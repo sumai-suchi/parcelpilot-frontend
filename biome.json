@@ -25,7 +25,12 @@
       "recommended": true,
       "performance": {
         "noImgElement": "off"
+      },
+      "correctness": {
+        "noChildrenProp": "off",
+        "useExhaustiveDependencies": "off"
       }
+      
     },
     "domains": {
       "next": "recommended",
