@@ -17,8 +17,9 @@ import {
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type * as React from "react";
-
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
@@ -27,11 +28,17 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { adminRoutes } from "@/routes/admin.route";
+import type { SidebarItems } from "@/types/sidebar.interface";
+import type { UserRole } from "@/types/user.interface";
 
 const data = {
   user: {
@@ -149,10 +156,18 @@ const data = {
     },
   ],
 };
+const sidebarRoutes: Partial<Record<UserRole, SidebarItems>> = {
+  ADMIN: adminRoutes,
+};
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function DashboardSidebar({ role }: { role: UserRole }) {
+  const pathname = usePathname();
+  const routes: SidebarItems = sidebarRoutes[role] || [];
+
+  console.log(pathname);
+
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="offcanvas">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -166,13 +181,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {/* <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+        {routes.map((item) => (
+          <SidebarGroup key={item.title}>
+            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {item.items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      render={<Link href={item.url} />}
+                      isActive={pathname === item.url}
+                    >
+                      {item.title}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   );
 }

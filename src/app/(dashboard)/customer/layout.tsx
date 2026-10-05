@@ -5,7 +5,7 @@ import DashboardShell from "@/components/dashboard/dashboard-shell";
 export default function layout({ children }: { children: ReactNode }) {
   return (
     <AuthGuard>
-      <DashboardShell role="ADMIN">{children}</DashboardShell>
+      <DashboardShell role="CUSTOMER">{children}</DashboardShell>
     </AuthGuard>
   );
 }

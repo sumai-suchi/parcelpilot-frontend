@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useGetMe, useLogout } from "@/hooks/auth.hook";
+import type { UserRole } from "@/types/user.interface";
 import { toast } from "../../toast";
 
 export default function Header() {
@@ -19,11 +20,19 @@ export default function Header() {
     { name: "Home", url: "/" },
     { name: "About us", url: "/about-us" },
   ];
+  const dashboardRoute: Record<UserRole, string> = {
+    ADMIN: "/admin",
+    CUSTOMER: "/customer",
+    COURIER: "/courier",
+    HUB_MANAGER: "/hub-manager",
+    OPERATIONS_MANAGER: "/operations-manager",
+  };
 
   const { data, isLoading } = useGetMe();
-  
+
   console.log("data", data, isLoading);
-  const user = data?.data;
+
+  const role: UserRole = !!data?.data && data?.data.role;
 
   const { mutate: logout } = useLogout();
   const queryClient = useQueryClient();
@@ -36,7 +45,7 @@ export default function Header() {
           description: "Logged out successfully",
           type: "success",
         });
-       queryClient.setQueryData(["user"], null);
+        queryClient.setQueryData(["user"], null);
       },
       onError: () => {
         toast.add({
@@ -67,23 +76,24 @@ export default function Header() {
               {route.name}
             </Link>
           ))}
+          {role && <Link href={dashboardRoute[role]}>Dashboard</Link>}
 
-                 <div>
-          { !data && (
-            <Button
-              variant="outline"
-              render={<Link href="/login">Login</Link>}
-              nativeButton={false}
-            >
-              Login
-            </Button>
-          )}
-          {data && (
-            <Button onClick={handleLogout} variant="destructive">
-              Logout
-            </Button>
-          )}
-        </div>
+          <div>
+            {!data && (
+              <Button
+                variant="outline"
+                render={<Link href="/login">Login</Link>}
+                nativeButton={false}
+              >
+                Login
+              </Button>
+            )}
+            {data && (
+              <Button onClick={handleLogout} variant="destructive">
+                Logout
+              </Button>
+            )}
+          </div>
         </nav>
 
         {/* Mobile Navigation */}
@@ -108,23 +118,25 @@ export default function Header() {
                     {route.name}
                   </Link>
                 ))}
+                 {role && <Link href={dashboardRoute[role]}>Dashboard</Link>}
 
-              <div>
-          { !data && (
-            <Button
-              variant="outline"
-              render={<Link href="/login">Login</Link>}
-              nativeButton={false}
-            >
-              Login
-            </Button>
-          )}
-          {data && (
-            <Button onClick={handleLogout} variant="destructive">
-              Logout
-            </Button>
-          )}
-        </div>
+
+                <div>
+                  {!data && (
+                    <Button
+                      variant="outline"
+                      render={<Link href="/login">Login</Link>}
+                      nativeButton={false}
+                    >
+                      Login
+                    </Button>
+                  )}
+                  {data && (
+                    <Button onClick={handleLogout} variant="destructive">
+                      Logout
+                    </Button>
+                  )}
+                </div>
               </nav>
             </SheetContent>
           </Sheet>

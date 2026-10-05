@@ -29,6 +29,9 @@
       "correctness": {
         "noChildrenProp": "off",
         "useExhaustiveDependencies": "off"
+      },
+      "a11y": {
+        "useValidAriaRole": "off"
       }
       
     },
