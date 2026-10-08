@@ -34,7 +34,7 @@ export const  CustomerRegistrationSchema = z
         "Password must contain atleast 1 Special Character",
       ),
     confirmPassword: z.string().min(1, "Please confirm your password"),
-    
+    profilePicture: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password do not match",
