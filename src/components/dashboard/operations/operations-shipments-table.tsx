@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle2, Loader2, Package, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2, Package, ShieldCheck, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { useUpdateShipmentDelivered } from "@/hooks/operations.hook";
 import type { OperationsShipment } from "@/types/operations.interface";
@@ -225,17 +225,39 @@ export function OperationsShipmentsTable({
                       <span className="font-mono text-[10px] text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 font-bold uppercase">
                         Delivered ✓
                       </span>
-                    ) : s.status === "AT_ORIGIN_HUB" ||
-                      s.status === "AT_DESTINATION_HUB" ? (
+                    ) : s.status === "AT_ORIGIN_HUB" ? (
                       <div className="flex items-center gap-1.5">
                         <Button
                           type="button"
                           size="xs"
                           variant="default"
                           onClick={() => onOpenAssign(s)}
-                          className="rounded-none bg-primary hover:bg-primary/90 text-primary-foreground font-mono uppercase font-bold text-[10px] tracking-wider cursor-pointer"
+                          className="rounded-none bg-primary hover:bg-primary/90 text-primary-foreground font-mono uppercase font-bold text-[10px] tracking-wider cursor-pointer flex items-center gap-1"
                         >
-                          Dispatch Delivery
+                          <Truck className="h-3 w-3" />
+                          <span>Dispatch Transit</span>
+                        </Button>
+                        <Button
+                          type="button"
+                          size="xs"
+                          variant="outline"
+                          onClick={() => onOpenAssign(s)}
+                          className="rounded-none font-mono uppercase text-[10px] tracking-wider border-border hover:bg-muted cursor-pointer"
+                        >
+                          Reassign
+                        </Button>
+                      </div>
+                    ) : s.status === "AT_DESTINATION_HUB" ? (
+                      <div className="flex items-center gap-1.5">
+                        <Button
+                          type="button"
+                          size="xs"
+                          variant="default"
+                          onClick={() => onOpenAssign(s)}
+                          className="rounded-none bg-emerald-600 hover:bg-emerald-700 text-white font-mono uppercase font-bold text-[10px] tracking-wider cursor-pointer flex items-center gap-1 shadow-xs"
+                        >
+                          <Truck className="h-3 w-3" />
+                          <span>Out for Delivery</span>
                         </Button>
                         <Button
                           type="button"

@@ -49,6 +49,18 @@ export interface CourierTask {
     description?: string | null;
     pickupAddress: SavedAddress;
     deliveryAddress: SavedAddress;
+    originHub?: {
+      id: string;
+      name: string;
+      code: string;
+      address?: string;
+    } | null;
+    destinationHub?: {
+      id: string;
+      name: string;
+      code: string;
+      address?: string;
+    } | null;
     customer?: {
       user: {
         id: string;

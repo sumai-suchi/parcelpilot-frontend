@@ -63,13 +63,18 @@ export function CourierTaskCard({
 
   const handleDeliverToHub = async () => {
     try {
+      const isTransit = shipmentStatus === "IN_TRANSIT";
       await deliverToHubMutation.mutateAsync({
         shipmentId: shipment.id,
-        note: "Delivered to hub and checked in by courier rider.",
+        note: isTransit
+          ? `Delivered to destination hub (${shipment.destinationHub?.name || "Destination Hub"}) by transit driver.`
+          : "Delivered to origin hub and checked in by courier rider.",
       });
       toast.add({
-        title: "Delivered to Hub",
-        description: `Parcel ${shipment.trackingNumber} successfully checked in.`,
+        title: isTransit ? "Arrived at Destination Hub" : "Delivered to Hub",
+        description: isTransit
+          ? `Shipment ${shipment.trackingNumber} successfully checked into destination hub.`
+          : `Parcel ${shipment.trackingNumber} successfully checked in.`,
         type: "success",
       });
     } catch (err: any) {
@@ -189,6 +194,29 @@ export function CourierTaskCard({
             )}
           </div>
         </div>
+
+        {/* Inter-Hub Transit Route Corridor */}
+        {shipmentStatus === "IN_TRANSIT" && (
+          <div className="flex items-center justify-between p-3 bg-primary/5 border border-primary/20 text-xs font-mono">
+            <div>
+              <span className="text-[10px] text-muted-foreground uppercase block font-semibold">
+                Origin Hub
+              </span>
+              <span className="font-bold text-foreground">
+                {shipment.originHub?.name || "Origin Hub"}
+              </span>
+            </div>
+            <Truck className="h-4 w-4 text-primary shrink-0" />
+            <div className="text-right">
+              <span className="text-[10px] text-muted-foreground uppercase block font-semibold">
+                Destination Hub
+              </span>
+              <span className="font-bold text-foreground">
+                {shipment.destinationHub?.name || "Destination Hub"}
+              </span>
+            </div>
+          </div>
+        )}
       </CardContent>
 
       <CardFooter className="p-4 sm:p-5 pt-0 border-t border-border/40 flex items-center justify-between gap-2 flex-wrap">
@@ -241,6 +269,20 @@ export function CourierTaskCard({
               >
                 <Building2 className="h-3.5 w-3.5" />
                 Deliver to Hub
+              </Button>
+            )}
+
+            {/* Step 2.5: In transit truck driver drop-off at destination hub */}
+            {shipmentStatus === "IN_TRANSIT" && (
+              <Button
+                size="sm"
+                variant="default"
+                disabled={deliverToHubMutation.isPending}
+                onClick={handleDeliverToHub}
+                className="rounded-none font-mono text-xs uppercase tracking-wider gap-1.5 cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                <Building2 className="h-3.5 w-3.5" />
+                Deliver to Destination Hub
               </Button>
             )}
 

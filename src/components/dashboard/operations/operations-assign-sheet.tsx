@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AlertCircle, Check, Loader2, Truck, User, X } from "lucide-react";
 import { toast } from "sonner";
 import { useAssignHubAndCourier } from "@/hooks/operations.hook";
@@ -35,36 +35,64 @@ export function OperationsAssignSheet({
 
   const assignMutation = useAssignHubAndCourier();
 
+  useEffect(() => {
+    if (shipment) {
+      setOriginHubId(shipment.originHubId || "");
+      setDestinationHubId(shipment.destinationHubId || "");
+      setCourierId("");
+      setNote("");
+    }
+  }, [shipment]);
+
   if (!isOpen || !shipment) return null;
+
+  const isOriginHubStage = shipment.status === "AT_ORIGIN_HUB";
+  const isDestinationHubStage = shipment.status === "AT_DESTINATION_HUB";
 
   const availableCouriers = couriers.filter(
     (c) => c.availabilityStatus === "AVAILABLE",
   );
 
   const handleAssign = async () => {
-    if (!originHubId) {
+    const finalOriginId = originHubId || shipment.originHubId;
+    if (!finalOriginId) {
       toast.error("Please select an Origin Induction Hub.");
       return;
     }
     if (!courierId) {
-      toast.error("Please select an available Courier Rider.");
+      toast.error(
+        isOriginHubStage
+          ? "Please select a Truck Driver / Transit Courier."
+          : "Please select an available Courier Rider.",
+      );
       return;
     }
 
     try {
+      const targetDestId = destinationHubId || shipment.destinationHubId || finalOriginId;
       await assignMutation.mutateAsync({
         shipmentId: shipment.id,
         payload: {
-          originHubId,
-          destinationHubId: destinationHubId || originHubId,
+          originHubId: finalOriginId,
+          destinationHubId: targetDestId,
           courierId,
           note: note || undefined,
         },
       });
 
-      toast.success(
-        `Shipment ${shipment.trackingNumber} approved and dispatched!`,
-      );
+      if (isOriginHubStage && finalOriginId !== targetDestId) {
+        toast.success(
+          `Shipment ${shipment.trackingNumber} dispatched in transit to destination hub!`,
+        );
+      } else if (isDestinationHubStage || isOriginHubStage) {
+        toast.success(
+          `Shipment ${shipment.trackingNumber} dispatched out for delivery!`,
+        );
+      } else {
+        toast.success(
+          `Shipment ${shipment.trackingNumber} approved and dispatched!`,
+        );
+      }
       onClose();
     } catch (err: any) {
       toast.error(err?.message || "Failed to assign shipment.");
@@ -79,10 +107,20 @@ export function OperationsAssignSheet({
           <div>
             <div className="inline-flex items-center gap-1.5 font-mono text-[10px] text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-none uppercase tracking-widest font-semibold mb-1">
               <Truck className="h-3 w-3" />
-              <span>ROUTING & INDUCTION CONTROL</span>
+              <span>
+                {isOriginHubStage
+                  ? "INTER-HUB TRANSIT DISPATCH"
+                  : isDestinationHubStage
+                    ? "LAST-MILE DELIVERY DISPATCH"
+                    : "ROUTING & INDUCTION CONTROL"}
+              </span>
             </div>
             <h3 className="text-base font-heading font-black tracking-tight text-foreground uppercase">
-              Courier & Terminal Routing
+              {isOriginHubStage
+                ? "Assign Transit Driver (Truck Driver)"
+                : isDestinationHubStage
+                  ? "Assign Delivery Courier"
+                  : "Courier & Terminal Routing"}
             </h3>
             <p className="text-xs font-mono text-muted-foreground">
               WAYBILL:{" "}
@@ -188,7 +226,11 @@ export function OperationsAssignSheet({
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground block font-bold">
-                Assign Pickup Courier Rider *
+                {isOriginHubStage
+                  ? "Assign Truck Driver / Transit Courier *"
+                  : isDestinationHubStage
+                    ? "Assign Delivery Courier Rider *"
+                    : "Assign Pickup Courier Rider *"}
               </label>
               <span className="text-[11px] font-mono text-primary font-semibold">
                 {availableCouriers.length} riders available
@@ -260,7 +302,13 @@ export function OperationsAssignSheet({
             </label>
             <textarea
               rows={2}
-              placeholder="e.g. Inducted for early morning pickup run. Contact sender prior to dispatch."
+              placeholder={
+                isOriginHubStage
+                  ? "e.g. Inter-hub transit via freight truck. Estimated transit time: 4 hours."
+                  : isDestinationHubStage
+                    ? "e.g. Out for final delivery. Recipient OTP verification required."
+                    : "e.g. Inducted for early morning pickup run. Contact sender prior to dispatch."
+              }
               value={note}
               onChange={(e) => setNote(e.target.value)}
               className="w-full rounded-none border border-input bg-background px-3 py-2 text-xs font-mono text-foreground focus:outline-none focus:border-primary"
@@ -287,10 +335,22 @@ export function OperationsAssignSheet({
             {assignMutation.isPending ? (
               <>
                 <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
-                <span>Inducting Route...</span>
+                <span>
+                  {isOriginHubStage
+                    ? "Dispatching Transit..."
+                    : isDestinationHubStage
+                      ? "Dispatching Delivery..."
+                      : "Inducting Route..."}
+                </span>
               </>
             ) : (
-              <span>Confirm & Dispatch</span>
+              <span>
+                {isOriginHubStage
+                  ? "Dispatch in Transit"
+                  : isDestinationHubStage
+                    ? "Dispatch Out for Delivery"
+                    : "Confirm & Dispatch"}
+              </span>
             )}
           </Button>
         </div>
