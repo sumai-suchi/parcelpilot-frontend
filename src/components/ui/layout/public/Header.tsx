@@ -3,7 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Menu } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -23,9 +23,9 @@ export default function Header() {
   const dashboardRoute: Record<UserRole, string> = {
     ADMIN: "/admin",
     CUSTOMER: "/customer",
-    COURIER: "/courier",
-    HUB_MANAGER: "/hub-manager",
-    OPERATIONS_MANAGER: "/operations-manager",
+    COURIER: "/courior",
+    HUB_MANAGER: "/hub_manager",
+    OPERATIONS_MANAGER: "/operation_manager",
   };
 
   const { data, isLoading } = useGetMe();
@@ -77,16 +77,23 @@ export default function Header() {
             </Link>
           ))}
           {role && <Link href={dashboardRoute[role]}>Dashboard</Link>}
+          {data?.data && (
+            <Link
+              href="/apply-for-role"
+              className="text-sm font-medium text-primary hover:underline transition-colors"
+            >
+              Apply for Role
+            </Link>
+          )}
 
           <div>
             {!data && (
-              <Button
-                variant="outline"
-                render={<Link href="/login">Login</Link>}
-                nativeButton={false}
+              <Link
+                href="/login"
+                className={buttonVariants({ variant: "outline" })}
               >
                 Login
-              </Button>
+              </Link>
             )}
             {data && (
               <Button onClick={handleLogout} variant="destructive">
@@ -119,17 +126,23 @@ export default function Header() {
                   </Link>
                 ))}
                  {role && <Link href={dashboardRoute[role]}>Dashboard</Link>}
-
+                 {data?.data && (
+                   <Link
+                     href="/apply-for-role"
+                     className="text-base font-medium text-primary hover:underline transition-colors"
+                   >
+                     Apply for Role
+                   </Link>
+                 )}
 
                 <div>
                   {!data && (
-                    <Button
-                      variant="outline"
-                      render={<Link href="/login">Login</Link>}
-                      nativeButton={false}
+                    <Link
+                      href="/login"
+                      className={buttonVariants({ variant: "outline" })}
                     >
                       Login
-                    </Button>
+                    </Link>
                   )}
                   {data && (
                     <Button onClick={handleLogout} variant="destructive">

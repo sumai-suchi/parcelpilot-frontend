@@ -2,28 +2,27 @@ const prefix = "/admin";
 
 export const adminRoutes = [
   {
-    title: "Management",
+    title: "Platform Administration",
     items: [
       {
-        title: "Overview",
+        title: "Overview & Analytics",
         url: `${prefix}`,
       },
       {
-        title: "Doctor Approval",
-        url: `${prefix}/approve-doctor`,
-      },
-    ],
-  },
-  {
-    title: "App Settings",
-    items: [
-      {
-        title: "Routing",
-        url: "#",
+        title: "Workforce & Users",
+        url: `${prefix}`,
       },
       {
-        title: "Data Fetching",
-        url: "#",
+        title: "Delivery Fleet",
+        url: `${prefix}`,
+      },
+      {
+        title: "Hub Management",
+        url: `${prefix}/hubs`,
+      },
+      {
+        title: "Revenue & Payments",
+        url: `${prefix}`,
       },
     ],
   },

@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
-
-
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import type { UserRole } from "@/types/user.interface";
 import { DashboardSidebar } from "./dashboard-sidebar";
 
@@ -12,6 +15,8 @@ export default function DashboardShell({
   children: ReactNode;
   role: UserRole;
 }) {
+  const roleLabel = role.replace(/_/g, " ");
+
   return (
     <SidebarProvider
       style={
@@ -22,11 +27,23 @@ export default function DashboardShell({
       }
     >
       <DashboardSidebar role={role} />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
+      <SidebarInset className="min-w-0 flex flex-col">
+        <header className="flex h-14 shrink-0 items-center justify-between border-b border-border/70 px-4 bg-background/95 backdrop-blur-xs">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground cursor-pointer" />
+            <Separator orientation="vertical" className="h-4" />
+            <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+              {roleLabel} Console
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-none uppercase tracking-wider font-semibold">
+              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+              Live System
+            </span>
+          </div>
         </header>
-        {children}
+        <main className="flex-1 w-full">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

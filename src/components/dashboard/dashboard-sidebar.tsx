@@ -1,29 +1,8 @@
 "use client";
 
-import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from "@tabler/icons-react";
+import { IconInnerShadowTop } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type * as React from "react";
-import { NavDocuments } from "@/components/nav-documents";
-import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -36,174 +15,93 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useGetMe } from "@/hooks/auth.hook";
 import { adminRoutes } from "@/routes/admin.route";
+import { couriorRoutes } from "@/routes/courior.route";
+import { customerRoutes } from "@/routes/customer.route";
+import { hubManagerRoutes } from "@/routes/hub_manager.route";
+import { operationManagerRoutes } from "@/routes/operation_manager.route";
 import type { SidebarItems } from "@/types/sidebar.interface";
 import type { UserRole } from "@/types/user.interface";
+import { NavUser } from "./nav-user";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
-  ],
-};
-const sidebarRoutes: Partial<Record<UserRole, SidebarItems>> = {
+const sidebarRoutes: Record<UserRole, SidebarItems> = {
   ADMIN: adminRoutes,
+  CUSTOMER: customerRoutes,
+  COURIER: couriorRoutes,
+  HUB_MANAGER: hubManagerRoutes,
+  OPERATIONS_MANAGER: operationManagerRoutes,
 };
 
 export function DashboardSidebar({ role }: { role: UserRole }) {
   const pathname = usePathname();
   const routes: SidebarItems = sidebarRoutes[role] || [];
-
-  console.log(pathname);
+  const { data: userRes } = useGetMe();
+  const user = userRes?.data;
 
   return (
-    <Sidebar collapsible="offcanvas">
-      <SidebarHeader>
+    <Sidebar collapsible="offcanvas" className="border-r border-border">
+      <SidebarHeader className="border-b border-border/70">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <a href="/" className="flex items-center gap-2">
-                <IconInnerShadowTop className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+            <SidebarMenuButton
+              render={<Link href="/" />}
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
+            >
+              <IconInnerShadowTop className="size-5! text-primary" />
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-tight">ParcelPilot</span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                  {role.replace("_", " ")}
+                </span>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
-        {routes.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+        {routes.map((group) => (
+          <SidebarGroup key={group.title}>
+            <SidebarGroupLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+              {group.title}
+            </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      render={<Link href={item.url} />}
-                      isActive={pathname === item.url}
-                    >
-                      {item.title}
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {group.items.map((item) => {
+                  const isActive = pathname === item.url;
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        render={<Link href={item.url} />}
+                        isActive={isActive}
+                        className="font-medium text-xs rounded-none transition-colors"
+                      >
+                        {item.title}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
       </SidebarContent>
-      {/* <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter> */}
+
+      <SidebarFooter className="border-t border-border/70 p-2">
+        <NavUser
+          user={
+            user
+              ? {
+                  name: user.name,
+                  email: user.email,
+                  avatar: user.profilePicture || user.avatar,
+                  role: user.role,
+                }
+              : null
+          }
+        />
+      </SidebarFooter>
     </Sidebar>
   );
 }

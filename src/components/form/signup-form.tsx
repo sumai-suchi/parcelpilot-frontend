@@ -2,9 +2,10 @@
 
 import { useForm } from "@tanstack/react-form";
 import { cn } from "cn";
-import { Eye, EyeOff } from "lucide-react";
+import { Camera, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { uploadImage } from "@/api/upload.api";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -24,15 +25,24 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const defaultValues = {
+  const defaultValues: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    profilePicture?: string;
+  } = {
     name: "Mir",
     email: "mir@gmail.com",
     password: "@User123456",
     confirmPassword: "@User123456",
+    profilePicture: undefined,
   };
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
   const { mutate: registration } = useRegistration();
   const router = useRouter();
@@ -47,6 +57,7 @@ export function SignupForm({
         name: value.name,
         email: value.email,
         password: value.password,
+        profilePicture: value.profilePicture || undefined,
       };
       console.log("form-", registrationData);
       registration(registrationData, {
@@ -98,6 +109,100 @@ export function SignupForm({
             Fill in the form below to create your account
           </p>
         </div>
+
+        <form.Field name="profilePicture">
+          {(field) => (
+            <div className="flex flex-col items-center gap-2 pb-1">
+              <div className="relative group">
+                <label
+                  htmlFor="signup-avatar-input"
+                  className={cn(
+                    "cursor-pointer block relative rounded-full overflow-hidden border-2 border-dashed transition-all p-1",
+                    isUploadingAvatar
+                      ? "opacity-60 pointer-events-none"
+                      : "border-muted-foreground/30 hover:border-primary",
+                  )}
+                  title="Click to upload profile picture"
+                >
+                  <div className="relative size-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
+                    {avatarPreview || field.state.value ? (
+                      <img
+                        src={avatarPreview || field.state.value}
+                        alt="Avatar preview"
+                        className="size-full object-cover rounded-full"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-muted-foreground">
+                        <Camera className="size-6 mb-0.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <span className="text-[10px] font-medium">Photo</span>
+                      </div>
+                    )}
+
+                    {isUploadingAvatar && (
+                      <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+                        <Loader2 className="size-5 animate-spin text-primary" />
+                      </div>
+                    )}
+                  </div>
+                </label>
+                <input
+                  id="signup-avatar-input"
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg,image/webp"
+                  className="sr-only"
+                  disabled={isUploadingAvatar}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+
+                    const localUrl = URL.createObjectURL(file);
+                    setAvatarPreview(localUrl);
+                    setIsUploadingAvatar(true);
+
+                    try {
+                      const res = await uploadImage(file, "parcelpilot/avatars");
+                      if (res.success && res.data?.url) {
+                        field.handleChange(res.data.url);
+                        toast.add({
+                          title: "Photo Uploaded",
+                          description: "Profile picture ready.",
+                          type: "success",
+                        });
+                      } else {
+                        throw new Error(res.message || "Failed to upload photo");
+                      }
+                    } catch (err: any) {
+                      setAvatarPreview(null);
+                      field.handleChange("");
+                      const isCloudinaryConfigError =
+                        err?.message?.includes?.("Cloudinary") ||
+                        err?.data?.message?.includes?.("Cloudinary") ||
+                        err?.message?.includes?.("api_key") ||
+                        err?.status === 500;
+
+                      toast.add({
+                        title: "Upload Failed",
+                        description: isCloudinaryConfigError
+                          ? "Cloudinary credentials missing or invalid in server .env. Please configure your Cloudinary Cloud Name, API Key, and API Secret."
+                          : err?.data?.message ||
+                            err?.message ||
+                            "Failed to upload photo",
+                        type: "error",
+                      });
+                    } finally {
+                      setIsUploadingAvatar(false);
+                      e.target.value = "";
+                    }
+                  }}
+                />
+              </div>
+              <span className="text-xs text-muted-foreground">
+                Profile picture (Optional)
+              </span>
+            </div>
+          )}
+        </form.Field>
+
         <Field>
           <form.Field
             name="name"

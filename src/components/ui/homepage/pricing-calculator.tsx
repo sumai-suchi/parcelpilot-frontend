@@ -12,9 +12,9 @@ export default function PricingCalculator() {
 
   // Pricing formula
   const getBaseRate = () => {
-    if (zone === "metro") return 60;
-    if (zone === "suburb") return 100;
-    return 130;
+    if (zone === "metro") return 100;
+    if (zone === "suburb") return 130;
+    return 160;
   };
 
   const getWeightCost = () => {
