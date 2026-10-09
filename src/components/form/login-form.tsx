@@ -25,6 +25,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { useLogin } from "@/hooks/auth.hook";
 import { loginSchema } from "@/validation/auth.validation";
 import { Spinner } from "../ui/spinner";
@@ -310,9 +311,7 @@ export function LoginForm({
 
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button">
-            Login with GitHub
-          </Button>
+          <GoogleAuthButton mode="login" />
           <FieldDescription className="text-center">
             Don&apos;t have an account?{" "}
             <a href="/register" className="underline underline-offset-4">

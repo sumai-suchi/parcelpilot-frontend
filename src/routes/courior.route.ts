@@ -18,4 +18,13 @@ export const couriorRoutes = [
       },
     ],
   },
+  {
+    title: "Account & Security",
+    items: [
+      {
+        title: "View Profile",
+        url: `${prefix}/profile`,
+      },
+    ],
+  },
 ];

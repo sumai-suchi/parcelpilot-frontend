@@ -24,14 +24,12 @@ interface HubParcelsTableProps {
   parcels: OperationsShipment[];
   isLoading: boolean;
   onDispatchTransfer: (shipment: OperationsShipment) => void;
-  onAssignDelivery: (shipment: OperationsShipment) => void;
 }
 
 export function HubParcelsTable({
   parcels,
   isLoading,
   onDispatchTransfer,
-  onAssignDelivery,
 }: HubParcelsTableProps) {
   if (isLoading) {
     return (
@@ -144,16 +142,9 @@ export function HubParcelsTable({
                       Dispatch Linehaul
                     </Button>
                   ) : (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="xs"
-                      onClick={() => onAssignDelivery(p)}
-                      className="gap-1.5 font-mono text-xs hover:border-primary hover:text-primary"
-                    >
-                      <Bike className="h-3 w-3" />
-                      Dispatch Final Mile
-                    </Button>
+                    <span className="inline-flex items-center font-mono text-[10px] text-muted-foreground uppercase bg-muted/40 px-2 py-1 border border-border">
+                      Local Bay Stored
+                    </span>
                   )}
                 </TableCell>
               </TableRow>

@@ -10,11 +10,11 @@ export const adminRoutes = [
       },
       {
         title: "Workforce & Users",
-        url: `${prefix}`,
+        url: `${prefix}/users`,
       },
       {
         title: "Delivery Fleet",
-        url: `${prefix}`,
+        url: `${prefix}/fleet`,
       },
       {
         title: "Hub Management",
@@ -22,7 +22,20 @@ export const adminRoutes = [
       },
       {
         title: "Revenue & Payments",
-        url: `${prefix}`,
+        url: `${prefix}/revenue`,
+      },
+      {
+        title: "Role Applications",
+        url: `${prefix}/applications`,
+      },
+    ],
+  },
+  {
+    title: "Account & Security",
+    items: [
+      {
+        title: "View Profile",
+        url: `${prefix}/profile`,
       },
     ],
   },

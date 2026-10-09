@@ -33,3 +33,11 @@ export function userLogin(payload: LoginPayload) {
   return apiClient("/auth/login", { method: "POST", body: payload });
 }
 
+export interface GoogleAuthPayload {
+  idToken: string;
+}
+
+export function googleAuthLogin(payload: GoogleAuthPayload) {
+  return apiClient("/auth/google", { method: "POST", body: payload });
+}
+

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Radio, RefreshCw } from "lucide-react";
+import { Package, RefreshCw } from "lucide-react";
 import {
   useOperationsCouriers,
   useOperationsHubs,
@@ -10,14 +10,14 @@ import {
 import type { OperationsShipment } from "@/types/operations.interface";
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "../shared/dashboard-header";
-import { OperationsAnalytics } from "./operations-analytics";
 import { OperationsAssignSheet } from "./operations-assign-sheet";
 import { OperationsFilters } from "./operations-filters";
 import { OperationsRejectDialog } from "./operations-reject-dialog";
 import { OperationsShipmentsTable } from "./operations-shipments-table";
+import { OperationsStatsCards } from "./operations-stats-cards";
 import { cn } from "@/lib/utils";
 
-export function OperationsDashboardView() {
+export function OperationsAllShipmentsView() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedShipmentForAssign, setSelectedShipmentForAssign] =
@@ -45,12 +45,12 @@ export function OperationsDashboardView() {
 
   return (
     <div className="space-y-8">
-      {/* Reusable Dashboard Header */}
+      {/* Header */}
       <DashboardHeader
-        category="OPERATIONS COMMAND / ROUTING ENGINE"
-        title="Operations Command Center."
-        description="Real-time dispatch intake, field courier rider assignment, and multi-hub consignment routing."
-        badgeIcon={Radio}
+        category="GLOBAL SHIPMENTS / MASTER REGISTRY"
+        title="Master Shipments Registry."
+        description="Global consignment ledger across all operational stages, regional hub terminals, and delivery corridors."
+        badgeIcon={Package}
         actions={
           <Button
             variant="outline"
@@ -62,41 +62,24 @@ export function OperationsDashboardView() {
             <RefreshCw
               className={cn("h-3.5 w-3.5", isFetching && "animate-spin")}
             />
-            <span className="hidden sm:inline">Refresh Ledger</span>
+            <span className="hidden sm:inline">Refresh Registry</span>
           </Button>
         }
       />
 
-      {/* Comprehensive Operations Analytics Suite */}
-      <OperationsAnalytics
-        shipments={shipments}
-        hubs={hubs}
-        couriers={couriers}
-        isLoading={isShipmentsLoading}
+      {/* Metrics */}
+      <OperationsStatsCards shipments={shipments} />
+
+      {/* Filters */}
+      <OperationsFilters
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        statusFilter={statusFilter}
+        onStatusFilterChange={setStatusFilter}
+        totalCount={shipments.length}
       />
 
-      {/* Responsive Filter Bar */}
-      <div className="pt-2">
-        <div className="flex items-center justify-between mb-3 border-b border-border/60 pb-2">
-          <div>
-            <h4 className="text-sm font-heading font-black uppercase text-foreground">
-              Live Queue & Waybill Ledger
-            </h4>
-            <p className="text-xs text-muted-foreground">
-              Filter and search through active consignment records to assign couriers or resolve routing.
-            </p>
-          </div>
-        </div>
-        <OperationsFilters
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-          totalCount={shipments.length}
-        />
-      </div>
-
-      {/* Consignments Ledger Table */}
+      {/* Table */}
       <OperationsShipmentsTable
         shipments={shipments}
         isLoading={isShipmentsLoading}
@@ -104,7 +87,7 @@ export function OperationsDashboardView() {
         onOpenReject={(s) => setSelectedShipmentForReject(s)}
       />
 
-      {/* Routing Assignment Drawer Sheet */}
+      {/* Assign Sheet */}
       <OperationsAssignSheet
         isOpen={!!selectedShipmentForAssign}
         shipment={selectedShipmentForAssign}
@@ -113,7 +96,7 @@ export function OperationsDashboardView() {
         couriers={couriers}
       />
 
-      {/* Consignment Rejection Governance Modal */}
+      {/* Reject Modal */}
       <OperationsRejectDialog
         isOpen={!!selectedShipmentForReject}
         shipment={selectedShipmentForReject}

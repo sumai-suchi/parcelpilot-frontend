@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { LogOut, ShieldCheck, User } from "lucide-react";
+import { ExternalLink, LogOut, ShieldCheck, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   Avatar,
@@ -128,10 +128,27 @@ export function NavUser({ user }: NavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() => router.push("/")}
+                onClick={() => {
+                  const rolePrefixMap: Record<string, string> = {
+                    ADMIN: "/admin",
+                    OPERATIONS_MANAGER: "/operation_manager",
+                    HUB_MANAGER: "/hub_manager",
+                    COURIER: "/courior",
+                    CUSTOMER: "/customer",
+                  };
+                  const prefix = user.role ? rolePrefixMap[user.role] || "/customer" : "/customer";
+                  router.push(`${prefix}/profile`);
+                }}
                 className="cursor-pointer gap-2"
               >
                 <User className="size-4" />
+                <span>View Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push("/")}
+                className="cursor-pointer gap-2"
+              >
+                <ExternalLink className="size-4" />
                 <span>Go to Homepage</span>
               </DropdownMenuItem>
               <DropdownMenuItem

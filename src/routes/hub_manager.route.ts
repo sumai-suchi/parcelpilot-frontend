@@ -5,16 +5,29 @@ export const hubManagerRoutes = [
     title: "Hub Operations",
     items: [
       {
-        title: "Sorting Operations",
+        title: "Terminal Overview",
         url: `${prefix}`,
       },
       {
-        title: "Inter-Hub Linehauls",
-        url: `${prefix}`,
+        title: "Sorting Operations",
+        url: `${prefix}/sorting`,
       },
       {
         title: "Bay Inventory",
-        url: `${prefix}`,
+        url: `${prefix}/inventory`,
+      },
+      {
+        title: "Inter-Hub Linehauls",
+        url: `${prefix}/linehauls`,
+      },
+    ],
+  },
+  {
+    title: "Account & Security",
+    items: [
+      {
+        title: "View Profile",
+        url: `${prefix}/profile`,
       },
     ],
   },

@@ -9,12 +9,12 @@ export const operationManagerRoutes = [
         url: `${prefix}`,
       },
       {
-        title: "Pending Approvals",
-        url: `${prefix}#pending`,
+        title: "Pending Approval",
+        url: `${prefix}/pending-approval`,
       },
       {
-        title: "Active Dispatches",
-        url: `${prefix}#active`,
+        title: "Active Dispatch",
+        url: `${prefix}/active-dispatch`,
       },
     ],
   },
@@ -23,11 +23,20 @@ export const operationManagerRoutes = [
     items: [
       {
         title: "All Shipments",
-        url: `${prefix}#all`,
+        url: `${prefix}/all-shipments`,
       },
       {
-        title: "Hub Transfers",
-        url: `${prefix}#transfers`,
+        title: "Hub Transfer",
+        url: `${prefix}/hub-transfers`,
+      },
+    ],
+  },
+  {
+    title: "Account & Security",
+    items: [
+      {
+        title: "View Profile",
+        url: `${prefix}/profile`,
       },
     ],
   },

@@ -16,6 +16,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { useRegistration } from "@/hooks/auth.hook";
 import type { RegistrationPayload } from "@/types/auth.interface";
 import { CustomerRegistrationSchema } from "@/validation/auth.validation";
@@ -344,9 +345,7 @@ export function SignupForm({
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button">
-            Sign up with GitHub
-          </Button>
+          <GoogleAuthButton mode="register" />
           <FieldDescription className="px-6 text-center">
             Already have an account? <a href="/login">Sign in</a>
           </FieldDescription>

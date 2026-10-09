@@ -9,15 +9,11 @@ import {
   Search,
 } from "lucide-react";
 import { useHubShipments, useHubTransfers } from "@/hooks/hub.hook";
-import {
-  useOperationsCouriers,
-  useOperationsHubs,
-} from "@/hooks/operations.hook";
+import { useOperationsHubs } from "@/hooks/operations.hook";
 import type { HubTransferItem } from "@/types/hub.interface";
 import type { OperationsShipment } from "@/types/operations.interface";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { OperationsAssignSheet } from "../operations/operations-assign-sheet";
 import { DashboardHeader } from "../shared/dashboard-header";
 import { HubDispatchTransferModal } from "./hub-dispatch-transfer-modal";
 import { HubParcelsTable } from "./hub-parcels-table";
@@ -32,8 +28,6 @@ export function HubDashboardView() {
   const [activeTab, setActiveTab] = useState<HubTab>("parcels");
   const [searchTerm, setSearchTerm] = useState("");
   const [dispatchShipment, setDispatchShipment] =
-    useState<OperationsShipment | null>(null);
-  const [assignDeliveryShipment, setAssignDeliveryShipment] =
     useState<OperationsShipment | null>(null);
   const [receiveTransfer, setReceiveTransfer] =
     useState<HubTransferItem | null>(null);
@@ -53,12 +47,10 @@ export function HubDashboardView() {
   } = useHubTransfers({ limit: 100 });
 
   const { data: hubsRes } = useOperationsHubs();
-  const { data: couriersRes } = useOperationsCouriers();
 
   const allShipments = useMemo(() => shipmentsRes?.data || [], [shipmentsRes]);
   const transfers = useMemo(() => transfersRes?.data || [], [transfersRes]);
   const hubs = useMemo(() => hubsRes?.data || [], [hubsRes]);
-  const couriers = useMemo(() => couriersRes?.data || [], [couriersRes]);
 
   // Parcels currently docked at this hub sorting facility
   const parcelsAtHub = useMemo(
@@ -204,7 +196,6 @@ export function HubDashboardView() {
           parcels={filteredParcels}
           isLoading={isShipmentsLoading}
           onDispatchTransfer={(s) => setDispatchShipment(s)}
-          onAssignDelivery={(s) => setAssignDeliveryShipment(s)}
         />
       ) : (
         <HubTransfersTable
@@ -227,15 +218,6 @@ export function HubDashboardView() {
         isOpen={!!receiveTransfer}
         transfer={receiveTransfer}
         onClose={() => setReceiveTransfer(null)}
-      />
-
-      {/* Final Delivery Courier Dispatch Sheet (Reused from Operations) */}
-      <OperationsAssignSheet
-        isOpen={!!assignDeliveryShipment}
-        shipment={assignDeliveryShipment}
-        onClose={() => setAssignDeliveryShipment(null)}
-        hubs={hubs}
-        couriers={couriers}
       />
     </div>
   );
