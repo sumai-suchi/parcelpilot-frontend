@@ -1,7 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Bike, CheckCircle2, PackageCheck, RefreshCw, Search, Truck, Zap } from "lucide-react";
+import {
+  Bike,
+  CheckCircle2,
+  PackageCheck,
+  RefreshCw,
+  Search,
+  Truck,
+  Zap,
+} from "lucide-react";
 import {
   useOperationsCouriers,
   useOperationsHubs,
@@ -49,7 +57,7 @@ export function OperationsActiveDispatchView() {
         s.status === "COURIER_ASSIGNED" ||
         s.status === "PICKUP_ASSIGNED" ||
         s.status === "PICKED_UP" ||
-        s.status === "OUT_FOR_DELIVERY"
+        s.status === "OUT_FOR_DELIVERY",
     );
   }, [allShipments]);
 
@@ -57,11 +65,13 @@ export function OperationsActiveDispatchView() {
   const metrics = useMemo(() => {
     const total = activeDispatches.length;
     const assigned = activeDispatches.filter(
-      (s) => s.status === "COURIER_ASSIGNED" || s.status === "PICKUP_ASSIGNED"
+      (s) => s.status === "COURIER_ASSIGNED" || s.status === "PICKUP_ASSIGNED",
     ).length;
-    const pickedUp = activeDispatches.filter((s) => s.status === "PICKED_UP").length;
+    const pickedUp = activeDispatches.filter(
+      (s) => s.status === "PICKED_UP",
+    ).length;
     const outForDelivery = activeDispatches.filter(
-      (s) => s.status === "OUT_FOR_DELIVERY"
+      (s) => s.status === "OUT_FOR_DELIVERY",
     ).length;
 
     return { total, assigned, pickedUp, outForDelivery };
@@ -175,7 +185,7 @@ export function OperationsActiveDispatchView() {
                 "h-7 px-2.5 text-[10px] uppercase rounded-none cursor-pointer",
                 dispatchStageFilter === st.id
                   ? "bg-primary text-primary-foreground font-bold"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {st.label}

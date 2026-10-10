@@ -82,10 +82,9 @@ export default function AboutTechStack() {
   return (
     <section className="py-24 bg-muted/30 text-foreground border-b border-border relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
+          <div className="inline-flex items-center gap-2 rounded-none border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
             <Cpu className="size-3.5" />
             <span>ENGINEERING & TECHNICAL RIGOR</span>
           </div>
@@ -93,9 +92,10 @@ export default function AboutTechStack() {
             Architected for Zero Failure Tolerance
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            In physical logistics, software downtime means stranded vehicles and missing cargo.
-            Our technical stack is chosen specifically to guarantee transaction atomicity, sub-second
-            telemetry, and ironclad financial precision.
+            In physical logistics, software downtime means stranded vehicles and
+            missing cargo. Our technical stack is chosen specifically to
+            guarantee transaction atomicity, sub-second telemetry, and ironclad
+            financial precision.
           </p>
         </div>
 
@@ -111,18 +111,21 @@ export default function AboutTechStack() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
               >
-                <Card className="h-full border-border bg-card hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between">
+                <Card className="h-full rounded-none border-border bg-card hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between">
                   <CardHeader className="space-y-3 pb-3">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase">
                         {item.category}
                       </span>
-                      <Badge variant="outline" className="text-[10px] font-mono border-border">
+                      <Badge
+                        variant="outline"
+                        className="rounded-none text-[10px] font-mono border-border"
+                      >
                         {item.badge}
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 rounded-lg bg-muted text-foreground">
+                      <div className="p-2 rounded-none bg-muted text-foreground">
                         <IconComponent className={`size-5 ${item.accent}`} />
                       </div>
                       <CardTitle className="text-base font-bold text-foreground">
@@ -142,25 +145,28 @@ export default function AboutTechStack() {
         </div>
 
         {/* Architectural Principles Banner */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-zinc-950 text-zinc-100 border border-zinc-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 sm:p-8 rounded-none bg-card text-card-foreground border border-border shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 text-xs font-mono text-primary font-bold">
               <Lock className="size-3.5" />
               <span>CRYPTOGRAPHIC FINANCIAL ASSURANCE</span>
             </div>
-            <h4 className="text-xl font-bold tracking-tight text-white font-sans">
+            <h4 className="text-xl font-bold tracking-tight text-foreground font-sans">
               BigInt Native Currency Serialization & Zero Rounding Errors
             </h4>
-            <p className="text-xs text-zinc-400 max-w-2xl font-sans">
-              All financial transactions across delivery fees, courier payouts, and Stripe payments
-              avoid JavaScript floating-point rounding bugs, maintaining exact cent-level balance sheet parity.
+            <p className="text-xs text-muted-foreground max-w-2xl font-sans">
+              All financial transactions across delivery fees, courier payouts,
+              and Stripe payments avoid JavaScript floating-point rounding bugs,
+              maintaining exact cent-level balance sheet parity.
             </p>
           </div>
-          <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 bg-emerald-500/10 text-xs font-mono shrink-0 px-3 py-1">
+          <Badge
+            variant="outline"
+            className="rounded-none border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 text-xs font-mono shrink-0 px-3 py-1"
+          >
             VERIFIED INTEGRITY
           </Badge>
         </div>
-
       </div>
     </section>
   );

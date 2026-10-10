@@ -59,7 +59,10 @@ export default function FloatingAssistant() {
       id: Date.now().toString(),
       sender: "user",
       text: query,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -87,7 +90,10 @@ export default function FloatingAssistant() {
         id: (Date.now() + 1).toString(),
         sender: "assistant",
         text: reply,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       };
 
       setMessages((prev) => [...prev, botMsg]);
@@ -203,7 +209,9 @@ export default function FloatingAssistant() {
                   >
                     {m.text}
                   </div>
-                  <span className="text-[9px] text-zinc-500 mt-1 font-mono">{m.time}</span>
+                  <span className="text-[9px] text-zinc-500 mt-1 font-mono">
+                    {m.time}
+                  </span>
                 </div>
               ))}
             </div>

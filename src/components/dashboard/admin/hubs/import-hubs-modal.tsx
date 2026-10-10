@@ -83,7 +83,9 @@ export function ImportHubsModal({ open, onOpenChange }: ImportHubsModalProps) {
       const data = await res.json();
       setJsonText(JSON.stringify(data, null, 2));
       setFileName("bangladesh-hubs-preset.json");
-      toast.success("Loaded pre-configured Bangladesh national logistics hub network!");
+      toast.success(
+        "Loaded pre-configured Bangladesh national logistics hub network!",
+      );
     } catch (err: any) {
       toast.error(err?.message || "Failed to load preset hubs.");
     } finally {
@@ -183,7 +185,8 @@ export function ImportHubsModal({ open, onOpenChange }: ImportHubsModalProps) {
                 <span>Load Bangladesh Preset</span>
               </div>
               <span className="text-[11px] text-muted-foreground font-sans leading-snug">
-                22 verified hubs across 9 national divisions (Dhaka, Bogura, CTG, etc.)
+                22 verified hubs across 9 national divisions (Dhaka, Bogura,
+                CTG, etc.)
               </span>
             </Button>
 
@@ -248,7 +251,8 @@ export function ImportHubsModal({ open, onOpenChange }: ImportHubsModalProps) {
               className="rounded-none border-border font-mono text-xs bg-muted/20 resize-y min-h-[160px] sm:min-h-[220px] max-h-[380px] w-full focus-visible:ring-0 focus-visible:border-primary"
             />
             <span className="text-[11px] text-muted-foreground font-mono block leading-relaxed">
-              Automatic zone provisioning: any missing zone code will be created automatically.
+              Automatic zone provisioning: any missing zone code will be created
+              automatically.
             </span>
           </div>
         </div>

@@ -110,10 +110,7 @@ export function AdminHubsView() {
       )}
 
       {/* Add Hub Drawer */}
-      <AddHubDrawer
-        open={isAddDrawerOpen}
-        onOpenChange={setIsAddDrawerOpen}
-      />
+      <AddHubDrawer open={isAddDrawerOpen} onOpenChange={setIsAddDrawerOpen} />
     </div>
   );
 }

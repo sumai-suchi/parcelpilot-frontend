@@ -6,9 +6,8 @@ export interface RegistrationPayload {
 }
 
 export interface VerifyAccountPayload {
-  email : string;
+  email: string;
   otp: string;
-
 }
 export interface LoginPayload {
   email: string;

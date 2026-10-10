@@ -4,7 +4,10 @@ import { Bike, Building2, User } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import { useCourierProfile, useUpdateCourierAvailability } from "@/hooks/courier.hook";
+import {
+  useCourierProfile,
+  useUpdateCourierAvailability,
+} from "@/hooks/courier.hook";
 import type { CourierAvailability } from "@/types/courier.interface";
 import { cn } from "@/lib/utils";
 
@@ -72,13 +75,18 @@ export function CourierAvailabilityToggle() {
                 {profile?.user?.name || "Field Courier"}
               </h3>
               <span className="font-mono text-xs text-muted-foreground">
-                [{profile?.vehicleType || "Motorcycle"} • {profile?.vehicleNumber || "BD-1234"}]
+                [{profile?.vehicleType || "Motorcycle"} •{" "}
+                {profile?.vehicleNumber || "BD-1234"}]
               </span>
             </div>
             <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
               <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
               <span>
-                Assigned Hub: <strong className="text-foreground">{profile?.hub?.name || "Dhaka Central Hub"}</strong> ({profile?.hub?.code || "DAC"})
+                Assigned Hub:{" "}
+                <strong className="text-foreground">
+                  {profile?.hub?.name || "Dhaka Central Hub"}
+                </strong>{" "}
+                ({profile?.hub?.code || "DAC"})
               </span>
             </p>
           </div>

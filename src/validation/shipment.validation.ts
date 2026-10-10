@@ -6,14 +6,8 @@ export const AddressSchema = z.object({
     .string()
     .trim()
     .min(3, "Address line must be at least 3 characters long"),
-  city: z
-    .string()
-    .trim()
-    .min(2, "City must be at least 2 characters long"),
-  area: z
-    .string()
-    .trim()
-    .min(2, "Area must be at least 2 characters long"),
+  city: z.string().trim().min(2, "City must be at least 2 characters long"),
+  area: z.string().trim().min(2, "Area must be at least 2 characters long"),
   postalCode: z.string().max(20).optional(),
 });
 
@@ -48,8 +42,13 @@ export const CreateShipmentSchema = z
       .gt(0, "Weight must be greater than zero")
       .min(0.05, "Minimum parcel weight is 0.05 kg (50g)")
       .max(500, "Maximum parcel weight allowed is 500 kg"),
-    deliveryType: z.enum(["STANDARD", "EXPRESS", "SAME_DAY"]).default("STANDARD"),
-    description: z.string().max(1000, "Description cannot exceed 1000 characters").optional(),
+    deliveryType: z
+      .enum(["STANDARD", "EXPRESS", "SAME_DAY"])
+      .default("STANDARD"),
+    description: z
+      .string()
+      .max(1000, "Description cannot exceed 1000 characters")
+      .optional(),
     scheduledPickupAt: z.string().optional(),
   })
   .refine(
@@ -64,7 +63,8 @@ export const CreateShipmentSchema = z
       );
     },
     {
-      message: "Please select a saved pickup address or fill in all pickup address fields.",
+      message:
+        "Please select a saved pickup address or fill in all pickup address fields.",
       path: ["pickupAddressId"],
     },
   );

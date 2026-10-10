@@ -30,8 +30,18 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { Courier, Hub, OperationsShipment } from "@/types/operations.interface";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type {
+  Courier,
+  Hub,
+  OperationsShipment,
+} from "@/types/operations.interface";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MetricCard, MetricGrid } from "../shared/metric-card";
 import { cn } from "@/lib/utils";
@@ -49,7 +59,9 @@ export function OperationsAnalytics({
   couriers,
   isLoading,
 }: OperationsAnalyticsProps) {
-  const [chartMetric, setChartMetric] = useState<"volume" | "freight">("volume");
+  const [chartMetric, setChartMetric] = useState<"volume" | "freight">(
+    "volume",
+  );
 
   // Real-time operations calculations
   const analytics = useMemo(() => {
@@ -57,34 +69,38 @@ export function OperationsAnalytics({
 
     // Stage counts
     const pendingCount = shipments.filter(
-      (s) => s.status === "PENDING_APPROVAL" || s.status === "CREATED"
+      (s) => s.status === "PENDING_APPROVAL" || s.status === "CREATED",
     ).length;
 
     const assignedCount = shipments.filter(
-      (s) => s.status === "COURIER_ASSIGNED" || s.status === "PICKUP_ASSIGNED"
+      (s) => s.status === "COURIER_ASSIGNED" || s.status === "PICKUP_ASSIGNED",
     ).length;
 
     const atHubCount = shipments.filter(
       (s) =>
         s.status === "AT_ORIGIN_HUB" ||
         s.status === "RECEIVED_AT_HUB" ||
-        s.status === "AT_DESTINATION_HUB"
+        s.status === "AT_DESTINATION_HUB",
     ).length;
 
-    const inTransitCount = shipments.filter((s) => s.status === "IN_TRANSIT").length;
+    const inTransitCount = shipments.filter(
+      (s) => s.status === "IN_TRANSIT",
+    ).length;
 
     const outForDeliveryCount = shipments.filter(
-      (s) => s.status === "OUT_FOR_DELIVERY"
+      (s) => s.status === "OUT_FOR_DELIVERY",
     ).length;
 
-    const deliveredCount = shipments.filter((s) => s.status === "DELIVERED").length;
+    const deliveredCount = shipments.filter(
+      (s) => s.status === "DELIVERED",
+    ).length;
 
     const cancelledCount = shipments.filter(
       (s) =>
         s.status === "CANCELLED" ||
         s.status === "REJECTED" ||
         s.status === "RETURNED" ||
-        s.status === "DELIVERY_FAILED"
+        s.status === "DELIVERY_FAILED",
     ).length;
 
     // Active field execution (dispatched + out for delivery)
@@ -105,20 +121,20 @@ export function OperationsAnalytics({
     // Couriers On-Duty
     const totalCouriers = couriers.length;
     const availableCouriers = couriers.filter(
-      (c) => (c.availabilityStatus || "").toUpperCase() === "AVAILABLE"
+      (c) => (c.availabilityStatus || "").toUpperCase() === "AVAILABLE",
     ).length;
     const busyCouriers = couriers.filter(
-      (c) => (c.availabilityStatus || "").toUpperCase() === "BUSY"
+      (c) => (c.availabilityStatus || "").toUpperCase() === "BUSY",
     ).length;
 
     // Service Mode Tiers
     const expressCount = shipments.filter(
-      (s) => (s.deliveryType || "").toUpperCase() === "EXPRESS"
+      (s) => (s.deliveryType || "").toUpperCase() === "EXPRESS",
     ).length;
     const sameDayCount = shipments.filter(
       (s) =>
         (s.deliveryType || "").toUpperCase().includes("SAME") ||
-        (s.deliveryType || "").toUpperCase().includes("DAY")
+        (s.deliveryType || "").toUpperCase().includes("DAY"),
     ).length;
     const standardCount = total - (expressCount + sameDayCount);
 
@@ -131,13 +147,24 @@ export function OperationsAnalytics({
     for (let i = 6; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
-      const dateKey = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-      dayMap.set(dateKey, { date: dateKey, dispatched: 0, delivered: 0, freight: 0 });
+      const dateKey = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      dayMap.set(dateKey, {
+        date: dateKey,
+        dispatched: 0,
+        delivered: 0,
+        freight: 0,
+      });
     }
 
     shipments.forEach((s) => {
       const d = new Date(s.createdAt || Date.now());
-      const dateKey = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      const dateKey = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
       if (dayMap.has(dateKey)) {
         const item = dayMap.get(dateKey)!;
         item.dispatched += 1;
@@ -150,7 +177,10 @@ export function OperationsAnalytics({
 
     // Provide baseline progression curve if dataset is pristine
     let timeSeries = Array.from(dayMap.values());
-    const totalTrendDispatched = timeSeries.reduce((acc, curr) => acc + curr.dispatched, 0);
+    const totalTrendDispatched = timeSeries.reduce(
+      (acc, curr) => acc + curr.dispatched,
+      0,
+    );
     if (totalTrendDispatched === 0 && shipments.length === 0) {
       timeSeries = [
         { date: "Oct 04", dispatched: 12, delivered: 9, freight: 1440 },
@@ -299,7 +329,8 @@ export function OperationsAnalytics({
             </h3>
           </div>
           <p className="text-xs text-muted-foreground font-sans mt-0.5">
-            Real-time courier fleet dispatch capacity, linehaul cross-dock flow, and consignment lifecycle velocity.
+            Real-time courier fleet dispatch capacity, linehaul cross-dock flow,
+            and consignment lifecycle velocity.
           </p>
         </div>
 
@@ -313,7 +344,7 @@ export function OperationsAnalytics({
                 "px-2.5 py-1 transition-colors uppercase font-bold cursor-pointer",
                 chartMetric === "volume"
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Dispatch Flow
@@ -325,7 +356,7 @@ export function OperationsAnalytics({
                 "px-2.5 py-1 transition-colors uppercase font-bold cursor-pointer",
                 chartMetric === "freight"
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Freight Volume (৳)
@@ -404,7 +435,9 @@ export function OperationsAnalytics({
               ) : (
                 <div className="flex items-center gap-1.5">
                   <span className="size-2.5 bg-primary rounded-none inline-block" />
-                  <span className="text-muted-foreground">Freight Volume (BDT)</span>
+                  <span className="text-muted-foreground">
+                    Freight Volume (BDT)
+                  </span>
                 </div>
               )}
             </div>
@@ -418,11 +451,31 @@ export function OperationsAnalytics({
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
                 <defs>
-                  <linearGradient id="opPrimaryGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="var(--primary)" stopOpacity={0.0} />
+                  <linearGradient
+                    id="opPrimaryGrad"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="5%"
+                      stopColor="var(--primary)"
+                      stopOpacity={0.4}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="var(--primary)"
+                      stopOpacity={0.0}
+                    />
                   </linearGradient>
-                  <linearGradient id="opEmeraldGrad" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient
+                    id="opEmeraldGrad"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
                     <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                   </linearGradient>
@@ -437,13 +490,23 @@ export function OperationsAnalytics({
                   dataKey="date"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)", fontFamily: "monospace" }}
+                  tick={{
+                    fontSize: 11,
+                    fill: "var(--muted-foreground)",
+                    fontFamily: "monospace",
+                  }}
                 />
                 <YAxis
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)", fontFamily: "monospace" }}
-                  tickFormatter={(val) => (chartMetric === "freight" ? `৳${val}` : `${val}`)}
+                  tick={{
+                    fontSize: 11,
+                    fill: "var(--muted-foreground)",
+                    fontFamily: "monospace",
+                  }}
+                  tickFormatter={(val) =>
+                    chartMetric === "freight" ? `৳${val}` : `${val}`
+                  }
                 />
                 <Tooltip
                   content={({ active, payload, label }) => {
@@ -457,17 +520,23 @@ export function OperationsAnalytics({
                             <>
                               <div className="flex items-center justify-between gap-4 text-primary">
                                 <span>Dispatched:</span>
-                                <span className="font-bold">{payload[0]?.value} consignments</span>
+                                <span className="font-bold">
+                                  {payload[0]?.value} consignments
+                                </span>
                               </div>
                               <div className="flex items-center justify-between gap-4 text-emerald-600">
                                 <span>Fulfilled:</span>
-                                <span className="font-bold">{payload[1]?.value} deliveries</span>
+                                <span className="font-bold">
+                                  {payload[1]?.value} deliveries
+                                </span>
                               </div>
                             </>
                           ) : (
                             <div className="flex items-center justify-between gap-4 text-primary">
                               <span>Freight Value:</span>
-                              <span className="font-bold">৳{payload[0]?.value?.toLocaleString()}</span>
+                              <span className="font-bold">
+                                ৳{payload[0]?.value?.toLocaleString()}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -519,7 +588,8 @@ export function OperationsAnalytics({
               Operations Command Gateways
             </h3>
             <p className="text-xs text-muted-foreground font-sans">
-              Dedicated management portals for approval queues, courier dispatches, and inter-hub transfers.
+              Dedicated management portals for approval queues, courier
+              dispatches, and inter-hub transfers.
             </p>
           </div>
           <Badge variant="outline" className="font-mono text-[10px] uppercase">
@@ -540,7 +610,13 @@ export function OperationsAnalytics({
                     <div className="p-2 rounded-none bg-primary/10 border border-primary/20 text-primary">
                       <GwIcon className="size-4" />
                     </div>
-                    <Badge variant="outline" className={cn("text-[9px] font-mono uppercase", gw.badgeColor)}>
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        "text-[9px] font-mono uppercase",
+                        gw.badgeColor,
+                      )}
+                    >
                       {gw.badge}
                     </Badge>
                   </div>
@@ -581,7 +657,8 @@ export function OperationsAnalytics({
                 Consignment Operational Lifecycle Funnel
               </CardTitle>
               <CardDescription className="text-xs text-muted-foreground">
-                Distribution of shipments across the 6 sequential stages from intake to doorstep fulfillment.
+                Distribution of shipments across the 6 sequential stages from
+                intake to doorstep fulfillment.
               </CardDescription>
             </div>
             <Badge variant="outline" className="font-mono text-xs">
@@ -592,11 +669,18 @@ export function OperationsAnalytics({
         <CardContent className="p-5 space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {stages.map((st) => {
-              const pct = analytics.total > 0 ? ((st.count / analytics.total) * 100).toFixed(0) : "0";
+              const pct =
+                analytics.total > 0
+                  ? ((st.count / analytics.total) * 100).toFixed(0)
+                  : "0";
               return (
                 <div
                   key={st.title}
-                  className={cn("p-3 border font-mono space-y-1.5 transition-all", st.border, st.bg)}
+                  className={cn(
+                    "p-3 border font-mono space-y-1.5 transition-all",
+                    st.border,
+                    st.bg,
+                  )}
                 >
                   <span className="text-[10px] font-bold uppercase text-muted-foreground block truncate">
                     {st.title}

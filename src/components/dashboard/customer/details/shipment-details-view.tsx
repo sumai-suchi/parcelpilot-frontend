@@ -118,10 +118,11 @@ export function ShipmentDetailsView({ shipmentId }: ShipmentDetailsViewProps) {
         throw new Error("Stripe checkout URL was not returned by gateway.");
       }
     } catch (err: any) {
-      toast.error(err?.message || "Failed to initiate Stripe payment checkout.");
+      toast.error(
+        err?.message || "Failed to initiate Stripe payment checkout.",
+      );
     }
   };
-
 
   const shipment: DetailedShipmentData | undefined = res?.data;
 
@@ -317,7 +318,8 @@ export function ShipmentDetailsView({ shipmentId }: ShipmentDetailsViewProps) {
         <div className="rounded-none border border-emerald-500/40 bg-emerald-500/10 p-4 flex items-center gap-3 text-emerald-700 dark:text-emerald-400 font-mono text-xs">
           <Spinner className="h-4 w-4 shrink-0" />
           <span className="font-bold uppercase tracking-wider">
-            Verifying payment with Stripe and synchronizing consignment record...
+            Verifying payment with Stripe and synchronizing consignment
+            record...
           </span>
         </div>
       )}
@@ -363,11 +365,12 @@ export function ShipmentDetailsView({ shipmentId }: ShipmentDetailsViewProps) {
             }
             className="bg-amber-600 hover:bg-amber-700 text-white font-mono text-xs uppercase font-bold tracking-wider rounded-none shrink-0"
           >
-            {createCheckoutSessionMutation.isPending ? "Connecting..." : "Settle with Stripe"}
+            {createCheckoutSessionMutation.isPending
+              ? "Connecting..."
+              : "Settle with Stripe"}
           </Button>
         </div>
       )}
-
 
       {/* Receiver Delivery Handover OTP Security Card */}
       {shipment.deliveryOtp && !isCancelled && (
@@ -390,7 +393,8 @@ export function ShipmentDetailsView({ shipmentId }: ShipmentDetailsViewProps) {
                 )}
               </div>
               <p className="font-sans text-xs text-muted-foreground leading-relaxed">
-                Provide this 6-digit Security OTP to your courier rider upon arrival to confirm physical receipt of your package.
+                Provide this 6-digit Security OTP to your courier rider upon
+                arrival to confirm physical receipt of your package.
               </p>
             </div>
 
@@ -830,7 +834,6 @@ export function ShipmentDetailsView({ shipmentId }: ShipmentDetailsViewProps) {
           </Card>
         </div>
       </div>
-
 
       {/* Cancel Shipment Confirmation Modal */}
       {isCancelModalOpen && (

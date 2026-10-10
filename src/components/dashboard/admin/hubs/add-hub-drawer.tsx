@@ -106,7 +106,11 @@ export function AddHubDrawer({ open, onOpenChange }: AddHubDrawerProps) {
 
         {/* Scrollable Form Body */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-          <form id="add-hub-form" onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+          <form
+            id="add-hub-form"
+            onSubmit={handleSubmit}
+            className="space-y-4 sm:space-y-5"
+          >
             {/* Hub Name */}
             <div className="space-y-1.5">
               <Label
@@ -147,7 +151,8 @@ export function AddHubDrawer({ open, onOpenChange }: AddHubDrawerProps) {
                 className="rounded-none border-border h-10 w-full font-mono uppercase tracking-wider text-xs sm:text-sm"
               />
               <span className="text-[11px] text-muted-foreground block">
-                Internal alphanumeric code used on waybill manifests (auto-capitalized).
+                Internal alphanumeric code used on waybill manifests
+                (auto-capitalized).
               </span>
             </div>
 
@@ -194,7 +199,8 @@ export function AddHubDrawer({ open, onOpenChange }: AddHubDrawerProps) {
                 </select>
               )}
               <span className="text-[11px] text-muted-foreground block">
-                Geographic zone responsible for coverage pricing and boundary tariffs.
+                Geographic zone responsible for coverage pricing and boundary
+                tariffs.
               </span>
             </div>
 
@@ -217,7 +223,8 @@ export function AddHubDrawer({ open, onOpenChange }: AddHubDrawerProps) {
                 className="rounded-none border-border font-sans resize-none w-full text-xs sm:text-sm"
               />
               <span className="text-[11px] text-muted-foreground block">
-                Accurate physical street address where couriers check in and intake shipments.
+                Accurate physical street address where couriers check in and
+                intake shipments.
               </span>
             </div>
 

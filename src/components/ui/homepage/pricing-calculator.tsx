@@ -45,15 +45,17 @@ export default function PricingCalculator() {
         ? "Same-Day (4-6 Hours)"
         : "Next-Day Morning"
       : zone === "metro"
-      ? "24 Hours"
-      : "48 - 72 Hours";
+        ? "24 Hours"
+        : "48 - 72 Hours";
 
   return (
     <section className="py-20 bg-white dark:bg-zinc-900 border-y border-zinc-200/70 dark:border-zinc-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3" data-aos="fade-up">
+        <div
+          className="text-center max-w-2xl mx-auto space-y-3"
+          data-aos="fade-up"
+        >
           <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 px-3.5 py-1 text-xs font-semibold text-orange-600 dark:text-orange-400">
             <Calculator className="h-3.5 w-3.5" />
             Transparent Pricing
@@ -73,10 +75,8 @@ export default function PricingCalculator() {
           className="mt-14 max-w-4xl mx-auto rounded-3xl border border-zinc-200 bg-zinc-50/50 p-6 sm:p-10 shadow-xl dark:border-zinc-800 dark:bg-zinc-950/70 backdrop-blur-sm"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
             {/* Input Controls */}
             <div className="lg:col-span-7 space-y-6">
-              
               {/* Delivery Zone */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-2">
@@ -86,7 +86,11 @@ export default function PricingCalculator() {
                   {[
                     { id: "metro", label: "Inside Metro", sub: "Same City" },
                     { id: "suburb", label: "Sub-Urban", sub: "Adjacent Areas" },
-                    { id: "nationwide", label: "Nationwide", sub: "All 64 Districts" },
+                    {
+                      id: "nationwide",
+                      label: "Nationwide",
+                      sub: "All 64 Districts",
+                    },
                   ].map((z) => (
                     <button
                       key={z.id}
@@ -99,7 +103,9 @@ export default function PricingCalculator() {
                       }`}
                     >
                       <div className="font-bold">{z.label}</div>
-                      <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">{z.sub}</div>
+                      <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">
+                        {z.sub}
+                      </div>
                     </button>
                   ))}
                 </div>
@@ -147,7 +153,9 @@ export default function PricingCalculator() {
                     }`}
                   >
                     <div className="font-bold">Standard Delivery</div>
-                    <div className="text-xs text-zinc-500 dark:text-zinc-400">Regular transit 24-48 hours</div>
+                    <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                      Regular transit 24-48 hours
+                    </div>
                   </button>
                   <button
                     type="button"
@@ -160,26 +168,37 @@ export default function PricingCalculator() {
                   >
                     <div className="font-bold flex items-center gap-1.5">
                       <span>Express Priority</span>
-                      <span className="text-[10px] bg-orange-500 text-white px-1.5 py-0.2 rounded font-bold">FAST</span>
+                      <span className="text-[10px] bg-orange-500 text-white px-1.5 py-0.2 rounded font-bold">
+                        FAST
+                      </span>
                     </div>
-                    <div className="text-xs text-zinc-500 dark:text-zinc-400">Urgent rush dispatch</div>
+                    <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                      Urgent rush dispatch
+                    </div>
                   </button>
                 </div>
               </div>
 
               {/* Optional COD Collection Amount */}
               <div>
-                <label htmlFor="codAmount" className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1.5">
+                <label
+                  htmlFor="codAmount"
+                  className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 mb-1.5"
+                >
                   4. Cash On Delivery (COD) Amount (Optional)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-zinc-500">৳</span>
+                  <span className="absolute left-3.5 top-2.5 text-sm font-bold text-zinc-500">
+                    ৳
+                  </span>
                   <input
                     id="codAmount"
                     type="number"
                     min="0"
                     value={codAmount || ""}
-                    onChange={(e) => setCodAmount(Math.max(0, parseInt(e.target.value) || 0))}
+                    onChange={(e) =>
+                      setCodAmount(Math.max(0, parseInt(e.target.value) || 0))
+                    }
                     placeholder="Enter customer payable amount"
                     className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-2.5 pl-8 text-sm text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                   />
@@ -201,22 +220,30 @@ export default function PricingCalculator() {
                 <div className="mt-4 space-y-3 text-sm">
                   <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                     <span>Base Shipping:</span>
-                    <span className="font-semibold text-zinc-900 dark:text-zinc-100">৳{baseRate}</span>
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                      ৳{baseRate}
+                    </span>
                   </div>
                   <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                     <span>Weight Surcharge ({weight}kg):</span>
-                    <span className="font-semibold text-zinc-900 dark:text-zinc-100">৳{weightCost}</span>
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                      ৳{weightCost}
+                    </span>
                   </div>
                   {expressFee > 0 && (
                     <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                       <span>Express Priority:</span>
-                      <span className="font-semibold text-orange-600 dark:text-orange-400">+৳{expressFee}</span>
+                      <span className="font-semibold text-orange-600 dark:text-orange-400">
+                        +৳{expressFee}
+                      </span>
                     </div>
                   )}
                   {codFee > 0 && (
                     <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                       <span>COD Fee (1%):</span>
-                      <span className="font-semibold text-zinc-900 dark:text-zinc-100">৳{codFee}</span>
+                      <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                        ৳{codFee}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -224,13 +251,17 @@ export default function PricingCalculator() {
                 <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
                   <div className="flex items-baseline justify-between">
                     <div>
-                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Total Estimated Cost</div>
+                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+                        Total Estimated Cost
+                      </div>
                       <div className="text-3xl font-extrabold text-orange-600 dark:text-orange-400">
                         ৳{totalCost}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">ETA Delivery</div>
+                      <div className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+                        ETA Delivery
+                      </div>
                       <div className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
                         {estimatedHours}
                       </div>

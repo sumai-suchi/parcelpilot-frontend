@@ -24,7 +24,13 @@ import { useGetMe } from "@/hooks/auth.hook";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { DashboardHeader } from "./dashboard-header";
 import { StatusBadge } from "./status-badge";
 import { toast } from "sonner";
@@ -49,7 +55,10 @@ export function UserProfileView() {
         .toUpperCase()
     : "PP";
 
-  const roleDescriptions: Record<string, { title: string; desc: string; icon: any; permissions: string[] }> = {
+  const roleDescriptions: Record<
+    string,
+    { title: string; desc: string; icon: any; permissions: string[] }
+  > = {
     ADMIN: {
       title: "Executive System Administrator",
       desc: "Full administrative governance across network infrastructure, workforce credentials, financial settlements, and platform audit logs.",
@@ -109,7 +118,9 @@ export function UserProfileView() {
     },
   };
 
-  const roleInfo = user?.role ? roleDescriptions[user.role] : roleDescriptions.CUSTOMER;
+  const roleInfo = user?.role
+    ? roleDescriptions[user.role]
+    : roleDescriptions.CUSTOMER;
   const RoleIcon = roleInfo?.icon || ShieldCheck;
 
   return (
@@ -136,7 +147,10 @@ export function UserProfileView() {
             <div className="mx-auto mb-4 relative">
               <Avatar className="size-24 rounded-none border-2 border-primary mx-auto shadow-md">
                 {user?.profilePicture && (
-                  <AvatarImage src={user.profilePicture} alt={user?.name || "User"} />
+                  <AvatarImage
+                    src={user.profilePicture}
+                    alt={user?.name || "User"}
+                  />
                 )}
                 <AvatarFallback className="rounded-none font-mono text-2xl font-black bg-primary/10 text-primary">
                   {initials}
@@ -260,7 +274,9 @@ export function UserProfileView() {
                     <span>Email Address</span>
                     <button
                       type="button"
-                      onClick={() => copyToClipboard(user?.email || "", "Email")}
+                      onClick={() =>
+                        copyToClipboard(user?.email || "", "Email")
+                      }
                       className="hover:text-primary transition-colors cursor-pointer"
                     >
                       <Copy className="size-3" />
@@ -287,7 +303,10 @@ export function UserProfileView() {
                     Account Status
                   </span>
                   <div className="pt-0.5">
-                    <StatusBadge status={user?.status || "ACTIVE"} type="account" />
+                    <StatusBadge
+                      status={user?.status || "ACTIVE"}
+                      type="account"
+                    />
                   </div>
                 </div>
               </div>
@@ -307,7 +326,10 @@ export function UserProfileView() {
                     {roleInfo?.desc}
                   </CardDescription>
                 </div>
-                <Badge variant="outline" className="font-mono text-xs uppercase">
+                <Badge
+                  variant="outline"
+                  className="font-mono text-xs uppercase"
+                >
                   {user?.role?.replace("_", " ") || "USER"}
                 </Badge>
               </div>

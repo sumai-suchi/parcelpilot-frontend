@@ -14,8 +14,7 @@ export const loginSchema = z.object({
     ),
 });
 
-
-export const  CustomerRegistrationSchema = z
+export const CustomerRegistrationSchema = z
   .object({
     name: z
       .string("Not A String!!!!!")

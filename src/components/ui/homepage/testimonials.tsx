@@ -33,9 +33,11 @@ export default function Testimonials() {
   return (
     <section className="py-20 bg-white dark:bg-zinc-900 border-t border-zinc-200/70 dark:border-zinc-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3" data-aos="fade-up">
+        <div
+          className="text-center max-w-2xl mx-auto space-y-3"
+          data-aos="fade-up"
+        >
           <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 px-3.5 py-1 text-xs font-semibold text-orange-600 dark:text-orange-400">
             Real Customer Stories
           </div>
@@ -43,7 +45,8 @@ export default function Testimonials() {
             Trusted by Thousands Across the Country
           </h2>
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-            See how merchants, enterprises, and everyday senders rely on ParcelPilot for mission-critical deliveries.
+            See how merchants, enterprises, and everyday senders rely on
+            ParcelPilot for mission-critical deliveries.
           </p>
         </div>
 
@@ -61,7 +64,10 @@ export default function Testimonials() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1">
                     {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-amber-400 text-amber-400"
+                      />
                     ))}
                   </div>
                   <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400">
@@ -93,7 +99,6 @@ export default function Testimonials() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

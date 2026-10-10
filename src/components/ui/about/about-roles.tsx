@@ -28,7 +28,8 @@ const ECOSYSTEM_ROLES = [
     role: "Merchant & Customer",
     badge: "DEMAND SIDE",
     icon: Users,
-    description: "Empowered with instant pickup scheduling, multi-address books, live GPS waypoint timelines, and Stripe digital checkout.",
+    description:
+      "Empowered with instant pickup scheduling, multi-address books, live GPS waypoint timelines, and Stripe digital checkout.",
     capabilities: [
       "Real-time waypoint status tracking",
       "Stripe card or Cash-on-Delivery payment",
@@ -42,7 +43,8 @@ const ECOSYSTEM_ROLES = [
     role: "Field Courier Hero",
     badge: "LAST-MILE FLEET",
     icon: Bike,
-    description: "Turn-by-turn task dispatch, geofenced pickups, mobile barcode scans, and cryptographic recipient OTP delivery completion.",
+    description:
+      "Turn-by-turn task dispatch, geofenced pickups, mobile barcode scans, and cryptographic recipient OTP delivery completion.",
     capabilities: [
       "Real-time route & density dispatching",
       "6-digit recipient OTP verification",
@@ -56,7 +58,8 @@ const ECOSYSTEM_ROLES = [
     role: "Hub Operations Manager",
     badge: "FACILITY LOGISTICS",
     icon: Building2,
-    description: "Regional terminal supervisors handling linehaul vehicle manifests, container de-palletizing, and sorting belt throughput.",
+    description:
+      "Regional terminal supervisors handling linehaul vehicle manifests, container de-palletizing, and sorting belt throughput.",
     capabilities: [
       "Inbound linehaul manifest verification",
       "Automated sorting induction & seal audits",
@@ -70,7 +73,8 @@ const ECOSYSTEM_ROLES = [
     role: "Network Operations Manager",
     badge: "TRAFFIC DISPATCH",
     icon: Sliders,
-    description: "System-wide linehaul visibility, corridor delay heatmaps, dynamic courier reassignments, and emergency exception triage.",
+    description:
+      "System-wide linehaul visibility, corridor delay heatmaps, dynamic courier reassignments, and emergency exception triage.",
     capabilities: [
       "Nationwide highway corridor oversight",
       "One-click dynamic rider reassignment",
@@ -86,10 +90,9 @@ export default function AboutRoles() {
   return (
     <section className="py-24 bg-muted/30 text-foreground border-b border-border relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
+          <div className="inline-flex items-center gap-2 rounded-none border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
             <Users className="size-3.5" />
             <span>THE MULTI-ROLE ECOSYSTEM</span>
           </div>
@@ -97,8 +100,9 @@ export default function AboutRoles() {
             One Unified Platform, Every Specialized Role
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            A successful delivery requires flawless synchronization between five distinct actors.
-            ParcelPilot gives each participant a dedicated, purpose-built console.
+            A successful delivery requires flawless synchronization between five
+            distinct actors. ParcelPilot gives each participant a dedicated,
+            purpose-built console.
           </p>
         </div>
 
@@ -115,13 +119,16 @@ export default function AboutRoles() {
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="flex"
               >
-                <Card className="border-border bg-card hover:border-primary/40 hover:shadow-lg transition-all flex flex-col justify-between w-full">
+                <Card className="rounded-none border-border bg-card hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between w-full">
                   <CardHeader className="space-y-3 pb-3">
                     <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="text-[10px] font-mono border-border">
+                      <Badge
+                        variant="outline"
+                        className="rounded-none text-[10px] font-mono border-border"
+                      >
                         {item.badge}
                       </Badge>
-                      <div className="p-2 rounded-lg bg-muted text-foreground">
+                      <div className="p-2 rounded-none bg-muted text-foreground">
                         <IconComponent className={`size-4 ${item.accent}`} />
                       </div>
                     </div>
@@ -153,7 +160,8 @@ export default function AboutRoles() {
                       className={buttonVariants({
                         variant: "outline",
                         size: "sm",
-                        className: "w-full text-xs font-mono uppercase tracking-wider justify-between hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors",
+                        className:
+                          "rounded-none w-full text-xs font-mono uppercase tracking-wider justify-between hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors",
                       })}
                     >
                       <span>{item.ctaText}</span>
@@ -165,7 +173,6 @@ export default function AboutRoles() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

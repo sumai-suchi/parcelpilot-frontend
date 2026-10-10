@@ -46,7 +46,8 @@ type BayCategory = "ALL" | "BAY_A" | "BAY_B" | "BAY_C";
 export function HubInventoryView() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBay, setSelectedBay] = useState<BayCategory>("ALL");
-  const [dispatchShipment, setDispatchShipment] = useState<OperationsShipment | null>(null);
+  const [dispatchShipment, setDispatchShipment] =
+    useState<OperationsShipment | null>(null);
 
   const {
     data: shipmentsRes,
@@ -73,7 +74,9 @@ export function HubInventoryView() {
   );
 
   // Classify each parcel into physical storage bays
-  const getBaySlot = (shipment: OperationsShipment): {
+  const getBaySlot = (
+    shipment: OperationsShipment,
+  ): {
     code: "BAY_A" | "BAY_B" | "BAY_C";
     label: string;
     shelf: string;
@@ -113,12 +116,27 @@ export function HubInventoryView() {
     });
 
     return {
-      bayA: { count: bayACount, max: 40, percent: Math.min(100, Math.round((bayACount / 40) * 100)) },
-      bayB: { count: bayBCount, max: 50, percent: Math.min(100, Math.round((bayBCount / 50) * 100)) },
-      bayC: { count: bayCCount, max: 60, percent: Math.min(100, Math.round((bayCCount / 60) * 100)) },
+      bayA: {
+        count: bayACount,
+        max: 40,
+        percent: Math.min(100, Math.round((bayACount / 40) * 100)),
+      },
+      bayB: {
+        count: bayBCount,
+        max: 50,
+        percent: Math.min(100, Math.round((bayBCount / 50) * 100)),
+      },
+      bayC: {
+        count: bayCCount,
+        max: 60,
+        percent: Math.min(100, Math.round((bayCCount / 60) * 100)),
+      },
       totalCount: parcelsInHub.length,
       totalMax: 150,
-      totalPercent: Math.min(100, Math.round((parcelsInHub.length / 150) * 100)),
+      totalPercent: Math.min(
+        100,
+        Math.round((parcelsInHub.length / 150) * 100),
+      ),
     };
   }, [parcelsInHub]);
 
@@ -138,7 +156,13 @@ export function HubInventoryView() {
         const matchArea = p.deliveryAddress?.area?.toLowerCase().includes(q);
         const matchCity = p.deliveryAddress?.city?.toLowerCase().includes(q);
         const matchShelf = slot.shelf.toLowerCase().includes(q);
-        if (!matchTracking && !matchType && !matchArea && !matchCity && !matchShelf) {
+        if (
+          !matchTracking &&
+          !matchType &&
+          !matchArea &&
+          !matchCity &&
+          !matchShelf
+        ) {
           return false;
         }
       }
@@ -163,7 +187,9 @@ export function HubInventoryView() {
             disabled={isFetching}
             className="gap-2 font-mono text-xs"
           >
-            <RefreshCw className={cn("h-3.5 w-3.5", isFetching && "animate-spin")} />
+            <RefreshCw
+              className={cn("h-3.5 w-3.5", isFetching && "animate-spin")}
+            />
             <span className="hidden sm:inline">Refresh Bay Audit</span>
           </Button>
         }
@@ -173,7 +199,9 @@ export function HubInventoryView() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Bay A */}
         <Card
-          onClick={() => setSelectedBay(selectedBay === "BAY_A" ? "ALL" : "BAY_A")}
+          onClick={() =>
+            setSelectedBay(selectedBay === "BAY_A" ? "ALL" : "BAY_A")
+          }
           className={cn(
             "rounded-none border transition-all cursor-pointer",
             selectedBay === "BAY_A"
@@ -186,7 +214,10 @@ export function HubInventoryView() {
               <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
                 Bay Section A
               </span>
-              <Badge variant="outline" className="text-[10px] font-mono border-amber-500/40 text-amber-600 dark:text-amber-400">
+              <Badge
+                variant="outline"
+                className="text-[10px] font-mono border-amber-500/40 text-amber-600 dark:text-amber-400"
+              >
                 INTAKE DOCK
               </Badge>
             </div>
@@ -198,9 +229,14 @@ export function HubInventoryView() {
             <div className="flex justify-between items-baseline font-mono text-xs">
               <span className="text-xl font-bold text-foreground">
                 {bayCapacity.bayA.count}
-                <span className="text-xs text-muted-foreground font-normal"> / {bayCapacity.bayA.max} slots</span>
+                <span className="text-xs text-muted-foreground font-normal">
+                  {" "}
+                  / {bayCapacity.bayA.max} slots
+                </span>
               </span>
-              <span className="text-xs text-muted-foreground">{bayCapacity.bayA.percent}% utilized</span>
+              <span className="text-xs text-muted-foreground">
+                {bayCapacity.bayA.percent}% utilized
+              </span>
             </div>
             <div className="h-1.5 w-full bg-muted overflow-hidden">
               <div
@@ -216,7 +252,9 @@ export function HubInventoryView() {
 
         {/* Bay B */}
         <Card
-          onClick={() => setSelectedBay(selectedBay === "BAY_B" ? "ALL" : "BAY_B")}
+          onClick={() =>
+            setSelectedBay(selectedBay === "BAY_B" ? "ALL" : "BAY_B")
+          }
           className={cn(
             "rounded-none border transition-all cursor-pointer",
             selectedBay === "BAY_B"
@@ -229,7 +267,10 @@ export function HubInventoryView() {
               <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
                 Bay Section B
               </span>
-              <Badge variant="outline" className="text-[10px] font-mono border-purple-500/40 text-purple-600 dark:text-purple-400">
+              <Badge
+                variant="outline"
+                className="text-[10px] font-mono border-purple-500/40 text-purple-600 dark:text-purple-400"
+              >
                 LINEHAUL
               </Badge>
             </div>
@@ -241,9 +282,14 @@ export function HubInventoryView() {
             <div className="flex justify-between items-baseline font-mono text-xs">
               <span className="text-xl font-bold text-foreground">
                 {bayCapacity.bayB.count}
-                <span className="text-xs text-muted-foreground font-normal"> / {bayCapacity.bayB.max} slots</span>
+                <span className="text-xs text-muted-foreground font-normal">
+                  {" "}
+                  / {bayCapacity.bayB.max} slots
+                </span>
               </span>
-              <span className="text-xs text-muted-foreground">{bayCapacity.bayB.percent}% utilized</span>
+              <span className="text-xs text-muted-foreground">
+                {bayCapacity.bayB.percent}% utilized
+              </span>
             </div>
             <div className="h-1.5 w-full bg-muted overflow-hidden">
               <div
@@ -259,7 +305,9 @@ export function HubInventoryView() {
 
         {/* Bay C */}
         <Card
-          onClick={() => setSelectedBay(selectedBay === "BAY_C" ? "ALL" : "BAY_C")}
+          onClick={() =>
+            setSelectedBay(selectedBay === "BAY_C" ? "ALL" : "BAY_C")
+          }
           className={cn(
             "rounded-none border transition-all cursor-pointer",
             selectedBay === "BAY_C"
@@ -272,7 +320,10 @@ export function HubInventoryView() {
               <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
                 Bay Section C
               </span>
-              <Badge variant="outline" className="text-[10px] font-mono border-emerald-500/40 text-emerald-600 dark:text-emerald-400">
+              <Badge
+                variant="outline"
+                className="text-[10px] font-mono border-emerald-500/40 text-emerald-600 dark:text-emerald-400"
+              >
                 FINAL MILE
               </Badge>
             </div>
@@ -284,9 +335,14 @@ export function HubInventoryView() {
             <div className="flex justify-between items-baseline font-mono text-xs">
               <span className="text-xl font-bold text-foreground">
                 {bayCapacity.bayC.count}
-                <span className="text-xs text-muted-foreground font-normal"> / {bayCapacity.bayC.max} slots</span>
+                <span className="text-xs text-muted-foreground font-normal">
+                  {" "}
+                  / {bayCapacity.bayC.max} slots
+                </span>
               </span>
-              <span className="text-xs text-muted-foreground">{bayCapacity.bayC.percent}% utilized</span>
+              <span className="text-xs text-muted-foreground">
+                {bayCapacity.bayC.percent}% utilized
+              </span>
             </div>
             <div className="h-1.5 w-full bg-muted overflow-hidden">
               <div
@@ -295,7 +351,8 @@ export function HubInventoryView() {
               />
             </div>
             <p className="text-[11px] text-muted-foreground font-sans">
-              Parcels received from linehauls ready for local delivery courier assignment.
+              Parcels received from linehauls ready for local delivery courier
+              assignment.
             </p>
           </CardContent>
         </Card>
@@ -322,10 +379,18 @@ export function HubInventoryView() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="rounded-none">
-              <SelectItem value="ALL" className="text-xs font-mono">All Bay Sections ({parcelsInHub.length})</SelectItem>
-              <SelectItem value="BAY_A" className="text-xs font-mono">Bay A: Inbound ({bayCapacity.bayA.count})</SelectItem>
-              <SelectItem value="BAY_B" className="text-xs font-mono">Bay B: Linehaul ({bayCapacity.bayB.count})</SelectItem>
-              <SelectItem value="BAY_C" className="text-xs font-mono">Bay C: Destination ({bayCapacity.bayC.count})</SelectItem>
+              <SelectItem value="ALL" className="text-xs font-mono">
+                All Bay Sections ({parcelsInHub.length})
+              </SelectItem>
+              <SelectItem value="BAY_A" className="text-xs font-mono">
+                Bay A: Inbound ({bayCapacity.bayA.count})
+              </SelectItem>
+              <SelectItem value="BAY_B" className="text-xs font-mono">
+                Bay B: Linehaul ({bayCapacity.bayB.count})
+              </SelectItem>
+              <SelectItem value="BAY_C" className="text-xs font-mono">
+                Bay C: Destination ({bayCapacity.bayC.count})
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -396,7 +461,8 @@ export function HubInventoryView() {
                             {shipment.trackingNumber}
                           </span>
                           <span className="text-[10px] text-muted-foreground uppercase">
-                            {shipment.parcelType} • {new Date(shipment.createdAt).toLocaleDateString()}
+                            {shipment.parcelType} •{" "}
+                            {new Date(shipment.createdAt).toLocaleDateString()}
                           </span>
                         </TableCell>
                         <TableCell className="py-3 px-4 font-mono text-xs">
@@ -404,9 +470,12 @@ export function HubInventoryView() {
                             variant="outline"
                             className={cn(
                               "text-[10px] font-mono rounded-none uppercase block w-fit mb-0.5",
-                              slot.code === "BAY_A" && "border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10",
-                              slot.code === "BAY_B" && "border-purple-500/40 text-purple-600 dark:text-purple-400 bg-purple-500/10",
-                              slot.code === "BAY_C" && "border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
+                              slot.code === "BAY_A" &&
+                                "border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10",
+                              slot.code === "BAY_B" &&
+                                "border-purple-500/40 text-purple-600 dark:text-purple-400 bg-purple-500/10",
+                              slot.code === "BAY_C" &&
+                                "border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
                             )}
                           >
                             {slot.shelf}
@@ -417,14 +486,18 @@ export function HubInventoryView() {
                         </TableCell>
                         <TableCell className="py-3 px-4 font-mono text-xs">
                           <div className="flex items-center gap-1.5 text-foreground">
-                            <span>{shipment.originHub?.name || "Local Depot"}</span>
+                            <span>
+                              {shipment.originHub?.name || "Local Depot"}
+                            </span>
                             <ArrowRight className="h-3 w-3 text-muted-foreground" />
                             <span className="font-semibold text-primary">
-                              {shipment.destinationHub?.name || "Destination Hub"}
+                              {shipment.destinationHub?.name ||
+                                "Destination Hub"}
                             </span>
                           </div>
                           <span className="text-[10px] text-muted-foreground block">
-                            {shipment.deliveryAddress?.area}, {shipment.deliveryAddress?.city}
+                            {shipment.deliveryAddress?.area},{" "}
+                            {shipment.deliveryAddress?.city}
                           </span>
                         </TableCell>
                         <TableCell className="py-3 px-4 font-mono text-xs">

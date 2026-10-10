@@ -16,7 +16,6 @@ export default function ProductCta() {
   return (
     <section className="py-24 bg-background text-foreground border-t border-border relative overflow-hidden">
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-        
         {/* Live Indicator */}
         <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-mono text-emerald-600 dark:text-emerald-400">
           <span className="relative flex h-2 w-2">
@@ -32,7 +31,8 @@ export default function ProductCta() {
             Your next delivery shouldn't be a black box.
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground font-normal leading-relaxed">
-            Track every shipment. Coordinate every handoff. Deliver with confidence.
+            Track every shipment. Coordinate every handoff. Deliver with
+            confidence.
           </p>
         </div>
 
@@ -42,7 +42,8 @@ export default function ProductCta() {
             href="/register"
             className={buttonVariants({
               size: "lg",
-              className: "bg-primary text-primary-foreground font-bold text-xs uppercase tracking-wider shadow-lg shadow-primary/25",
+              className:
+                "bg-primary text-primary-foreground font-bold text-xs uppercase tracking-wider shadow-lg shadow-primary/25",
             })}
           >
             Start Shipping
@@ -75,7 +76,6 @@ export default function ProductCta() {
             <span>INSTANT STRIPE INTEGRATION</span>
           </div>
         </div>
-
       </div>
     </section>
   );

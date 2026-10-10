@@ -11,7 +11,12 @@ import {
   User,
   X,
 } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/toast";
@@ -127,7 +132,11 @@ export function CourierTaskCard({
             </div>
             <p className="font-mono text-[10px] text-muted-foreground flex items-center gap-1">
               <Clock className="h-3 w-3" />
-              Assigned: {new Date(task.assignedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              Assigned:{" "}
+              {new Date(task.assignedAt).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </p>
           </div>
 
@@ -138,10 +147,10 @@ export function CourierTaskCard({
                 isAssignmentPending
                   ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
                   : task.status === "COMPLETED"
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
-                  : task.status === "REJECTED"
-                  ? "border-destructive/40 bg-destructive/10 text-destructive"
-                  : "border-primary/40 bg-primary/10 text-primary"
+                    ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
+                    : task.status === "REJECTED"
+                      ? "border-destructive/40 bg-destructive/10 text-destructive"
+                      : "border-primary/40 bg-primary/10 text-primary"
               }`}
             >
               Task: {task.status}

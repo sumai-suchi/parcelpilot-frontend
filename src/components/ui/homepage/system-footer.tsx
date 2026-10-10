@@ -7,9 +7,7 @@ export default function SystemFooter() {
   return (
     <footer className="border-t border-zinc-800 bg-zinc-950 text-zinc-400 font-sans text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-zinc-800">
-          
           {/* Brand Column */}
           <div className="col-span-2 space-y-4">
             <div className="flex items-center gap-2 text-white font-mono font-bold text-base">
@@ -19,8 +17,9 @@ export default function SystemFooter() {
               <span>PARCELPILOT</span>
             </div>
             <p className="text-zinc-500 text-xs max-w-sm leading-relaxed">
-              Intelligent courier and logistics management platform orchestrating end-to-end 
-              shipment lifecycle, multi-hub sorting, and automated financial settlements.
+              Intelligent courier and logistics management platform
+              orchestrating end-to-end shipment lifecycle, multi-hub sorting,
+              and automated financial settlements.
             </p>
 
             {/* System Status Element */}
@@ -36,27 +35,39 @@ export default function SystemFooter() {
           {/* Product Links */}
           <div className="space-y-3">
             <div className="font-mono text-zinc-200 font-semibold uppercase tracking-wider text-[11px]">
-              PRODUCT
+              PRODUCT & RATES
             </div>
             <ul className="space-y-2 font-mono">
               <li>
-                <Link href="#tracking-cockpit" className="hover:text-orange-400 transition-colors">
-                  Tracking Cockpit
+                <Link
+                  href="/pricing"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Pricing & Tariffs
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/coverage"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Coverage & Hubs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/packaging-guide"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Packaging Standards
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/register"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   Merchant Portal
-                </Link>
-              </li>
-              <li>
-                <Link href="/register" className="hover:text-orange-400 transition-colors">
-                  Courier Fleet App
-                </Link>
-              </li>
-              <li>
-                <Link href="/register" className="hover:text-orange-400 transition-colors">
-                  Hub Management
                 </Link>
               </li>
             </ul>
@@ -69,22 +80,34 @@ export default function SystemFooter() {
             </div>
             <ul className="space-y-2 font-mono">
               <li>
-                <Link href="/customer" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/customer"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   For Customers
                 </Link>
               </li>
               <li>
-                <Link href="/courior" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/courior"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   For Couriers
                 </Link>
               </li>
               <li>
-                <Link href="/hub_manager" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/hub_manager"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   For Hub Managers
                 </Link>
               </li>
               <li>
-                <Link href="/operation_manager" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/operation_manager"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   For Operations
                 </Link>
               </li>
@@ -94,50 +117,56 @@ export default function SystemFooter() {
           {/* Company Links */}
           <div className="space-y-3">
             <div className="font-mono text-zinc-200 font-semibold uppercase tracking-wider text-[11px]">
-              COMPANY
+              COMPANY & SUPPORT
             </div>
             <ul className="space-y-2 font-mono">
               <li>
-                <Link href="/about-us" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/about-us"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   About ParcelPilot
                 </Link>
               </li>
               <li>
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href="/help"
                   className="hover:text-orange-400 transition-colors"
                 >
-                  GitHub Repository
-                </a>
-              </li>
-              <li>
-                <Link href="/login" className="hover:text-orange-400 transition-colors">
-                  Security & Audit
+                  Help Center & FAQs
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="hover:text-orange-400 transition-colors">
+                <Link
+                  href="/contact"
+                  className="hover:text-orange-400 transition-colors"
+                >
                   Contact Dispatch
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/apply-for-role"
+                  className="hover:text-orange-400 transition-colors"
+                >
+                  Careers & Drivers
                 </Link>
               </li>
             </ul>
           </div>
-
         </div>
 
         {/* Bottom Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-zinc-600">
           <div>
-            © {new Date().getFullYear()} ParcelPilot Logistics Systems Inc. All rights reserved.
+            © {new Date().getFullYear()} ParcelPilot Logistics Systems Inc. All
+            rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <span>VERSION 2.4.0-PROD</span>
             <span>ENCRYPTED WAYBILL PROTOCOL</span>
           </div>
         </div>
-
       </div>
     </footer>
   );

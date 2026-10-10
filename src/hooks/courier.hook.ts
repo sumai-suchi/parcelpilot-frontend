@@ -81,13 +81,8 @@ export function useRejectAssignment() {
 export function usePickupShipment() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
-      shipmentId,
-      note,
-    }: {
-      shipmentId: string;
-      note?: string;
-    }) => pickupShipment(shipmentId, { note }),
+    mutationFn: ({ shipmentId, note }: { shipmentId: string; note?: string }) =>
+      pickupShipment(shipmentId, { note }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courier-tasks"] });
       queryClient.invalidateQueries({ queryKey: ["operations-shipments"] });
@@ -98,13 +93,8 @@ export function usePickupShipment() {
 export function useDeliverToHub() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
-      shipmentId,
-      note,
-    }: {
-      shipmentId: string;
-      note?: string;
-    }) => deliverToOriginHub(shipmentId, { note }),
+    mutationFn: ({ shipmentId, note }: { shipmentId: string; note?: string }) =>
+      deliverToOriginHub(shipmentId, { note }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courier-tasks"] });
       queryClient.invalidateQueries({ queryKey: ["operations-shipments"] });
@@ -115,13 +105,8 @@ export function useDeliverToHub() {
 export function useStartDelivery() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
-      shipmentId,
-      note,
-    }: {
-      shipmentId: string;
-      note?: string;
-    }) => startDelivery(shipmentId, { note }),
+    mutationFn: ({ shipmentId, note }: { shipmentId: string; note?: string }) =>
+      startDelivery(shipmentId, { note }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courier-tasks"] });
       queryClient.invalidateQueries({ queryKey: ["operations-shipments"] });

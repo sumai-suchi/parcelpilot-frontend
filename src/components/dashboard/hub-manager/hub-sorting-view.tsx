@@ -46,21 +46,34 @@ import { StatusBadge } from "../shared/status-badge";
 import { HubDispatchTransferModal } from "./hub-dispatch-transfer-modal";
 import { cn } from "@/lib/utils";
 
-type SortField = "weight" | "createdAt" | "priority" | "destination" | "tracking";
+type SortField =
+  | "weight"
+  | "createdAt"
+  | "priority"
+  | "destination"
+  | "tracking";
 type SortDirection = "asc" | "desc";
 type DeliveryFilter = "ALL" | "SAME_DAY" | "EXPRESS" | "STANDARD";
 type WeightClass = "ALL" | "LIGHT" | "MEDIUM" | "HEAVY";
-type LaneFilter = "ALL" | "METRO_SPEED" | "LINEHAUL_OUTBOUND" | "FINAL_MILE_BAY" | "BULK_FREIGHT";
+type LaneFilter =
+  | "ALL"
+  | "METRO_SPEED"
+  | "LINEHAUL_OUTBOUND"
+  | "FINAL_MILE_BAY"
+  | "BULK_FREIGHT";
 
 export function HubSortingView() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState<SortField>("createdAt");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [deliveryFilter, setDeliveryFilter] = useState<DeliveryFilter>("ALL");
-  const [destinationHubFilter, setDestinationHubFilter] = useState<string>("ALL");
-  const [weightClassFilter, setWeightClassFilter] = useState<WeightClass>("ALL");
+  const [destinationHubFilter, setDestinationHubFilter] =
+    useState<string>("ALL");
+  const [weightClassFilter, setWeightClassFilter] =
+    useState<WeightClass>("ALL");
   const [selectedLane, setSelectedLane] = useState<LaneFilter>("ALL");
-  const [dispatchShipment, setDispatchShipment] = useState<OperationsShipment | null>(null);
+  const [dispatchShipment, setDispatchShipment] =
+    useState<OperationsShipment | null>(null);
 
   const {
     data: shipmentsRes,
@@ -95,7 +108,11 @@ export function HubSortingView() {
   const getSortingLane = (shipment: OperationsShipment) => {
     const weightNum = getWeightNumber(shipment.weight);
     if (weightNum >= 10) return "BULK_FREIGHT";
-    if (shipment.deliveryType === "SAME_DAY" || shipment.deliveryType === "EXPRESS") return "METRO_SPEED";
+    if (
+      shipment.deliveryType === "SAME_DAY" ||
+      shipment.deliveryType === "EXPRESS"
+    )
+      return "METRO_SPEED";
     if (shipment.status === "AT_DESTINATION_HUB") return "FINAL_MILE_BAY";
     return "LINEHAUL_OUTBOUND";
   };
@@ -130,7 +147,14 @@ export function HubSortingView() {
         const matchCity = p.deliveryAddress?.city?.toLowerCase().includes(q);
         const matchDestHub = p.destinationHub?.name?.toLowerCase().includes(q);
         const matchOriginHub = p.originHub?.name?.toLowerCase().includes(q);
-        if (!matchTracking && !matchType && !matchArea && !matchCity && !matchDestHub && !matchOriginHub) {
+        if (
+          !matchTracking &&
+          !matchType &&
+          !matchArea &&
+          !matchCity &&
+          !matchDestHub &&
+          !matchOriginHub
+        ) {
           return false;
         }
       }
@@ -141,7 +165,10 @@ export function HubSortingView() {
       }
 
       // Destination Hub filter
-      if (destinationHubFilter !== "ALL" && p.destinationHubId !== destinationHubFilter) {
+      if (
+        destinationHubFilter !== "ALL" &&
+        p.destinationHubId !== destinationHubFilter
+      ) {
         return false;
       }
 
@@ -158,7 +185,14 @@ export function HubSortingView() {
 
       return true;
     });
-  }, [parcelsAtHub, searchTerm, deliveryFilter, destinationHubFilter, weightClassFilter, selectedLane]);
+  }, [
+    parcelsAtHub,
+    searchTerm,
+    deliveryFilter,
+    destinationHubFilter,
+    weightClassFilter,
+    selectedLane,
+  ]);
 
   // Sorting logic
   const sortedParcels = useMemo(() => {
@@ -178,7 +212,8 @@ export function HubSortingView() {
           comparison = getWeightNumber(a.weight) - getWeightNumber(b.weight);
           break;
         case "createdAt":
-          comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          comparison =
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
           break;
         case "priority": {
           const aPriority = priorityWeight[a.deliveryType] || 0;
@@ -241,7 +276,9 @@ export function HubSortingView() {
               disabled={isFetching}
               className="gap-2 font-mono text-xs"
             >
-              <RefreshCw className={cn("h-3.5 w-3.5", isFetching && "animate-spin")} />
+              <RefreshCw
+                className={cn("h-3.5 w-3.5", isFetching && "animate-spin")}
+              />
               <span className="hidden sm:inline">Refresh Sorting Queue</span>
             </Button>
           </div>
@@ -252,7 +289,11 @@ export function HubSortingView() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <button
           type="button"
-          onClick={() => setSelectedLane(selectedLane === "METRO_SPEED" ? "ALL" : "METRO_SPEED")}
+          onClick={() =>
+            setSelectedLane(
+              selectedLane === "METRO_SPEED" ? "ALL" : "METRO_SPEED",
+            )
+          }
           className={cn(
             "p-3.5 border text-left transition-all rounded-none cursor-pointer flex flex-col justify-between",
             selectedLane === "METRO_SPEED"
@@ -278,7 +319,13 @@ export function HubSortingView() {
 
         <button
           type="button"
-          onClick={() => setSelectedLane(selectedLane === "LINEHAUL_OUTBOUND" ? "ALL" : "LINEHAUL_OUTBOUND")}
+          onClick={() =>
+            setSelectedLane(
+              selectedLane === "LINEHAUL_OUTBOUND"
+                ? "ALL"
+                : "LINEHAUL_OUTBOUND",
+            )
+          }
           className={cn(
             "p-3.5 border text-left transition-all rounded-none cursor-pointer flex flex-col justify-between",
             selectedLane === "LINEHAUL_OUTBOUND"
@@ -304,7 +351,11 @@ export function HubSortingView() {
 
         <button
           type="button"
-          onClick={() => setSelectedLane(selectedLane === "FINAL_MILE_BAY" ? "ALL" : "FINAL_MILE_BAY")}
+          onClick={() =>
+            setSelectedLane(
+              selectedLane === "FINAL_MILE_BAY" ? "ALL" : "FINAL_MILE_BAY",
+            )
+          }
           className={cn(
             "p-3.5 border text-left transition-all rounded-none cursor-pointer flex flex-col justify-between",
             selectedLane === "FINAL_MILE_BAY"
@@ -330,7 +381,11 @@ export function HubSortingView() {
 
         <button
           type="button"
-          onClick={() => setSelectedLane(selectedLane === "BULK_FREIGHT" ? "ALL" : "BULK_FREIGHT")}
+          onClick={() =>
+            setSelectedLane(
+              selectedLane === "BULK_FREIGHT" ? "ALL" : "BULK_FREIGHT",
+            )
+          }
           className={cn(
             "p-3.5 border text-left transition-all rounded-none cursor-pointer flex flex-col justify-between",
             selectedLane === "BULK_FREIGHT"
@@ -444,10 +499,18 @@ export function HubSortingView() {
                 <SelectValue placeholder="All Tiers" />
               </SelectTrigger>
               <SelectContent className="rounded-none">
-                <SelectItem value="ALL" className="text-xs font-mono">All Service Tiers</SelectItem>
-                <SelectItem value="SAME_DAY" className="text-xs font-mono">SAME_DAY (Hyperlocal)</SelectItem>
-                <SelectItem value="EXPRESS" className="text-xs font-mono">EXPRESS (Fast Priority)</SelectItem>
-                <SelectItem value="STANDARD" className="text-xs font-mono">STANDARD (Regular)</SelectItem>
+                <SelectItem value="ALL" className="text-xs font-mono">
+                  All Service Tiers
+                </SelectItem>
+                <SelectItem value="SAME_DAY" className="text-xs font-mono">
+                  SAME_DAY (Hyperlocal)
+                </SelectItem>
+                <SelectItem value="EXPRESS" className="text-xs font-mono">
+                  EXPRESS (Fast Priority)
+                </SelectItem>
+                <SelectItem value="STANDARD" className="text-xs font-mono">
+                  STANDARD (Regular)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -465,9 +528,15 @@ export function HubSortingView() {
                 <SelectValue placeholder="All Destination Hubs" />
               </SelectTrigger>
               <SelectContent className="rounded-none">
-                <SelectItem value="ALL" className="text-xs font-mono">All Destination Terminals</SelectItem>
+                <SelectItem value="ALL" className="text-xs font-mono">
+                  All Destination Terminals
+                </SelectItem>
                 {hubs.map((hub) => (
-                  <SelectItem key={hub.id} value={hub.id} className="text-xs font-mono">
+                  <SelectItem
+                    key={hub.id}
+                    value={hub.id}
+                    className="text-xs font-mono"
+                  >
                     {hub.name} ({hub.code})
                   </SelectItem>
                 ))}
@@ -488,10 +557,18 @@ export function HubSortingView() {
                 <SelectValue placeholder="All Weight Classes" />
               </SelectTrigger>
               <SelectContent className="rounded-none">
-                <SelectItem value="ALL" className="text-xs font-mono">All Weight Classes</SelectItem>
-                <SelectItem value="LIGHT" className="text-xs font-mono">Light Freight (&lt; 3 kg)</SelectItem>
-                <SelectItem value="MEDIUM" className="text-xs font-mono">Medium Cargo (3 - 10 kg)</SelectItem>
-                <SelectItem value="HEAVY" className="text-xs font-mono">Heavy Freight (&gt; 10 kg)</SelectItem>
+                <SelectItem value="ALL" className="text-xs font-mono">
+                  All Weight Classes
+                </SelectItem>
+                <SelectItem value="LIGHT" className="text-xs font-mono">
+                  Light Freight (&lt; 3 kg)
+                </SelectItem>
+                <SelectItem value="MEDIUM" className="text-xs font-mono">
+                  Medium Cargo (3 - 10 kg)
+                </SelectItem>
+                <SelectItem value="HEAVY" className="text-xs font-mono">
+                  Heavy Freight (&gt; 10 kg)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -508,7 +585,8 @@ export function HubSortingView() {
             </CardTitle>
           </div>
           <span className="text-[11px] font-mono text-muted-foreground">
-            Current Order: {sortField.toUpperCase()} ({sortDirection.toUpperCase()})
+            Current Order: {sortField.toUpperCase()} (
+            {sortDirection.toUpperCase()})
           </span>
         </CardHeader>
         <CardContent className="p-0">
@@ -521,7 +599,8 @@ export function HubSortingView() {
             <div className="py-16 text-center space-y-2 font-mono">
               <Package className="h-8 w-8 mx-auto text-muted-foreground stroke-1" />
               <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                No parcels match the current sorting parameters or filter criteria.
+                No parcels match the current sorting parameters or filter
+                criteria.
               </p>
             </div>
           ) : (
@@ -566,7 +645,8 @@ export function HubSortingView() {
                             {shipment.trackingNumber}
                           </span>
                           <span className="text-[10px] text-muted-foreground uppercase">
-                            {shipment.parcelType} • {new Date(shipment.createdAt).toLocaleDateString()}
+                            {shipment.parcelType} •{" "}
+                            {new Date(shipment.createdAt).toLocaleDateString()}
                           </span>
                         </TableCell>
                         <TableCell className="py-3 px-4 font-mono text-xs">
@@ -587,14 +667,18 @@ export function HubSortingView() {
                         </TableCell>
                         <TableCell className="py-3 px-4 font-mono text-xs">
                           <div className="flex items-center gap-1.5 text-foreground">
-                            <span>{shipment.originHub?.name || "Local Depot"}</span>
+                            <span>
+                              {shipment.originHub?.name || "Local Depot"}
+                            </span>
                             <ArrowRight className="h-3 w-3 text-muted-foreground" />
                             <span className="font-semibold text-primary">
-                              {shipment.destinationHub?.name || "Destination Hub"}
+                              {shipment.destinationHub?.name ||
+                                "Destination Hub"}
                             </span>
                           </div>
                           <span className="text-[10px] text-muted-foreground block">
-                            {shipment.deliveryAddress?.area}, {shipment.deliveryAddress?.city}
+                            {shipment.deliveryAddress?.area},{" "}
+                            {shipment.deliveryAddress?.city}
                           </span>
                         </TableCell>
                         <TableCell className="py-3 px-4 font-mono text-xs">

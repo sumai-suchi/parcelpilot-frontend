@@ -3,7 +3,8 @@ import { UserProfileView } from "@/components/dashboard/shared/user-profile-view
 
 export const metadata: Metadata = {
   title: "Customer Profile & Account | ParcelPilot",
-  description: "View verified customer shipper profile, contact details, and account status.",
+  description:
+    "View verified customer shipper profile, contact details, and account status.",
 };
 
 export default function CustomerProfilePage() {

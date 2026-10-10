@@ -9,6 +9,11 @@ import {
   Home,
   Compass,
   Briefcase,
+  Coins,
+  MapPin,
+  PackageCheck,
+  LifeBuoy,
+  PhoneCall,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,6 +34,11 @@ export default function Header() {
 
   const routes = [
     { name: "Home", url: "/", icon: Home },
+    { name: "Pricing", url: "/pricing", icon: Coins },
+    { name: "Coverage", url: "/coverage", icon: MapPin },
+    { name: "Packaging", url: "/packaging-guide", icon: PackageCheck },
+    { name: "Help", url: "/help", icon: LifeBuoy },
+    { name: "Contact", url: "/contact", icon: PhoneCall },
     { name: "About us", url: "/about-us", icon: Compass },
   ];
 
@@ -69,9 +79,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/20 bg-background/30 backdrop-blur-md supports-[backdrop-filter]:bg-background/20 transition-all">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        
         {/* Large & Clearly Visible Brand Logo */}
-        <Link href="/" className="flex items-center overflow-visible h-16 w-auto group select-none">
+        <Link
+          href="/"
+          className="flex items-center overflow-visible h-16 w-auto group select-none"
+        >
           <img
             src="/logo.png"
             alt="Parcelpilot"
@@ -80,7 +92,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-3 lg:gap-4 xl:gap-5 lg:flex">
           {routes.map((route) => {
             const isActive = pathname === route.url;
             return (
@@ -169,16 +181,19 @@ export default function Header() {
         </nav>
 
         {/* Mobile Navigation */}
-        <div className="flex items-center md:hidden">
+        <div className="flex items-center lg:hidden">
           <Sheet>
-            <SheetTrigger className="p-2 rounded-lg border border-border/40 bg-background/40 hover:bg-muted text-foreground transition-colors cursor-pointer">
+            <SheetTrigger className="p-2 rounded-none border border-border/40 bg-background/40 hover:bg-muted text-foreground transition-colors cursor-pointer">
               <Menu className="size-5" />
             </SheetTrigger>
 
             <SheetContent side="right" className="w-[300px] sm:w-[350px]">
               <SheetHeader className="pb-4 border-b border-border/40">
                 <SheetTitle className="text-left">
-                  <Link href="/" className="flex items-center overflow-hidden h-14 w-auto">
+                  <Link
+                    href="/"
+                    className="flex items-center overflow-hidden h-14 w-auto"
+                  >
                     <img
                       src="/logo.png"
                       alt="Parcelpilot"
@@ -197,7 +212,9 @@ export default function Header() {
                       key={route.url}
                       href={route.url}
                       className={`flex items-center gap-3 text-base font-medium transition-colors hover:text-primary ${
-                        isActive ? "text-primary font-semibold" : "text-foreground"
+                        isActive
+                          ? "text-primary font-semibold"
+                          : "text-foreground"
                       }`}
                     >
                       <IconComponent className="size-4 text-muted-foreground" />
@@ -272,7 +289,6 @@ export default function Header() {
             </SheetContent>
           </Sheet>
         </div>
-
       </div>
     </header>
   );

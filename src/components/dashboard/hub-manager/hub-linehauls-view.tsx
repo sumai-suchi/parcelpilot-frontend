@@ -45,9 +45,11 @@ type StatusFilter = "ALL" | "IN_TRANSIT" | "RECEIVED" | "DISPATCHED";
 
 export function HubLinehaulsView() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [directionFilter, setDirectionFilter] = useState<DirectionFilter>("ALL");
+  const [directionFilter, setDirectionFilter] =
+    useState<DirectionFilter>("ALL");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
-  const [receiveTransfer, setReceiveTransfer] = useState<HubTransferItem | null>(null);
+  const [receiveTransfer, setReceiveTransfer] =
+    useState<HubTransferItem | null>(null);
 
   const {
     data: transfersRes,
@@ -89,10 +91,16 @@ export function HubLinehaulsView() {
       // Search term
       if (searchTerm.trim()) {
         const q = searchTerm.toLowerCase();
-        const matchTracking = t.shipment?.trackingNumber?.toLowerCase().includes(q);
+        const matchTracking = t.shipment?.trackingNumber
+          ?.toLowerCase()
+          .includes(q);
         const matchType = t.shipment?.parcelType?.toLowerCase().includes(q);
-        const matchFromHub = t.fromHub?.name?.toLowerCase().includes(q) || t.fromHub?.code?.toLowerCase().includes(q);
-        const matchToHub = t.toHub?.name?.toLowerCase().includes(q) || t.toHub?.code?.toLowerCase().includes(q);
+        const matchFromHub =
+          t.fromHub?.name?.toLowerCase().includes(q) ||
+          t.fromHub?.code?.toLowerCase().includes(q);
+        const matchToHub =
+          t.toHub?.name?.toLowerCase().includes(q) ||
+          t.toHub?.code?.toLowerCase().includes(q);
         if (!matchTracking && !matchType && !matchFromHub && !matchToHub) {
           return false;
         }
@@ -118,7 +126,9 @@ export function HubLinehaulsView() {
             disabled={isFetching}
             className="gap-2 font-mono text-xs"
           >
-            <RefreshCw className={cn("h-3.5 w-3.5", isFetching && "animate-spin")} />
+            <RefreshCw
+              className={cn("h-3.5 w-3.5", isFetching && "animate-spin")}
+            />
             <span className="hidden sm:inline">Refresh Linehauls</span>
           </Button>
         }
@@ -208,10 +218,18 @@ export function HubLinehaulsView() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="rounded-none">
-              <SelectItem value="ALL" className="text-xs font-mono">All Linehaul Statuses</SelectItem>
-              <SelectItem value="IN_TRANSIT" className="text-xs font-mono">IN_TRANSIT Only</SelectItem>
-              <SelectItem value="DISPATCHED" className="text-xs font-mono">DISPATCHED Only</SelectItem>
-              <SelectItem value="RECEIVED" className="text-xs font-mono">RECEIVED Only</SelectItem>
+              <SelectItem value="ALL" className="text-xs font-mono">
+                All Linehaul Statuses
+              </SelectItem>
+              <SelectItem value="IN_TRANSIT" className="text-xs font-mono">
+                IN_TRANSIT Only
+              </SelectItem>
+              <SelectItem value="DISPATCHED" className="text-xs font-mono">
+                DISPATCHED Only
+              </SelectItem>
+              <SelectItem value="RECEIVED" className="text-xs font-mono">
+                RECEIVED Only
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -223,7 +241,8 @@ export function HubLinehaulsView() {
           <div className="flex items-center gap-2">
             <Truck className="h-4 w-4 text-primary" />
             <CardTitle className="text-xs font-mono uppercase tracking-wider font-semibold">
-              Inter-Hub Consignment Manifest ({filteredTransfers.length} records)
+              Inter-Hub Consignment Manifest ({filteredTransfers.length}{" "}
+              records)
             </CardTitle>
           </div>
         </CardHeader>
@@ -310,10 +329,13 @@ export function HubLinehaulsView() {
                                 {new Date(t.dispatchedAt).toLocaleDateString()}
                               </div>
                               <div className="text-[10px]">
-                                {new Date(t.dispatchedAt).toLocaleTimeString([], {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })}
+                                {new Date(t.dispatchedAt).toLocaleTimeString(
+                                  [],
+                                  {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  },
+                                )}
                               </div>
                             </div>
                           ) : (

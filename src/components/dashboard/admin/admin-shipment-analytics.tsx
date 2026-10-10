@@ -36,7 +36,13 @@ import {
   YAxis,
 } from "recharts";
 import { useAdminShipments } from "@/hooks/admin.hook";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -93,7 +99,12 @@ export function AdminShipmentAnalytics({
 
     const atHubCount =
       overviewStatusMap?.RECEIVED_AT_HUB ??
-      rawShipments.filter((s: any) => s.status === "RECEIVED_AT_HUB" || s.status === "AT_ORIGIN_HUB" || s.status === "AT_DESTINATION_HUB").length;
+      rawShipments.filter(
+        (s: any) =>
+          s.status === "RECEIVED_AT_HUB" ||
+          s.status === "AT_ORIGIN_HUB" ||
+          s.status === "AT_DESTINATION_HUB",
+      ).length;
 
     const outForDeliveryCount =
       overviewStatusMap?.OUT_FOR_DELIVERY ??
@@ -101,14 +112,22 @@ export function AdminShipmentAnalytics({
 
     const pendingCount =
       overviewStatusMap?.PENDING ??
-      rawShipments.filter((s: any) => s.status === "PENDING" || s.status === "CREATED").length;
+      rawShipments.filter(
+        (s: any) => s.status === "PENDING" || s.status === "CREATED",
+      ).length;
 
     const cancelledCount =
       overviewStatusMap?.CANCELLED ??
-      rawShipments.filter((s: any) => s.status === "CANCELLED" || s.status === "RETURNED" || s.status === "DELIVERY_FAILED").length;
+      rawShipments.filter(
+        (s: any) =>
+          s.status === "CANCELLED" ||
+          s.status === "RETURNED" ||
+          s.status === "DELIVERY_FAILED",
+      ).length;
 
     // Active pipeline sum
-    const activePipelineCount = inTransitCount + atHubCount + outForDeliveryCount;
+    const activePipelineCount =
+      inTransitCount + atHubCount + outForDeliveryCount;
 
     // Fulfillment Success Rate
     const completedOrFailed = deliveredCount + cancelledCount;
@@ -122,29 +141,33 @@ export function AdminShipmentAnalytics({
     // Average delivery charges & total weight
     const totalCharges = rawShipments.reduce(
       (sum: number, s: any) => sum + Number(s.deliveryCharge || 0),
-      0
+      0,
     );
     const avgCharge =
-      rawShipments.length > 0 ? (totalCharges / rawShipments.length).toFixed(0) : "120";
+      rawShipments.length > 0
+        ? (totalCharges / rawShipments.length).toFixed(0)
+        : "120";
 
     const totalWeight = rawShipments.reduce(
       (sum: number, s: any) => sum + Number(s.weight || 0),
-      0
+      0,
     );
     const avgWeight =
-      rawShipments.length > 0 ? (totalWeight / rawShipments.length).toFixed(1) : "1.8";
+      rawShipments.length > 0
+        ? (totalWeight / rawShipments.length).toFixed(1)
+        : "1.8";
 
     // Delivery Service Types
     const standardCount = rawShipments.filter(
-      (s: any) => (s.deliveryType || "STANDARD").toUpperCase() === "STANDARD"
+      (s: any) => (s.deliveryType || "STANDARD").toUpperCase() === "STANDARD",
     ).length;
     const expressCount = rawShipments.filter(
-      (s: any) => (s.deliveryType || "").toUpperCase() === "EXPRESS"
+      (s: any) => (s.deliveryType || "").toUpperCase() === "EXPRESS",
     ).length;
     const sameDayCount = rawShipments.filter(
       (s: any) =>
         (s.deliveryType || "").toUpperCase().includes("SAME") ||
-        (s.deliveryType || "").toUpperCase().includes("DAY")
+        (s.deliveryType || "").toUpperCase().includes("DAY"),
     ).length;
 
     // Parcel Classifications
@@ -163,13 +186,24 @@ export function AdminShipmentAnalytics({
     for (let i = 6; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
-      const dateKey = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-      dayMap.set(dateKey, { date: dateKey, dispatched: 0, delivered: 0, revenue: 0 });
+      const dateKey = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      dayMap.set(dateKey, {
+        date: dateKey,
+        dispatched: 0,
+        delivered: 0,
+        revenue: 0,
+      });
     }
 
     rawShipments.forEach((s: any) => {
       const d = new Date(s.createdAt || Date.now());
-      const dateKey = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      const dateKey = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
       if (dayMap.has(dateKey)) {
         const item = dayMap.get(dateKey)!;
         item.dispatched += 1;
@@ -182,7 +216,10 @@ export function AdminShipmentAnalytics({
 
     // Provide baseline progression curve if dataset is pristine
     let timeSeries = Array.from(dayMap.values());
-    const totalTrendDispatched = timeSeries.reduce((acc, curr) => acc + curr.dispatched, 0);
+    const totalTrendDispatched = timeSeries.reduce(
+      (acc, curr) => acc + curr.dispatched,
+      0,
+    );
     if (totalTrendDispatched === 0 && rawShipments.length === 0) {
       timeSeries = [
         { date: "Oct 03", dispatched: 14, delivered: 11, revenue: 1680 },
@@ -263,7 +300,8 @@ export function AdminShipmentAnalytics({
             </h3>
           </div>
           <p className="text-xs text-muted-foreground font-sans mt-0.5">
-            Real-time package intake volume, linehaul transit velocity, fulfillment rate, and active consignment telemetry.
+            Real-time package intake volume, linehaul transit velocity,
+            fulfillment rate, and active consignment telemetry.
           </p>
         </div>
 
@@ -277,7 +315,7 @@ export function AdminShipmentAnalytics({
                 "px-2.5 py-1 transition-colors uppercase font-bold cursor-pointer",
                 chartMode === "volume"
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Volume & SLA
@@ -289,7 +327,7 @@ export function AdminShipmentAnalytics({
                 "px-2.5 py-1 transition-colors uppercase font-bold cursor-pointer",
                 chartMode === "revenue"
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Freight Charges
@@ -302,12 +340,19 @@ export function AdminShipmentAnalytics({
             size="sm"
             onClick={() => {
               refetch();
-              toast.info("Shipment telemetry synchronized with regional sorting hubs.");
+              toast.info(
+                "Shipment telemetry synchronized with regional sorting hubs.",
+              );
             }}
             disabled={isFetching}
             className="rounded-none border-border font-mono text-xs uppercase h-8 px-2.5 gap-1.5 cursor-pointer"
           >
-            <RefreshCw className={cn("size-3.5", isFetching && "animate-spin text-primary")} />
+            <RefreshCw
+              className={cn(
+                "size-3.5",
+                isFetching && "animate-spin text-primary",
+              )}
+            />
             <span className="hidden sm:inline">Refresh</span>
           </Button>
         </div>
@@ -382,7 +427,9 @@ export function AdminShipmentAnalytics({
               ) : (
                 <div className="flex items-center gap-1.5">
                   <span className="size-2.5 bg-primary rounded-none inline-block" />
-                  <span className="text-muted-foreground">Freight Volume (BDT)</span>
+                  <span className="text-muted-foreground">
+                    Freight Volume (BDT)
+                  </span>
                 </div>
               )}
             </div>
@@ -396,11 +443,31 @@ export function AdminShipmentAnalytics({
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
                 <defs>
-                  <linearGradient id="primaryGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="var(--primary)" stopOpacity={0.0} />
+                  <linearGradient
+                    id="primaryGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="5%"
+                      stopColor="var(--primary)"
+                      stopOpacity={0.4}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="var(--primary)"
+                      stopOpacity={0.0}
+                    />
                   </linearGradient>
-                  <linearGradient id="emeraldGradient" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient
+                    id="emeraldGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
                     <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                   </linearGradient>
@@ -415,13 +482,23 @@ export function AdminShipmentAnalytics({
                   dataKey="date"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)", fontFamily: "monospace" }}
+                  tick={{
+                    fontSize: 11,
+                    fill: "var(--muted-foreground)",
+                    fontFamily: "monospace",
+                  }}
                 />
                 <YAxis
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)", fontFamily: "monospace" }}
-                  tickFormatter={(val) => (chartMode === "revenue" ? `৳${val}` : `${val}`)}
+                  tick={{
+                    fontSize: 11,
+                    fill: "var(--muted-foreground)",
+                    fontFamily: "monospace",
+                  }}
+                  tickFormatter={(val) =>
+                    chartMode === "revenue" ? `৳${val}` : `${val}`
+                  }
                 />
                 <Tooltip
                   content={({ active, payload, label }) => {
@@ -435,17 +512,23 @@ export function AdminShipmentAnalytics({
                             <>
                               <div className="flex items-center justify-between gap-4 text-primary">
                                 <span>Dispatched:</span>
-                                <span className="font-bold">{payload[0]?.value} parcels</span>
+                                <span className="font-bold">
+                                  {payload[0]?.value} parcels
+                                </span>
                               </div>
                               <div className="flex items-center justify-between gap-4 text-emerald-600">
                                 <span>Delivered:</span>
-                                <span className="font-bold">{payload[1]?.value} parcels</span>
+                                <span className="font-bold">
+                                  {payload[1]?.value} parcels
+                                </span>
                               </div>
                             </>
                           ) : (
                             <div className="flex items-center justify-between gap-4 text-primary">
                               <span>Freight Total:</span>
-                              <span className="font-bold">৳{payload[0]?.value?.toLocaleString()}</span>
+                              <span className="font-bold">
+                                ৳{payload[0]?.value?.toLocaleString()}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -508,11 +591,16 @@ export function AdminShipmentAnalytics({
             {/* Standard */}
             <div className="space-y-1">
               <div className="flex justify-between items-center text-[11px]">
-                <span className="font-bold text-foreground">STANDARD DELIVERY (48-72h)</span>
+                <span className="font-bold text-foreground">
+                  STANDARD DELIVERY (48-72h)
+                </span>
                 <span className="text-muted-foreground">
                   {analytics.standardCount} parcels (
                   {analytics.totalCount > 0
-                    ? ((analytics.standardCount / analytics.totalCount) * 100).toFixed(0)
+                    ? (
+                        (analytics.standardCount / analytics.totalCount) *
+                        100
+                      ).toFixed(0)
                     : 0}
                   %)
                 </span>
@@ -534,11 +622,16 @@ export function AdminShipmentAnalytics({
             {/* Express */}
             <div className="space-y-1">
               <div className="flex justify-between items-center text-[11px]">
-                <span className="font-bold text-foreground">EXPRESS PRIORITY (24h)</span>
+                <span className="font-bold text-foreground">
+                  EXPRESS PRIORITY (24h)
+                </span>
                 <span className="text-muted-foreground">
                   {analytics.expressCount} parcels (
                   {analytics.totalCount > 0
-                    ? ((analytics.expressCount / analytics.totalCount) * 100).toFixed(0)
+                    ? (
+                        (analytics.expressCount / analytics.totalCount) *
+                        100
+                      ).toFixed(0)
                     : 0}
                   %)
                 </span>
@@ -560,11 +653,16 @@ export function AdminShipmentAnalytics({
             {/* Same Day */}
             <div className="space-y-1">
               <div className="flex justify-between items-center text-[11px]">
-                <span className="font-bold text-foreground">SAME-DAY INTRACITY (6-12h)</span>
+                <span className="font-bold text-foreground">
+                  SAME-DAY INTRACITY (6-12h)
+                </span>
                 <span className="text-muted-foreground">
                   {analytics.sameDayCount} parcels (
                   {analytics.totalCount > 0
-                    ? ((analytics.sameDayCount / analytics.totalCount) * 100).toFixed(0)
+                    ? (
+                        (analytics.sameDayCount / analytics.totalCount) *
+                        100
+                      ).toFixed(0)
                     : 0}
                   %)
                 </span>
@@ -600,20 +698,28 @@ export function AdminShipmentAnalytics({
           </CardHeader>
           <CardContent className="p-4">
             <div className="flex flex-wrap gap-2">
-              {Object.entries(analytics.parcelTypeCounts).map(([type, count]) => (
-                <div
-                  key={type}
-                  className="p-2.5 border border-border/70 bg-muted/20 flex items-center justify-between gap-3 min-w-[130px] flex-1 font-mono text-xs"
-                >
-                  <span className="text-[11px] font-bold text-foreground truncate">{type}</span>
-                  <Badge variant="secondary" className="text-[10px] h-5 px-1.5 font-bold">
-                    {count}
-                  </Badge>
-                </div>
-              ))}
+              {Object.entries(analytics.parcelTypeCounts).map(
+                ([type, count]) => (
+                  <div
+                    key={type}
+                    className="p-2.5 border border-border/70 bg-muted/20 flex items-center justify-between gap-3 min-w-[130px] flex-1 font-mono text-xs"
+                  >
+                    <span className="text-[11px] font-bold text-foreground truncate">
+                      {type}
+                    </span>
+                    <Badge
+                      variant="secondary"
+                      className="text-[10px] h-5 px-1.5 font-bold"
+                    >
+                      {count}
+                    </Badge>
+                  </div>
+                ),
+              )}
               {Object.keys(analytics.parcelTypeCounts).length === 0 && (
                 <div className="py-4 text-center text-xs font-mono text-muted-foreground w-full">
-                  Standard Parcel, Documents, Electronics, Apparel active in sorting line.
+                  Standard Parcel, Documents, Electronics, Apparel active in
+                  sorting line.
                 </div>
               )}
             </div>
@@ -631,7 +737,8 @@ export function AdminShipmentAnalytics({
                 Live Network Consignment Telemetry Stream
               </CardTitle>
               <CardDescription className="text-xs text-muted-foreground">
-                Real-time waybill ledger with origin hub routing, service tier, freight fees, and current transit stage.
+                Real-time waybill ledger with origin hub routing, service tier,
+                freight fees, and current transit stage.
               </CardDescription>
             </div>
 
@@ -673,7 +780,7 @@ export function AdminShipmentAnalytics({
                     "text-[10px] font-mono uppercase tracking-wider h-7 px-2.5 rounded-none cursor-pointer",
                     statusFilter === st.id
                       ? "bg-primary text-primary-foreground font-bold"
-                      : "text-muted-foreground hover:text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {st.label}
@@ -703,13 +810,18 @@ export function AdminShipmentAnalytics({
                     <TableCell colSpan={7} className="h-32 text-center">
                       <div className="flex items-center justify-center gap-2 font-mono text-xs text-muted-foreground">
                         <Loader2 className="size-4 animate-spin text-primary" />
-                        <span>Querying regional waybill telemetry records...</span>
+                        <span>
+                          Querying regional waybill telemetry records...
+                        </span>
                       </div>
                     </TableCell>
                   </TableRow>
                 ) : filteredShipments.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="h-28 text-center font-mono text-xs text-muted-foreground">
+                    <TableCell
+                      colSpan={7}
+                      className="h-28 text-center font-mono text-xs text-muted-foreground"
+                    >
                       No network consignments match your search query.
                     </TableCell>
                   </TableRow>
@@ -735,12 +847,15 @@ export function AdminShipmentAnalytics({
                           </button>
                         </div>
                         <span className="text-[10px] text-muted-foreground block font-normal">
-                          {new Date(shp.createdAt).toLocaleDateString(undefined, {
-                            month: "short",
-                            day: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
+                          {new Date(shp.createdAt).toLocaleDateString(
+                            undefined,
+                            {
+                              month: "short",
+                              day: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            },
+                          )}
                         </span>
                       </TableCell>
 
@@ -750,7 +865,9 @@ export function AdminShipmentAnalytics({
                           {shp.customer?.user?.name || "Merchant Consignor"}
                         </div>
                         <span className="text-[10px] text-muted-foreground block truncate max-w-[150px]">
-                          {shp.customer?.user?.phone || shp.recipientPhone || "Verified Account"}
+                          {shp.customer?.user?.phone ||
+                            shp.recipientPhone ||
+                            "Verified Account"}
                         </span>
                       </TableCell>
 
@@ -773,7 +890,10 @@ export function AdminShipmentAnalytics({
                       {/* Cargo Spec */}
                       <TableCell className="py-3">
                         <div className="flex items-center gap-1.5">
-                          <Badge variant="outline" className="text-[9px] uppercase font-mono px-1">
+                          <Badge
+                            variant="outline"
+                            className="text-[9px] uppercase font-mono px-1"
+                          >
                             {shp.deliveryType || "STANDARD"}
                           </Badge>
                           <span className="text-[11px] text-foreground font-bold">
@@ -796,7 +916,7 @@ export function AdminShipmentAnalytics({
                             "text-[9px] uppercase font-mono px-1",
                             shp.paymentStatus === "PAID"
                               ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                              : "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                              : "bg-amber-500/10 text-amber-600 border-amber-500/20",
                           )}
                         >
                           {shp.paymentStatus || "PENDING"}
@@ -839,7 +959,8 @@ export function AdminShipmentAnalytics({
               <div className="flex items-center gap-2">
                 <Package className="size-5 text-primary" />
                 <h4 className="font-black text-sm uppercase text-foreground">
-                  Consignment Waybill Telemetry: {selectedShipment.trackingNumber}
+                  Consignment Waybill Telemetry:{" "}
+                  {selectedShipment.trackingNumber}
                 </h4>
               </div>
               <button
@@ -864,8 +985,11 @@ export function AdminShipmentAnalytics({
                   Freight Settlement
                 </span>
                 <span className="font-bold text-sm text-foreground">
-                  ৳{Number(selectedShipment.deliveryCharge || 0).toLocaleString()} (
-                  {selectedShipment.paymentStatus || "UNPAID"})
+                  ৳
+                  {Number(
+                    selectedShipment.deliveryCharge || 0,
+                  ).toLocaleString()}{" "}
+                  ({selectedShipment.paymentStatus || "UNPAID"})
                 </span>
               </div>
             </div>
@@ -876,7 +1000,9 @@ export function AdminShipmentAnalytics({
                 <span className="text-[10px] text-muted-foreground uppercase block">
                   Service Speed Tier
                 </span>
-                <span className="font-bold">{selectedShipment.deliveryType || "STANDARD"}</span>
+                <span className="font-bold">
+                  {selectedShipment.deliveryType || "STANDARD"}
+                </span>
               </div>
               <div>
                 <span className="text-[10px] text-muted-foreground uppercase block">
@@ -888,16 +1014,21 @@ export function AdminShipmentAnalytics({
                 <span className="text-[10px] text-muted-foreground uppercase block">
                   Parcel Category
                 </span>
-                <span className="font-bold">{selectedShipment.parcelType || "General Cargo"}</span>
+                <span className="font-bold">
+                  {selectedShipment.parcelType || "General Cargo"}
+                </span>
               </div>
               <div>
                 <span className="text-[10px] text-muted-foreground uppercase block">
                   Induction Date
                 </span>
                 <span className="font-bold">
-                  {new Date(selectedShipment.createdAt).toLocaleDateString(undefined, {
-                    dateStyle: "medium",
-                  })}
+                  {new Date(selectedShipment.createdAt).toLocaleDateString(
+                    undefined,
+                    {
+                      dateStyle: "medium",
+                    },
+                  )}
                 </span>
               </div>
             </div>
@@ -912,7 +1043,9 @@ export function AdminShipmentAnalytics({
                   {selectedShipment.pickupAddress?.addressLine ||
                     selectedShipment.originHub?.address ||
                     "Network Pickup Node"}
-                  , {selectedShipment.pickupAddress?.city || selectedShipment.originHub?.name}
+                  ,{" "}
+                  {selectedShipment.pickupAddress?.city ||
+                    selectedShipment.originHub?.name}
                 </p>
               </div>
 
@@ -924,11 +1057,17 @@ export function AdminShipmentAnalytics({
                   {selectedShipment.deliveryAddress?.addressLine ||
                     selectedShipment.destinationHub?.address ||
                     "Network Destination Node"}
-                  , {selectedShipment.deliveryAddress?.city || selectedShipment.destinationHub?.name}
+                  ,{" "}
+                  {selectedShipment.deliveryAddress?.city ||
+                    selectedShipment.destinationHub?.name}
                 </p>
                 {selectedShipment.recipientName && (
                   <p className="text-[11px] text-muted-foreground pt-1">
-                    Recipient: <strong className="text-foreground">{selectedShipment.recipientName}</strong> ({selectedShipment.recipientPhone || "N/A"})
+                    Recipient:{" "}
+                    <strong className="text-foreground">
+                      {selectedShipment.recipientName}
+                    </strong>{" "}
+                    ({selectedShipment.recipientPhone || "N/A"})
                   </p>
                 )}
               </div>

@@ -161,7 +161,10 @@ export function SignupForm({
                     setIsUploadingAvatar(true);
 
                     try {
-                      const res = await uploadImage(file, "parcelpilot/avatars");
+                      const res = await uploadImage(
+                        file,
+                        "parcelpilot/avatars",
+                      );
                       if (res.success && res.data?.url) {
                         field.handleChange(res.data.url);
                         toast.add({
@@ -170,7 +173,9 @@ export function SignupForm({
                           type: "success",
                         });
                       } else {
-                        throw new Error(res.message || "Failed to upload photo");
+                        throw new Error(
+                          res.message || "Failed to upload photo",
+                        );
                       }
                     } catch (err: any) {
                       setAvatarPreview(null);

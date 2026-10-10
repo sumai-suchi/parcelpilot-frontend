@@ -3,11 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ExternalLink, LogOut, ShieldCheck, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -136,7 +132,9 @@ export function NavUser({ user }: NavUserProps) {
                     COURIER: "/courior",
                     CUSTOMER: "/customer",
                   };
-                  const prefix = user.role ? rolePrefixMap[user.role] || "/customer" : "/customer";
+                  const prefix = user.role
+                    ? rolePrefixMap[user.role] || "/customer"
+                    : "/customer";
                   router.push(`${prefix}/profile`);
                 }}
                 className="cursor-pointer gap-2"

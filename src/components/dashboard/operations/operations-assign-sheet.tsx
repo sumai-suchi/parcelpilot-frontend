@@ -69,7 +69,8 @@ export function OperationsAssignSheet({
     }
 
     try {
-      const targetDestId = destinationHubId || shipment.destinationHubId || finalOriginId;
+      const targetDestId =
+        destinationHubId || shipment.destinationHubId || finalOriginId;
       await assignMutation.mutateAsync({
         shipmentId: shipment.id,
         payload: {

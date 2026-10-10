@@ -21,7 +21,8 @@ export async function getMe() {
   try {
     return await apiClient("/auth/me");
   } catch (error: any) {
-    const status = error?.status ?? error?.statusCode ?? error?.response?.status;
+    const status =
+      error?.status ?? error?.statusCode ?? error?.response?.status;
     if (status === 401 || status === 403) {
       return null;
     }
@@ -40,4 +41,3 @@ export interface GoogleAuthPayload {
 export function googleAuthLogin(payload: GoogleAuthPayload) {
   return apiClient("/auth/google", { method: "POST", body: payload });
 }
-

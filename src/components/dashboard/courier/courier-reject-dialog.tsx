@@ -72,12 +72,16 @@ export function CourierRejectDialog({
           <strong className="font-mono text-foreground">
             {task.shipment.trackingNumber}
           </strong>{" "}
-          will return it to the Operations Manager dispatch queue for alternative rider assignment.
+          will return it to the Operations Manager dispatch queue for
+          alternative rider assignment.
         </p>
 
         {/* Reason Input */}
         <div className="space-y-2 font-mono text-xs">
-          <Label htmlFor="reject-reason" className="text-[11px] uppercase tracking-wider">
+          <Label
+            htmlFor="reject-reason"
+            className="text-[11px] uppercase tracking-wider"
+          >
             Decline Reason (Optional)
           </Label>
           <Input

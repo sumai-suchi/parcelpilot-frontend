@@ -3,7 +3,8 @@ import { OperationsActiveDispatchView } from "@/components/dashboard/operations/
 
 export const metadata: Metadata = {
   title: "Active Courier Dispatches | ParcelPilot",
-  description: "Monitor field courier riders executing customer pickups and doorstep deliveries.",
+  description:
+    "Monitor field courier riders executing customer pickups and doorstep deliveries.",
 };
 
 export default function OperationsActiveDispatchPage() {

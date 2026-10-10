@@ -14,7 +14,13 @@ import {
   X,
 } from "lucide-react";
 import { useAdminCouriers } from "@/hooks/admin.hook";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,23 +40,36 @@ export function AdminCouriersView() {
   const couriers = useMemo(() => couriersRes?.data || [], [couriersRes]);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"ALL" | "AVAILABLE" | "BUSY" | "OFFLINE">("ALL");
+  const [statusFilter, setStatusFilter] = useState<
+    "ALL" | "AVAILABLE" | "BUSY" | "OFFLINE"
+  >("ALL");
 
   // Driver Fleet Analytics Calculations
   const analytics = useMemo(() => {
     const total = couriers.length;
-    const available = couriers.filter((c: any) => c.availabilityStatus === "AVAILABLE").length;
-    const busy = couriers.filter((c: any) => c.availabilityStatus === "BUSY").length;
-    const offline = couriers.filter((c: any) => c.availabilityStatus === "OFFLINE").length;
+    const available = couriers.filter(
+      (c: any) => c.availabilityStatus === "AVAILABLE",
+    ).length;
+    const busy = couriers.filter(
+      (c: any) => c.availabilityStatus === "BUSY",
+    ).length;
+    const offline = couriers.filter(
+      (c: any) => c.availabilityStatus === "OFFLINE",
+    ).length;
 
-    const availableRate = total > 0 ? ((available / total) * 100).toFixed(1) : "0.0";
+    const availableRate =
+      total > 0 ? ((available / total) * 100).toFixed(1) : "0.0";
 
     // Vehicle Type distribution
-    const motorcycles = couriers.filter((c: any) =>
-      (c.vehicleType || "").toUpperCase().includes("MOTOR") || (c.vehicleType || "").toUpperCase().includes("BIKE")
+    const motorcycles = couriers.filter(
+      (c: any) =>
+        (c.vehicleType || "").toUpperCase().includes("MOTOR") ||
+        (c.vehicleType || "").toUpperCase().includes("BIKE"),
     ).length;
-    const vans = couriers.filter((c: any) =>
-      (c.vehicleType || "").toUpperCase().includes("VAN") || (c.vehicleType || "").toUpperCase().includes("TRUCK")
+    const vans = couriers.filter(
+      (c: any) =>
+        (c.vehicleType || "").toUpperCase().includes("VAN") ||
+        (c.vehicleType || "").toUpperCase().includes("TRUCK"),
     ).length;
     const bicycles = total - (motorcycles + vans);
 
@@ -108,11 +127,13 @@ export function AdminCouriersView() {
             Field Delivery Fleet & Availability Telemetry
           </h3>
           <p className="text-xs text-muted-foreground font-sans">
-            Active courier riders, real-time duty availability, and assigned terminal hubs across all logistics corridors.
+            Active courier riders, real-time duty availability, and assigned
+            terminal hubs across all logistics corridors.
           </p>
         </div>
         <div className="font-mono text-xs text-muted-foreground">
-          ACTIVE FLEET: <span className="font-bold text-foreground">{couriers.length}</span>
+          ACTIVE FLEET:{" "}
+          <span className="font-bold text-foreground">{couriers.length}</span>
         </div>
       </div>
 
@@ -159,22 +180,34 @@ export function AdminCouriersView() {
             <div className="flex items-center gap-3 p-2.5 rounded bg-muted/30 border border-border">
               <Bike className="size-5 text-primary shrink-0" />
               <div>
-                <span className="text-[10px] uppercase text-muted-foreground block">Motorcycles & Bikes</span>
-                <span className="font-bold text-sm text-foreground">{analytics.motorcycles || analytics.total} Units</span>
+                <span className="text-[10px] uppercase text-muted-foreground block">
+                  Motorcycles & Bikes
+                </span>
+                <span className="font-bold text-sm text-foreground">
+                  {analytics.motorcycles || analytics.total} Units
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2.5 rounded bg-muted/30 border border-border">
               <Truck className="size-5 text-blue-500 shrink-0" />
               <div>
-                <span className="text-[10px] uppercase text-muted-foreground block">Linehaul Vans & Cargo</span>
-                <span className="font-bold text-sm text-foreground">{analytics.vans} Units</span>
+                <span className="text-[10px] uppercase text-muted-foreground block">
+                  Linehaul Vans & Cargo
+                </span>
+                <span className="font-bold text-sm text-foreground">
+                  {analytics.vans} Units
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2.5 rounded bg-muted/30 border border-border">
               <CheckCircle2 className="size-5 text-emerald-500 shrink-0" />
               <div>
-                <span className="text-[10px] uppercase text-muted-foreground block">OTP Handshake Capability</span>
-                <span className="font-bold text-sm text-foreground">100% Verified</span>
+                <span className="text-[10px] uppercase text-muted-foreground block">
+                  OTP Handshake Capability
+                </span>
+                <span className="font-bold text-sm text-foreground">
+                  100% Verified
+                </span>
               </div>
             </div>
           </div>
@@ -225,7 +258,9 @@ export function AdminCouriersView() {
         </div>
 
         <div className="text-xs font-mono text-muted-foreground">
-          SHOWING: <strong className="text-foreground">{filteredCouriers.length}</strong> / {couriers.length}
+          SHOWING:{" "}
+          <strong className="text-foreground">{filteredCouriers.length}</strong>{" "}
+          / {couriers.length}
         </div>
       </div>
 
@@ -259,11 +294,21 @@ export function AdminCouriersView() {
             <Table>
               <TableHeader className="bg-muted/40 font-mono text-xs uppercase tracking-wider">
                 <TableRow className="border-border">
-                  <TableHead className="font-mono font-bold text-foreground">Courier Rider</TableHead>
-                  <TableHead className="font-mono font-bold text-foreground">Inducted Terminal Hub</TableHead>
-                  <TableHead className="font-mono font-bold text-foreground">Vehicle Mode</TableHead>
-                  <TableHead className="font-mono font-bold text-foreground">Plate Registration</TableHead>
-                  <TableHead className="font-mono font-bold text-foreground text-right">Duty Availability</TableHead>
+                  <TableHead className="font-mono font-bold text-foreground">
+                    Courier Rider
+                  </TableHead>
+                  <TableHead className="font-mono font-bold text-foreground">
+                    Inducted Terminal Hub
+                  </TableHead>
+                  <TableHead className="font-mono font-bold text-foreground">
+                    Vehicle Mode
+                  </TableHead>
+                  <TableHead className="font-mono font-bold text-foreground">
+                    Plate Registration
+                  </TableHead>
+                  <TableHead className="font-mono font-bold text-foreground text-right">
+                    Duty Availability
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody className="divide-y divide-border">
@@ -293,7 +338,10 @@ export function AdminCouriersView() {
                       {c.vehicleNumber || "REG-DHAKA-102"}
                     </TableCell>
                     <TableCell className="py-3.5 text-right">
-                      <StatusBadge status={c.availabilityStatus} type="courier" />
+                      <StatusBadge
+                        status={c.availabilityStatus}
+                        type="courier"
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

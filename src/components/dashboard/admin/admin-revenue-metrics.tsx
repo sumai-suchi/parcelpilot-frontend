@@ -32,7 +32,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useAdminPayments } from "@/hooks/admin.hook";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,53 +55,102 @@ import { MetricCard, MetricGrid } from "../shared/metric-card";
 import { toast } from "../../ui/toast";
 
 export function AdminRevenueMetrics() {
-  const { data: paymentsRes, isLoading, refetch, isFetching } = useAdminPayments({ limit: 100 });
+  const {
+    data: paymentsRes,
+    isLoading,
+    refetch,
+    isFetching,
+  } = useAdminPayments({ limit: 100 });
   const rawPayments = useMemo(() => paymentsRes?.data || [], [paymentsRes]);
 
   // Filters & Search State
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"ALL" | "PAID" | "PENDING" | "FAILED">("ALL");
-  const [providerFilter, setProviderFilter] = useState<"ALL" | "STRIPE" | "COD">("ALL");
-  const [chartMetric, setChartMetric] = useState<"revenue" | "volume">("revenue");
+  const [statusFilter, setStatusFilter] = useState<
+    "ALL" | "PAID" | "PENDING" | "FAILED"
+  >("ALL");
+  const [providerFilter, setProviderFilter] = useState<
+    "ALL" | "STRIPE" | "COD"
+  >("ALL");
+  const [chartMetric, setChartMetric] = useState<"revenue" | "volume">(
+    "revenue",
+  );
 
   // Real-Time Analytics Calculations from Payments Stream
   const analytics = useMemo(() => {
     const totalTransactions = rawPayments.length;
     const paidList = rawPayments.filter((p: any) => p.status === "PAID");
-    const pendingList = rawPayments.filter((p: any) => p.status === "PENDING" || p.status === "UNPAID");
+    const pendingList = rawPayments.filter(
+      (p: any) => p.status === "PENDING" || p.status === "UNPAID",
+    );
     const failedList = rawPayments.filter((p: any) => p.status === "FAILED");
 
-    const totalRealizedRevenue = paidList.reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
-    const totalPendingRevenue = pendingList.reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
-    const totalFailedRevenue = failedList.reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
+    const totalRealizedRevenue = paidList.reduce(
+      (acc: number, p: any) => acc + Number(p.amount || 0),
+      0,
+    );
+    const totalPendingRevenue = pendingList.reduce(
+      (acc: number, p: any) => acc + Number(p.amount || 0),
+      0,
+    );
+    const totalFailedRevenue = failedList.reduce(
+      (acc: number, p: any) => acc + Number(p.amount || 0),
+      0,
+    );
 
-    const successRate = totalTransactions > 0 ? (paidList.length / totalTransactions) * 100 : 100;
-    const avgOrderValue = paidList.length > 0 ? totalRealizedRevenue / paidList.length : 0;
+    const successRate =
+      totalTransactions > 0 ? (paidList.length / totalTransactions) * 100 : 100;
+    const avgOrderValue =
+      paidList.length > 0 ? totalRealizedRevenue / paidList.length : 0;
 
     // Channel Distribution
-    const stripePayments = rawPayments.filter((p: any) => (p.provider || "STRIPE").toUpperCase() === "STRIPE");
-    const codPayments = rawPayments.filter((p: any) => (p.provider || "").toUpperCase() === "CASH" || (p.provider || "").toUpperCase() === "COD");
-    const stripeRevenue = stripePayments.filter((p: any) => p.status === "PAID").reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
-    const codRevenue = codPayments.filter((p: any) => p.status === "PAID").reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
+    const stripePayments = rawPayments.filter(
+      (p: any) => (p.provider || "STRIPE").toUpperCase() === "STRIPE",
+    );
+    const codPayments = rawPayments.filter(
+      (p: any) =>
+        (p.provider || "").toUpperCase() === "CASH" ||
+        (p.provider || "").toUpperCase() === "COD",
+    );
+    const stripeRevenue = stripePayments
+      .filter((p: any) => p.status === "PAID")
+      .reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
+    const codRevenue = codPayments
+      .filter((p: any) => p.status === "PAID")
+      .reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
 
     // Tariff Tier Breakdown
-    const tierStandard = rawPayments.filter((p: any) => Number(p.amount) <= 100).length;
-    const tierExpress = rawPayments.filter((p: any) => Number(p.amount) > 100 && Number(p.amount) <= 180).length;
-    const tierHeavy = rawPayments.filter((p: any) => Number(p.amount) > 180).length;
+    const tierStandard = rawPayments.filter(
+      (p: any) => Number(p.amount) <= 100,
+    ).length;
+    const tierExpress = rawPayments.filter(
+      (p: any) => Number(p.amount) > 100 && Number(p.amount) <= 180,
+    ).length;
+    const tierHeavy = rawPayments.filter(
+      (p: any) => Number(p.amount) > 180,
+    ).length;
 
     // Build 7-Day Timeline Trends
-    const dayMap = new Map<string, { date: string; revenue: number; volume: number; failed: number }>();
+    const dayMap = new Map<
+      string,
+      { date: string; revenue: number; volume: number; failed: number }
+    >();
     const now = new Date();
     for (let i = 6; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
-      const dateKey = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      const dateKey = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
       dayMap.set(dateKey, { date: dateKey, revenue: 0, volume: 0, failed: 0 });
     }
 
     rawPayments.forEach((p: any) => {
       const d = new Date(p.createdAt || Date.now());
-      const dateKey = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      const dateKey = d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
       if (dayMap.has(dateKey)) {
         const item = dayMap.get(dateKey)!;
         item.volume += 1;
@@ -109,7 +164,10 @@ export function AdminRevenueMetrics() {
 
     // Provide baseline visual progression if dataset is nascent
     let timeSeries = Array.from(dayMap.values());
-    const totalTrendVol = timeSeries.reduce((acc, curr) => acc + curr.volume, 0);
+    const totalTrendVol = timeSeries.reduce(
+      (acc, curr) => acc + curr.volume,
+      0,
+    );
     if (totalTrendVol === 0 && totalRealizedRevenue === 0) {
       timeSeries = [
         { date: "Oct 03", revenue: 850, volume: 6, failed: 0 },
@@ -148,8 +206,12 @@ export function AdminRevenueMetrics() {
     return rawPayments.filter((p: any) => {
       const matchesSearch =
         searchQuery === "" ||
-        (p.transactionId || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (p.shipment?.trackingNumber || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.transactionId || "")
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        (p.shipment?.trackingNumber || "")
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
         (p.provider || "").toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesStatus =
@@ -160,16 +222,21 @@ export function AdminRevenueMetrics() {
 
       const matchesProvider =
         providerFilter === "ALL" ||
-        (providerFilter === "STRIPE" && (p.provider || "STRIPE").toUpperCase() === "STRIPE") ||
+        (providerFilter === "STRIPE" &&
+          (p.provider || "STRIPE").toUpperCase() === "STRIPE") ||
         (providerFilter === "COD" &&
-          ((p.provider || "").toUpperCase() === "CASH" || (p.provider || "").toUpperCase() === "COD"));
+          ((p.provider || "").toUpperCase() === "CASH" ||
+            (p.provider || "").toUpperCase() === "COD"));
 
       return matchesSearch && matchesStatus && matchesProvider;
     });
   }, [rawPayments, searchQuery, statusFilter, providerFilter]);
 
   const filteredTotalAmount = useMemo(() => {
-    return filteredPayments.reduce((acc: number, p: any) => acc + Number(p.amount || 0), 0);
+    return filteredPayments.reduce(
+      (acc: number, p: any) => acc + Number(p.amount || 0),
+      0,
+    );
   }, [filteredPayments]);
 
   // Export CSV Functionality
@@ -183,7 +250,15 @@ export function AdminRevenueMetrics() {
       return;
     }
 
-    const headers = ["Transaction ID", "Tracking Number", "Amount", "Currency", "Provider", "Status", "Date"];
+    const headers = [
+      "Transaction ID",
+      "Tracking Number",
+      "Amount",
+      "Currency",
+      "Provider",
+      "Status",
+      "Date",
+    ];
     const rows = filteredPayments.map((p: any) => [
       p.transactionId || "N/A",
       p.shipment?.trackingNumber || "N/A",
@@ -201,7 +276,10 @@ export function AdminRevenueMetrics() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `parcelpilot-settlement-ledger-${Date.now()}.csv`);
+    link.setAttribute(
+      "download",
+      `parcelpilot-settlement-ledger-${Date.now()}.csv`,
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -222,7 +300,10 @@ export function AdminRevenueMetrics() {
             <span className="font-mono text-xs uppercase tracking-widest text-primary font-bold">
               FINANCIAL TELEMETRY & STRIPE SETTLEMENT
             </span>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-mono px-2 py-0">
+            <Badge
+              variant="outline"
+              className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-mono px-2 py-0"
+            >
               <span className="size-1.5 rounded-full bg-emerald-500 inline-block mr-1.5" />
               LIVE LEDGER
             </Badge>
@@ -231,7 +312,9 @@ export function AdminRevenueMetrics() {
             Revenue Intelligence Cockpit
           </h2>
           <p className="text-xs text-muted-foreground font-sans max-w-2xl">
-            Real-time multi-channel cashflow analytics, escrow pipeline monitoring, settlement success rates, and itemized billing reconciliation.
+            Real-time multi-channel cashflow analytics, escrow pipeline
+            monitoring, settlement success rates, and itemized billing
+            reconciliation.
           </p>
         </div>
 
@@ -245,7 +328,9 @@ export function AdminRevenueMetrics() {
             disabled={isFetching}
             className="text-xs font-mono uppercase tracking-wider gap-1.5"
           >
-            <RefreshCw className={`size-3.5 ${isFetching ? "animate-spin" : ""}`} />
+            <RefreshCw
+              className={`size-3.5 ${isFetching ? "animate-spin" : ""}`}
+            />
             <span>Sync</span>
           </Button>
 
@@ -299,7 +384,6 @@ export function AdminRevenueMetrics() {
 
       {/* 3. Deep Visual Analytics: Charts & Distribution Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        
         {/* Left Column (8 cols): Interactive Revenue & Volume Velocity Chart */}
         <Card className="lg:col-span-8 rounded-none border-border bg-card shadow-sm flex flex-col justify-between">
           <CardHeader className="border-b border-border/70 pb-4">
@@ -350,29 +434,58 @@ export function AdminRevenueMetrics() {
                   margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
                 >
                   <defs>
-                    <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="revenueGrad"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#f97316" stopOpacity={0.4} />
-                      <stop offset="95%" stopColor="#f97316" stopOpacity={0.0} />
+                      <stop
+                        offset="95%"
+                        stopColor="#f97316"
+                        stopOpacity={0.0}
+                      />
                     </linearGradient>
                     <linearGradient id="volumeGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                      <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.0}
+                      />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="text-border/40" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="currentColor"
+                    className="text-border/40"
+                  />
                   <XAxis
                     dataKey="date"
                     tickLine={false}
                     axisLine={false}
-                    tick={{ fill: "currentColor", fontSize: 11, fontFamily: "monospace" }}
+                    tick={{
+                      fill: "currentColor",
+                      fontSize: 11,
+                      fontFamily: "monospace",
+                    }}
                     className="text-muted-foreground"
                   />
                   <YAxis
                     tickLine={false}
                     axisLine={false}
-                    tick={{ fill: "currentColor", fontSize: 11, fontFamily: "monospace" }}
+                    tick={{
+                      fill: "currentColor",
+                      fontSize: 11,
+                      fontFamily: "monospace",
+                    }}
                     className="text-muted-foreground"
-                    tickFormatter={(val) => (chartMetric === "revenue" ? `৳${val}` : `${val}`)}
+                    tickFormatter={(val) =>
+                      chartMetric === "revenue" ? `৳${val}` : `${val}`
+                    }
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -380,14 +493,20 @@ export function AdminRevenueMetrics() {
                         const data = payload[0].payload;
                         return (
                           <div className="rounded-lg border border-border bg-popover p-3 shadow-xl font-mono text-xs">
-                            <span className="text-muted-foreground font-semibold block mb-1.5">{data.date}</span>
+                            <span className="text-muted-foreground font-semibold block mb-1.5">
+                              {data.date}
+                            </span>
                             <div className="flex items-center justify-between gap-4 text-foreground">
                               <span>Settled Revenue:</span>
-                              <span className="font-bold text-primary">৳{data.revenue.toLocaleString()}</span>
+                              <span className="font-bold text-primary">
+                                ৳{data.revenue.toLocaleString()}
+                              </span>
                             </div>
                             <div className="flex items-center justify-between gap-4 text-muted-foreground mt-1">
                               <span>Transactions:</span>
-                              <span className="font-bold text-foreground">{data.volume} shipments</span>
+                              <span className="font-bold text-foreground">
+                                {data.volume} shipments
+                              </span>
                             </div>
                           </div>
                         );
@@ -434,13 +553,14 @@ export function AdminRevenueMetrics() {
 
         {/* Right Column (4 cols): Settlement Breakdown & Channel Intelligence */}
         <div className="lg:col-span-4 space-y-6 flex flex-col justify-between">
-          
           {/* Status Composition Card */}
           <Card className="rounded-none border-border bg-card shadow-sm">
             <CardHeader className="pb-3 border-b border-border/70">
               <CardTitle className="text-xs font-bold uppercase tracking-wider text-foreground font-mono flex items-center justify-between">
                 <span>SETTLEMENT STATUS MIX</span>
-                <span className="text-[10px] text-muted-foreground">BY COUNT</span>
+                <span className="text-[10px] text-muted-foreground">
+                  BY COUNT
+                </span>
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-4 space-y-3 font-mono text-xs">
@@ -453,7 +573,15 @@ export function AdminRevenueMetrics() {
                   <span className="font-bold text-foreground">
                     {analytics.paidCount}{" "}
                     <span className="text-muted-foreground font-normal text-[10px]">
-                      ({analytics.totalTransactions > 0 ? ((analytics.paidCount / analytics.totalTransactions) * 100).toFixed(0) : 0}%)
+                      (
+                      {analytics.totalTransactions > 0
+                        ? (
+                            (analytics.paidCount /
+                              analytics.totalTransactions) *
+                            100
+                          ).toFixed(0)
+                        : 0}
+                      %)
                     </span>
                   </span>
                 </div>
@@ -476,7 +604,15 @@ export function AdminRevenueMetrics() {
                   <span className="font-bold text-foreground">
                     {analytics.pendingCount}{" "}
                     <span className="text-muted-foreground font-normal text-[10px]">
-                      ({analytics.totalTransactions > 0 ? ((analytics.pendingCount / analytics.totalTransactions) * 100).toFixed(0) : 0}%)
+                      (
+                      {analytics.totalTransactions > 0
+                        ? (
+                            (analytics.pendingCount /
+                              analytics.totalTransactions) *
+                            100
+                          ).toFixed(0)
+                        : 0}
+                      %)
                     </span>
                   </span>
                 </div>
@@ -499,7 +635,15 @@ export function AdminRevenueMetrics() {
                   <span className="font-bold text-foreground">
                     {analytics.failedCount}{" "}
                     <span className="text-muted-foreground font-normal text-[10px]">
-                      ({analytics.totalTransactions > 0 ? ((analytics.failedCount / analytics.totalTransactions) * 100).toFixed(0) : 0}%)
+                      (
+                      {analytics.totalTransactions > 0
+                        ? (
+                            (analytics.failedCount /
+                              analytics.totalTransactions) *
+                            100
+                          ).toFixed(0)
+                        : 0}
+                      %)
                     </span>
                   </span>
                 </div>
@@ -520,7 +664,9 @@ export function AdminRevenueMetrics() {
             <CardHeader className="pb-3 border-b border-border/70">
               <CardTitle className="text-xs font-bold uppercase tracking-wider text-foreground font-mono flex items-center justify-between">
                 <span>GATEWAY CHANNELS</span>
-                <span className="text-[10px] text-muted-foreground">REVENUE SHARE</span>
+                <span className="text-[10px] text-muted-foreground">
+                  REVENUE SHARE
+                </span>
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-4 space-y-3 font-mono text-xs">
@@ -528,26 +674,37 @@ export function AdminRevenueMetrics() {
                 <div className="flex items-center gap-2.5">
                   <CreditCard className="size-4 text-primary" />
                   <div>
-                    <span className="font-bold block text-foreground">Stripe Hosted Checkout</span>
-                    <span className="text-[10px] text-muted-foreground font-normal">{analytics.stripeCount} Card Transactions</span>
+                    <span className="font-bold block text-foreground">
+                      Stripe Hosted Checkout
+                    </span>
+                    <span className="text-[10px] text-muted-foreground font-normal">
+                      {analytics.stripeCount} Card Transactions
+                    </span>
                   </div>
                 </div>
-                <span className="font-bold text-foreground">৳{analytics.stripeRevenue.toLocaleString()}</span>
+                <span className="font-bold text-foreground">
+                  ৳{analytics.stripeRevenue.toLocaleString()}
+                </span>
               </div>
 
               <div className="p-3 rounded bg-muted/30 border border-border flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <Wallet className="size-4 text-emerald-500" />
                   <div>
-                    <span className="font-bold block text-foreground">Cash On Delivery (COD)</span>
-                    <span className="text-[10px] text-muted-foreground font-normal">{analytics.codCount} Waybill Collections</span>
+                    <span className="font-bold block text-foreground">
+                      Cash On Delivery (COD)
+                    </span>
+                    <span className="text-[10px] text-muted-foreground font-normal">
+                      {analytics.codCount} Waybill Collections
+                    </span>
                   </div>
                 </div>
-                <span className="font-bold text-foreground">৳{analytics.codRevenue.toLocaleString()}</span>
+                <span className="font-bold text-foreground">
+                  ৳{analytics.codRevenue.toLocaleString()}
+                </span>
               </div>
             </CardContent>
           </Card>
-
         </div>
       </div>
 
@@ -561,10 +718,14 @@ export function AdminRevenueMetrics() {
                 <span>Waybill Delivery Fee Bracket Dispersion</span>
               </CardTitle>
               <CardDescription className="text-xs text-muted-foreground mt-0.5 font-sans">
-                Categorization of active shipments by tariff thresholds (Base, Regional, Express).
+                Categorization of active shipments by tariff thresholds (Base,
+                Regional, Express).
               </CardDescription>
             </div>
-            <Badge variant="outline" className="font-mono text-[10px] border-border text-muted-foreground">
+            <Badge
+              variant="outline"
+              className="font-mono text-[10px] border-border text-muted-foreground"
+            >
               WEIGHT & ZONE TARIFFS
             </Badge>
           </div>
@@ -572,19 +733,37 @@ export function AdminRevenueMetrics() {
         <CardContent className="pt-5">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
             <div className="p-3.5 rounded bg-muted/30 border border-border space-y-1">
-              <span className="text-[10px] uppercase text-muted-foreground font-bold">Standard Metro (≤ ৳100)</span>
-              <div className="text-2xl font-black text-foreground">{analytics.tierStandard}</div>
-              <span className="text-[10px] text-muted-foreground block font-sans">Light parcels & documents within Dhaka/Chattogram</span>
+              <span className="text-[10px] uppercase text-muted-foreground font-bold">
+                Standard Metro (≤ ৳100)
+              </span>
+              <div className="text-2xl font-black text-foreground">
+                {analytics.tierStandard}
+              </div>
+              <span className="text-[10px] text-muted-foreground block font-sans">
+                Light parcels & documents within Dhaka/Chattogram
+              </span>
             </div>
             <div className="p-3.5 rounded bg-muted/30 border border-border space-y-1">
-              <span className="text-[10px] uppercase text-muted-foreground font-bold">Inter-District Trunk (৳101 - ৳180)</span>
-              <div className="text-2xl font-black text-foreground">{analytics.tierExpress}</div>
-              <span className="text-[10px] text-muted-foreground block font-sans">Cross-zone linehaul transit across 64 districts</span>
+              <span className="text-[10px] uppercase text-muted-foreground font-bold">
+                Inter-District Trunk (৳101 - ৳180)
+              </span>
+              <div className="text-2xl font-black text-foreground">
+                {analytics.tierExpress}
+              </div>
+              <span className="text-[10px] text-muted-foreground block font-sans">
+                Cross-zone linehaul transit across 64 districts
+              </span>
             </div>
             <div className="p-3.5 rounded bg-muted/30 border border-border space-y-1">
-              <span className="text-[10px] uppercase text-muted-foreground font-bold">Heavy Freight & Express (&gt; ৳180)</span>
-              <div className="text-2xl font-black text-foreground">{analytics.tierHeavy}</div>
-              <span className="text-[10px] text-muted-foreground block font-sans">Bulky merchant cargo exceeding standard weight tier</span>
+              <span className="text-[10px] uppercase text-muted-foreground font-bold">
+                Heavy Freight & Express (&gt; ৳180)
+              </span>
+              <div className="text-2xl font-black text-foreground">
+                {analytics.tierHeavy}
+              </div>
+              <span className="text-[10px] text-muted-foreground block font-sans">
+                Bulky merchant cargo exceeding standard weight tier
+              </span>
             </div>
           </div>
         </CardContent>
@@ -656,10 +835,20 @@ export function AdminRevenueMetrics() {
           {/* Results Summary */}
           <div className="text-xs font-mono text-muted-foreground flex items-center justify-between sm:justify-end gap-3 shrink-0">
             <span>
-              FILTERED: <strong className="text-foreground">{filteredPayments.length}</strong> / {rawPayments.length}
+              FILTERED:{" "}
+              <strong className="text-foreground">
+                {filteredPayments.length}
+              </strong>{" "}
+              / {rawPayments.length}
             </span>
             <span>
-              SUM: <strong className="text-primary font-bold">৳{filteredTotalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</strong>
+              SUM:{" "}
+              <strong className="text-primary font-bold">
+                ৳
+                {filteredTotalAmount.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                })}
+              </strong>
             </span>
           </div>
         </div>
@@ -681,7 +870,9 @@ export function AdminRevenueMetrics() {
               <p className="text-xs uppercase tracking-wider text-muted-foreground">
                 No transactions match the selected filter query.
               </p>
-              {(searchQuery || statusFilter !== "ALL" || providerFilter !== "ALL") && (
+              {(searchQuery ||
+                statusFilter !== "ALL" ||
+                providerFilter !== "ALL") && (
                 <Button
                   type="button"
                   variant="outline"
@@ -704,17 +895,32 @@ export function AdminRevenueMetrics() {
               <Table>
                 <TableHeader className="bg-muted/40 font-mono text-xs uppercase tracking-wider">
                   <TableRow className="border-border">
-                    <TableHead className="font-mono font-bold text-foreground">Stripe Gateway Ref</TableHead>
-                    <TableHead className="font-mono font-bold text-foreground">Waybill #</TableHead>
-                    <TableHead className="font-mono font-bold text-foreground">Amount Settled</TableHead>
-                    <TableHead className="font-mono font-bold text-foreground">Provider Channel</TableHead>
-                    <TableHead className="font-mono font-bold text-foreground">Ledger Status</TableHead>
-                    <TableHead className="font-mono font-bold text-foreground text-right">Settlement Timestamp</TableHead>
+                    <TableHead className="font-mono font-bold text-foreground">
+                      Stripe Gateway Ref
+                    </TableHead>
+                    <TableHead className="font-mono font-bold text-foreground">
+                      Waybill #
+                    </TableHead>
+                    <TableHead className="font-mono font-bold text-foreground">
+                      Amount Settled
+                    </TableHead>
+                    <TableHead className="font-mono font-bold text-foreground">
+                      Provider Channel
+                    </TableHead>
+                    <TableHead className="font-mono font-bold text-foreground">
+                      Ledger Status
+                    </TableHead>
+                    <TableHead className="font-mono font-bold text-foreground text-right">
+                      Settlement Timestamp
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="divide-y divide-border font-mono text-xs">
                   {filteredPayments.map((p: any) => (
-                    <TableRow key={p.id} className="hover:bg-muted/30 transition-colors border-border">
+                    <TableRow
+                      key={p.id}
+                      className="hover:bg-muted/30 transition-colors border-border"
+                    >
                       <TableCell className="py-3 font-bold text-foreground">
                         <span className="tracking-tight text-primary">
                           {p.transactionId || "pi_stripe_pending"}

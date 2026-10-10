@@ -9,7 +9,9 @@ import type {
   UpdateUserStatusPayload,
 } from "@/types/admin.interface";
 
-export function getAdminOverview(): Promise<ApiResponse<AdminDashboardOverview>> {
+export function getAdminOverview(): Promise<
+  ApiResponse<AdminDashboardOverview>
+> {
   return apiClient("/admin/dashboard/overview", {
     method: "GET",
   });

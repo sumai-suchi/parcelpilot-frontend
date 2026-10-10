@@ -3,7 +3,8 @@ import { UserProfileView } from "@/components/dashboard/shared/user-profile-view
 
 export const metadata: Metadata = {
   title: "Hub Manager Profile | ParcelPilot",
-  description: "View verified hub manager credentials and sorting node authorizations.",
+  description:
+    "View verified hub manager credentials and sorting node authorizations.",
 };
 
 export default function HubManagerProfilePage() {

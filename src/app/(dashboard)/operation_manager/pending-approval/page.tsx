@@ -3,7 +3,8 @@ import { OperationsPendingApprovalView } from "@/components/dashboard/operations
 
 export const metadata: Metadata = {
   title: "Pending Approval Consignments | ParcelPilot",
-  description: "Review and approve newly submitted shipments, verify addresses, and assign courier routing.",
+  description:
+    "Review and approve newly submitted shipments, verify addresses, and assign courier routing.",
 };
 
 export default function OperationsPendingApprovalPage() {

@@ -97,8 +97,11 @@ export function updateShipmentOutForDelivery(
   shipmentId: string,
   payload?: { courierId?: string; note?: string },
 ): Promise<ApiResponse<OperationsShipment>> {
-  return apiClient(`/operations-manager/shipments/${shipmentId}/out-for-delivery`, {
-    method: "PATCH",
-    body: payload || {},
-  });
+  return apiClient(
+    `/operations-manager/shipments/${shipmentId}/out-for-delivery`,
+    {
+      method: "PATCH",
+      body: payload || {},
+    },
+  );
 }

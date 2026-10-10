@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { AlertCircle, Check, Clock, PackageCheck, RotateCcw, ShieldCheck, X } from "lucide-react";
+import {
+  AlertCircle,
+  Check,
+  Clock,
+  PackageCheck,
+  RotateCcw,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 import { toast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,7 +42,9 @@ export function CourierDeliveryDialog({
   isOpen,
   onClose,
 }: CourierDeliveryDialogProps) {
-  const [outcome, setOutcome] = useState<"SUCCESS" | "FAILED" | "RESCHEDULE">("SUCCESS");
+  const [outcome, setOutcome] = useState<"SUCCESS" | "FAILED" | "RESCHEDULE">(
+    "SUCCESS",
+  );
 
   // Success fields
   const [recipientName, setRecipientName] = useState(
@@ -52,7 +62,9 @@ export function CourierDeliveryDialog({
 
   // Reschedule fields
   const [rescheduleDate, setRescheduleDate] = useState("");
-  const [rescheduleReason, setRescheduleReason] = useState("Customer requested later delivery");
+  const [rescheduleReason, setRescheduleReason] = useState(
+    "Customer requested later delivery",
+  );
 
   const completeMutation = useCompleteDelivery();
   const failedMutation = useRecordDeliveryFailed();
@@ -162,7 +174,10 @@ export function CourierDeliveryDialog({
                 Record Delivery Outcome
               </h3>
               <p className="font-mono text-[10px] text-muted-foreground">
-                Consignment: <strong className="text-foreground">{task.shipment.trackingNumber}</strong>
+                Consignment:{" "}
+                <strong className="text-foreground">
+                  {task.shipment.trackingNumber}
+                </strong>
               </p>
             </div>
           </div>
@@ -184,7 +199,8 @@ export function CourierDeliveryDialog({
             onClick={() => setOutcome("SUCCESS")}
             className={cn(
               "rounded-none font-mono text-xs uppercase tracking-wider gap-1.5 cursor-pointer",
-              outcome === "SUCCESS" && "bg-emerald-600 hover:bg-emerald-700 text-white font-bold",
+              outcome === "SUCCESS" &&
+                "bg-emerald-600 hover:bg-emerald-700 text-white font-bold",
             )}
           >
             <Check className="h-3.5 w-3.5" />
@@ -198,7 +214,8 @@ export function CourierDeliveryDialog({
             onClick={() => setOutcome("FAILED")}
             className={cn(
               "rounded-none font-mono text-xs uppercase tracking-wider gap-1.5 cursor-pointer",
-              outcome === "FAILED" && "bg-destructive text-destructive-foreground font-bold hover:bg-destructive/90",
+              outcome === "FAILED" &&
+                "bg-destructive text-destructive-foreground font-bold hover:bg-destructive/90",
             )}
           >
             <AlertCircle className="h-3.5 w-3.5" />
@@ -212,7 +229,8 @@ export function CourierDeliveryDialog({
             onClick={() => setOutcome("RESCHEDULE")}
             className={cn(
               "rounded-none font-mono text-xs uppercase tracking-wider gap-1.5 cursor-pointer",
-              outcome === "RESCHEDULE" && "bg-amber-600 hover:bg-amber-700 text-white font-bold",
+              outcome === "RESCHEDULE" &&
+                "bg-amber-600 hover:bg-amber-700 text-white font-bold",
             )}
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -224,7 +242,10 @@ export function CourierDeliveryDialog({
         {outcome === "SUCCESS" && (
           <div className="space-y-3 font-mono text-xs">
             <div className="space-y-1.5">
-              <Label htmlFor="recipientName" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="recipientName"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 Recipient Signee Name *
               </Label>
               <Input
@@ -237,7 +258,10 @@ export function CourierDeliveryDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="recipientPhone" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="recipientPhone"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 Recipient Contact Phone
               </Label>
               <Input
@@ -272,12 +296,16 @@ export function CourierDeliveryDialog({
                 className="rounded-none h-10 bg-background border-primary/40 font-mono text-sm tracking-widest font-bold text-foreground text-center"
               />
               <p className="text-[10px] text-muted-foreground">
-                Ask the recipient for their 6-digit confirmation code shown on their tracking dashboard.
+                Ask the recipient for their 6-digit confirmation code shown on
+                their tracking dashboard.
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="deliveryNotes" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="deliveryNotes"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 Handover Notes (Optional)
               </Label>
               <Input
@@ -294,7 +322,10 @@ export function CourierDeliveryDialog({
         {outcome === "FAILED" && (
           <div className="space-y-3 font-mono text-xs">
             <div className="space-y-1.5">
-              <Label htmlFor="failureReason" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="failureReason"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 Impediment Reason *
               </Label>
               <select
@@ -312,7 +343,10 @@ export function CourierDeliveryDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="failureNotes" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="failureNotes"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 Field Evidence / Notes (Optional)
               </Label>
               <Input
@@ -329,7 +363,10 @@ export function CourierDeliveryDialog({
         {outcome === "RESCHEDULE" && (
           <div className="space-y-3 font-mono text-xs">
             <div className="space-y-1.5">
-              <Label htmlFor="rescheduleDate" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="rescheduleDate"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 New Target Delivery Date *
               </Label>
               <Input
@@ -342,7 +379,10 @@ export function CourierDeliveryDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="rescheduleReason" className="text-[11px] uppercase tracking-wider">
+              <Label
+                htmlFor="rescheduleReason"
+                className="text-[11px] uppercase tracking-wider"
+              >
                 Rescheduling Reason
               </Label>
               <Input

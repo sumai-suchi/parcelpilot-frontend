@@ -32,8 +32,10 @@ const SCENES = [
     terminal: "SENDER PORTAL // API INGESTION",
     data: {
       status: "MANIFEST_CREATED",
-      action: "Sender generates consignment PP-48291. Weight: 1.85kg. Declared value: ৳1,650.",
-      telemetry: "Barcode 8840291048291 generated · Webhook emitted to dispatch engine.",
+      action:
+        "Sender generates consignment PP-48291. Weight: 1.85kg. Declared value: ৳1,650.",
+      telemetry:
+        "Barcode 8840291048291 generated · Webhook emitted to dispatch engine.",
     },
   },
   {
@@ -44,7 +46,8 @@ const SCENES = [
     terminal: "DISPATCH RADAR // FLEET MATCH",
     data: {
       status: "COURIER_ASSIGNED",
-      action: "Rider #1142 located 850m away accepts pickup task via courier handset.",
+      action:
+        "Rider #1142 located 850m away accepts pickup task via courier handset.",
       telemetry: "Driver ETA: 7 minutes · Vehicle: Yamaha FZS #DHK-HA-4412.",
     },
   },
@@ -56,8 +59,10 @@ const SCENES = [
     terminal: "MERCHANT DOCK // CUSTODY HANDOVER",
     data: {
       status: "PICKED_UP",
-      action: "Barcode scanned at doorstep. Electronic scale confirms 1.85 kg. Custody transfer logged.",
-      telemetry: "Digital signature captured · SMS pickup confirmation pushed to recipient.",
+      action:
+        "Barcode scanned at doorstep. Electronic scale confirms 1.85 kg. Custody transfer logged.",
+      telemetry:
+        "Digital signature captured · SMS pickup confirmation pushed to recipient.",
     },
   },
   {
@@ -68,8 +73,10 @@ const SCENES = [
     terminal: "TEJGAON HUB-01 // BELT INDUCTION",
     data: {
       status: "ORIGIN_SORTED",
-      action: "Automated optical barcode scan sorts parcel into Chattogram Trunk Bin #04.",
-      telemetry: "Belt scan speed: 0.4s · Palletized into Secure Linehaul Container #C-902.",
+      action:
+        "Automated optical barcode scan sorts parcel into Chattogram Trunk Bin #04.",
+      telemetry:
+        "Belt scan speed: 0.4s · Palletized into Secure Linehaul Container #C-902.",
     },
   },
   {
@@ -80,20 +87,25 @@ const SCENES = [
     terminal: "HIGHWAY CORRIDOR N1 // LINEHAUL",
     data: {
       status: "IN_TRANSIT",
-      action: "Container truck en route from Dhaka to Chattogram via Highway N1 corridor.",
-      telemetry: "Speed: 64 km/h · Geo-fenced corridor locked · GPS telemetry synced every 15s.",
+      action:
+        "Container truck en route from Dhaka to Chattogram via Highway N1 corridor.",
+      telemetry:
+        "Speed: 64 km/h · Geo-fenced corridor locked · GPS telemetry synced every 15s.",
     },
   },
   {
     num: "06",
     title: "Destination Hub Inbound",
-    tagline: "De-palletizing, security seal verification, and rider bin sorting.",
+    tagline:
+      "De-palletizing, security seal verification, and rider bin sorting.",
     icon: Warehouse,
     terminal: "AGRABAD HUB-04 // INBOUND SCAN",
     data: {
       status: "DESTINATION_SORTED",
-      action: "Container unloaded, digital seal verified, and parcel routed to Agrabad local dispatch bin.",
-      telemetry: "Hub inbound timestamp: 05:45 AM · Assigned to Last-Mile Fleet Batch #02.",
+      action:
+        "Container unloaded, digital seal verified, and parcel routed to Agrabad local dispatch bin.",
+      telemetry:
+        "Hub inbound timestamp: 05:45 AM · Assigned to Last-Mile Fleet Batch #02.",
     },
   },
   {
@@ -104,8 +116,10 @@ const SCENES = [
     terminal: "LAST-MILE FLEET // DISPATCH RUN",
     data: {
       status: "OUT_FOR_DELIVERY",
-      action: "Courier departs hub for consignee address with 2-hour delivery window alert.",
-      telemetry: "Recipient notified with live map link · Contact masking active for privacy.",
+      action:
+        "Courier departs hub for consignee address with 2-hour delivery window alert.",
+      telemetry:
+        "Recipient notified with live map link · Contact masking active for privacy.",
     },
   },
   {
@@ -116,8 +130,10 @@ const SCENES = [
     terminal: "CONSIGNEE DOORSTEP // COMPLETE",
     data: {
       status: "DELIVERED_SUCCESS",
-      action: "4-digit recipient OTP verified, ৳1,650 cash collected, and receipt signed digitally.",
-      telemetry: "Chain of custody closed · Merchant ledger credited for tomorrow's bank run.",
+      action:
+        "4-digit recipient OTP verified, ৳1,650 cash collected, and receipt signed digitally.",
+      telemetry:
+        "Chain of custody closed · Merchant ledger credited for tomorrow's bank run.",
     },
   },
 ];
@@ -138,7 +154,6 @@ export default function LifecycleScroll() {
   return (
     <section className="py-24 bg-primary/[0.04] dark:bg-primary/[0.05] text-foreground border-t border-border relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
         <div className="max-w-3xl space-y-3 mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded">
@@ -150,14 +165,14 @@ export default function LifecycleScroll() {
             Travel with the parcel.
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
-            Step through all 8 operational handoffs to experience how ParcelPilot eliminates 
-            friction and blind spots across the complete shipment lifecycle.
+            Step through all 8 operational handoffs to experience how
+            ParcelPilot eliminates friction and blind spots across the complete
+            shipment lifecycle.
           </p>
         </div>
 
         {/* Interactive Experience Monitor using Shadcn Card */}
         <Card className="border-border bg-card text-card-foreground shadow-xl overflow-hidden">
-          
           {/* Top Stage Tracker Bar */}
           <div className="grid grid-cols-4 sm:grid-cols-8 border-b border-border/70 font-mono text-xs">
             {SCENES.map((sc, idx) => (
@@ -172,7 +187,9 @@ export default function LifecycleScroll() {
                 }`}
               >
                 <div>SCENE {sc.num}</div>
-                <div className="text-[10px] truncate hidden md:block mt-0.5">{sc.title}</div>
+                <div className="text-[10px] truncate hidden md:block mt-0.5">
+                  {sc.title}
+                </div>
               </button>
             ))}
           </div>
@@ -221,7 +238,10 @@ export default function LifecycleScroll() {
                       onClick={nextScene}
                       className="bg-primary text-primary-foreground font-semibold text-xs font-mono"
                     >
-                      <span>ADVANCE TO SCENE {SCENES[(activeIdx + 1) % SCENES.length].num}</span>
+                      <span>
+                        ADVANCE TO SCENE{" "}
+                        {SCENES[(activeIdx + 1) % SCENES.length].num}
+                      </span>
                       <ChevronRight className="h-4 w-4 ml-1.5" />
                     </Button>
                   </div>
@@ -231,8 +251,12 @@ export default function LifecycleScroll() {
                 <div className="lg:col-span-7">
                   <div className="rounded-xl border border-border bg-muted/30 p-6 font-mono text-xs space-y-4">
                     <div className="flex items-center justify-between pb-3 border-b border-border/70 text-muted-foreground">
-                      <span className="text-primary font-bold">{activeScene.terminal}</span>
-                      <span className="text-emerald-600 dark:text-emerald-400 font-semibold">STATUS: {activeScene.data.status}</span>
+                      <span className="text-primary font-bold">
+                        {activeScene.terminal}
+                      </span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+                        STATUS: {activeScene.data.status}
+                      </span>
                     </div>
 
                     <div className="space-y-3 text-foreground">
@@ -264,9 +288,7 @@ export default function LifecycleScroll() {
               </motion.div>
             </AnimatePresence>
           </CardContent>
-
         </Card>
-
       </div>
     </section>
   );

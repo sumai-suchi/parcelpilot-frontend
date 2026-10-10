@@ -36,9 +36,7 @@ export function CourierTaskList({
     (t) => t.shipment?.status === "DELIVERED" || t.status === "COMPLETED",
   ).length;
   const failedCount = tasks.filter(
-    (t) =>
-      t.shipment?.status === "DELIVERY_FAILED" ||
-      t.status === "REJECTED",
+    (t) => t.shipment?.status === "DELIVERY_FAILED" || t.status === "REJECTED",
   ).length;
 
   const tabs: FilterTabOption[] = [
@@ -82,7 +80,8 @@ export function CourierTaskList({
       if (searchTerm.trim()) {
         const query = searchTerm.toLowerCase();
         const tracking = task.shipment?.trackingNumber?.toLowerCase() || "";
-        const customerName = task.shipment?.customer?.user?.name?.toLowerCase() || "";
+        const customerName =
+          task.shipment?.customer?.user?.name?.toLowerCase() || "";
         const city = task.shipment?.deliveryAddress?.city?.toLowerCase() || "";
         return (
           tracking.includes(query) ||

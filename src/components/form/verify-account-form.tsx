@@ -35,8 +35,7 @@ export function VerifyAccountForm() {
 
   const email = searchParams.get("email") || "";
   const router = useRouter();
-    const queryClient = useQueryClient();
-
+  const queryClient = useQueryClient();
 
   const [otp, setOtp] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
@@ -89,7 +88,7 @@ export function VerifyAccountForm() {
           description: "Welcome onboard",
           type: "success",
         });
-         queryClient.invalidateQueries({ queryKey: ["user"] });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
         router.push("/");
       },
       onError: (err) => {

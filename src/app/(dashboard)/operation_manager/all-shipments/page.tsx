@@ -3,7 +3,8 @@ import { OperationsAllShipmentsView } from "@/components/dashboard/operations/op
 
 export const metadata: Metadata = {
   title: "Master Shipments Registry | ParcelPilot",
-  description: "Global consignment ledger across all operational stages and delivery corridors.",
+  description:
+    "Global consignment ledger across all operational stages and delivery corridors.",
 };
 
 export default function OperationsAllShipmentsPage() {

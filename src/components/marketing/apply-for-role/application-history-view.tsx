@@ -2,7 +2,13 @@
 
 import { Clock, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import type { RoleApplication } from "@/types/roleApplication.interface";
 
 interface ApplicationHistoryViewProps {
@@ -38,8 +44,8 @@ export function ApplicationHistoryView({
                         app.status === "APPROVED"
                           ? "default"
                           : app.status === "PENDING"
-                          ? "secondary"
-                          : "destructive"
+                            ? "secondary"
+                            : "destructive"
                       }
                       className="rounded-none font-mono text-[10px] uppercase font-bold"
                     >
@@ -67,19 +73,25 @@ export function ApplicationHistoryView({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs text-muted-foreground">
                 {app.hub && (
                   <p>
-                    <span className="text-foreground font-semibold">Assigned Hub:</span>{" "}
+                    <span className="text-foreground font-semibold">
+                      Assigned Hub:
+                    </span>{" "}
                     {app.hub.name} ({app.hub.code})
                   </p>
                 )}
                 {app.vehicleType && (
                   <p>
-                    <span className="text-foreground font-semibold">Vehicle:</span>{" "}
+                    <span className="text-foreground font-semibold">
+                      Vehicle:
+                    </span>{" "}
                     {app.vehicleType} [{app.vehicleNumber || "BD-REG"}]
                   </p>
                 )}
                 {app.experience && (
                   <p className="sm:col-span-2">
-                    <span className="text-foreground font-semibold">Experience:</span>{" "}
+                    <span className="text-foreground font-semibold">
+                      Experience:
+                    </span>{" "}
                     {app.experience}
                   </p>
                 )}
@@ -127,18 +139,24 @@ export function PendingApplicationBanner({
       <CardContent className="font-mono text-xs space-y-1 text-muted-foreground">
         {application.hub && (
           <p>
-            Target Hub: <strong className="text-foreground">{application.hub.name}</strong> ({application.hub.code})
+            Target Hub:{" "}
+            <strong className="text-foreground">{application.hub.name}</strong>{" "}
+            ({application.hub.code})
           </p>
         )}
         {application.vehicleType && (
           <p>
-            Vehicle: <strong className="text-foreground">{application.vehicleType}</strong>{" "}
+            Vehicle:{" "}
+            <strong className="text-foreground">
+              {application.vehicleType}
+            </strong>{" "}
             [{application.vehicleNumber || "Unassigned"}]
           </p>
         )}
         {application.notes && (
           <p>
-            Statement: <span className="text-foreground">{application.notes}</span>
+            Statement:{" "}
+            <span className="text-foreground">{application.notes}</span>
           </p>
         )}
       </CardContent>

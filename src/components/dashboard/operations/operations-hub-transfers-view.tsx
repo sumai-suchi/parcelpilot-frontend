@@ -1,7 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowRight, Building2, MapPin, RefreshCw, Search, Truck } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  MapPin,
+  RefreshCw,
+  Search,
+  Truck,
+} from "lucide-react";
 import {
   useOperationsCouriers,
   useOperationsHubs,
@@ -10,7 +17,13 @@ import {
 import type { OperationsShipment } from "@/types/operations.interface";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DashboardHeader } from "../shared/dashboard-header";
 import { MetricCard, MetricGrid } from "../shared/metric-card";
@@ -51,7 +64,7 @@ export function OperationsHubTransfersView() {
         s.status === "AT_ORIGIN_HUB" ||
         s.status === "IN_TRANSIT" ||
         s.status === "AT_DESTINATION_HUB" ||
-        s.status === "RECEIVED_AT_HUB"
+        s.status === "RECEIVED_AT_HUB",
     );
   }, [allShipments]);
 
@@ -59,13 +72,14 @@ export function OperationsHubTransfersView() {
   const metrics = useMemo(() => {
     const total = transferShipments.length;
     const originHub = transferShipments.filter(
-      (s) => s.status === "AT_ORIGIN_HUB"
+      (s) => s.status === "AT_ORIGIN_HUB",
     ).length;
     const inTransit = transferShipments.filter(
-      (s) => s.status === "IN_TRANSIT"
+      (s) => s.status === "IN_TRANSIT",
     ).length;
     const destHub = transferShipments.filter(
-      (s) => s.status === "AT_DESTINATION_HUB" || s.status === "RECEIVED_AT_HUB"
+      (s) =>
+        s.status === "AT_DESTINATION_HUB" || s.status === "RECEIVED_AT_HUB",
     ).length;
 
     return { total, originHub, inTransit, destHub };
@@ -155,15 +169,25 @@ export function OperationsHubTransfersView() {
       {/* Active Hub Network Telemetry */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
         <div className="p-3 border border-border/70 bg-card flex items-center justify-between">
-          <span className="text-muted-foreground uppercase">Operational Hubs</span>
-          <span className="font-bold text-foreground">{hubs.length} Facilities</span>
+          <span className="text-muted-foreground uppercase">
+            Operational Hubs
+          </span>
+          <span className="font-bold text-foreground">
+            {hubs.length} Facilities
+          </span>
         </div>
         <div className="p-3 border border-border/70 bg-card flex items-center justify-between">
-          <span className="text-muted-foreground uppercase">Courier Fleet Attached</span>
-          <span className="font-bold text-primary">{couriers.length} Couriers</span>
+          <span className="text-muted-foreground uppercase">
+            Courier Fleet Attached
+          </span>
+          <span className="font-bold text-primary">
+            {couriers.length} Couriers
+          </span>
         </div>
         <div className="p-3 border border-border/70 bg-card flex items-center justify-between">
-          <span className="text-muted-foreground uppercase">Transfer Velocity</span>
+          <span className="text-muted-foreground uppercase">
+            Transfer Velocity
+          </span>
           <span className="font-bold text-emerald-600">Active Cross-Dock</span>
         </div>
       </div>
@@ -196,7 +220,7 @@ export function OperationsHubTransfersView() {
                 "h-7 px-2.5 text-[10px] uppercase rounded-none cursor-pointer",
                 transferStageFilter === st.id
                   ? "bg-primary text-primary-foreground font-bold"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {st.label}

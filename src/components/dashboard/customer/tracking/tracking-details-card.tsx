@@ -1,6 +1,13 @@
 "use client";
 
-import { Building2, Key, MapPin, Package, ShieldCheck, User } from "lucide-react";
+import {
+  Building2,
+  Key,
+  MapPin,
+  Package,
+  ShieldCheck,
+  User,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TrackingDetailsCardProps {
@@ -162,7 +169,8 @@ export function TrackingDetailsCard({ data }: TrackingDetailsCardProps) {
                   Receiver Handover Security OTP
                 </span>
                 <p className="text-[11px] text-muted-foreground font-sans">
-                  Provide this 6-digit confirmation code to your courier rider upon arrival.
+                  Provide this 6-digit confirmation code to your courier rider
+                  upon arrival.
                 </p>
               </div>
             </div>

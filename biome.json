@@ -33,7 +33,6 @@
       "a11y": {
         "useValidAriaRole": "off"
       }
-      
     },
     "domains": {
       "next": "recommended",

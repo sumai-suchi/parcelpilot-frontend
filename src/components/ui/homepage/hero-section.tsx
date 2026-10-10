@@ -55,12 +55,42 @@ const HERO_SLIDES = [
 ];
 
 const CHECKPOINTS = [
-  { name: "Pickup", time: "08:30 AM", status: "completed", location: "Dhanmondi, Dhaka" },
-  { name: "Origin Hub", time: "11:15 AM", status: "completed", location: "Tejgaon Hub [HUB-01]" },
-  { name: "In Transit", time: "02:40 PM", status: "active", location: "N1 Highway Corridor" },
-  { name: "Destination Hub", time: "ETA 06:00 PM", status: "pending", location: "Agrabad Hub [HUB-04]" },
-  { name: "Out for Delivery", time: "ETA Tomorrow", status: "pending", location: "Chattogram Metro" },
-  { name: "Delivered", time: "Pending", status: "pending", location: "Consignee Doorstep" },
+  {
+    name: "Pickup",
+    time: "08:30 AM",
+    status: "completed",
+    location: "Dhanmondi, Dhaka",
+  },
+  {
+    name: "Origin Hub",
+    time: "11:15 AM",
+    status: "completed",
+    location: "Tejgaon Hub [HUB-01]",
+  },
+  {
+    name: "In Transit",
+    time: "02:40 PM",
+    status: "active",
+    location: "N1 Highway Corridor",
+  },
+  {
+    name: "Destination Hub",
+    time: "ETA 06:00 PM",
+    status: "pending",
+    location: "Agrabad Hub [HUB-04]",
+  },
+  {
+    name: "Out for Delivery",
+    time: "ETA Tomorrow",
+    status: "pending",
+    location: "Chattogram Metro",
+  },
+  {
+    name: "Delivered",
+    time: "Pending",
+    status: "pending",
+    location: "Consignee Doorstep",
+  },
 ];
 
 export default function HeroSection() {
@@ -112,10 +142,8 @@ export default function HeroSection() {
       {/* Main Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center">
-          
           {/* Left Column: Operational Editorial Messaging */}
           <div className="lg:col-span-6 space-y-6">
-            
             {/* System Status Identifier */}
             <div className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/60 px-3.5 py-1.5 text-xs font-mono text-zinc-200 backdrop-blur-md">
               <span className="relative flex h-2 w-2">
@@ -124,7 +152,9 @@ export default function HeroSection() {
               </span>
               <span>NETWORK RUNTIME // PROTOCOL V2.4</span>
               <span className="text-zinc-500">|</span>
-              <span className="text-orange-400 font-semibold">{HERO_SLIDES[currentSlide].label}</span>
+              <span className="text-orange-400 font-semibold">
+                {HERO_SLIDES[currentSlide].label}
+              </span>
             </div>
 
             {/* Main Headline */}
@@ -137,8 +167,10 @@ export default function HeroSection() {
 
             {/* Supporting Copy */}
             <p className="text-base sm:text-lg text-zinc-200 max-w-xl font-normal leading-relaxed drop-shadow-sm">
-              ParcelPilot coordinates real-time handoffs across customers, couriers, regional sorting hubs, 
-              and operations managers. Complete end-to-end telemetry from pickup confirmation to signed doorstep delivery.
+              ParcelPilot coordinates real-time handoffs across customers,
+              couriers, regional sorting hubs, and operations managers. Complete
+              end-to-end telemetry from pickup confirmation to signed doorstep
+              delivery.
             </p>
 
             {/* Purpose-Driven CTAs */}
@@ -157,7 +189,8 @@ export default function HeroSection() {
                 className={buttonVariants({
                   variant: "outline",
                   size: "lg",
-                  className: "border-white/30 bg-black/50 hover:bg-black/80 text-white font-bold text-xs uppercase tracking-wider backdrop-blur-md",
+                  className:
+                    "border-white/30 bg-black/50 hover:bg-black/80 text-white font-bold text-xs uppercase tracking-wider backdrop-blur-md",
                 })}
               >
                 Start Shipping
@@ -191,7 +224,9 @@ export default function HeroSection() {
                     onClick={() => setCurrentSlide(idx)}
                     aria-label={`Go to slide ${idx + 1}`}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      currentSlide === idx ? "w-6 bg-orange-500" : "w-2 bg-white/40 hover:bg-white/70"
+                      currentSlide === idx
+                        ? "w-6 bg-orange-500"
+                        : "w-2 bg-white/40 hover:bg-white/70"
                     }`}
                   />
                 ))}
@@ -212,7 +247,9 @@ export default function HeroSection() {
                       <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-bold">
                         LIVE CONSIGNMENT
                       </span>
-                      <span className="text-xs font-mono text-muted-foreground">MANIFEST #88241</span>
+                      <span className="text-xs font-mono text-muted-foreground">
+                        MANIFEST #88241
+                      </span>
                     </div>
                     <CardTitle className="text-2xl font-mono tracking-tight text-foreground flex items-center gap-2 pt-1">
                       <span>PP-48291</span>
@@ -223,9 +260,15 @@ export default function HeroSection() {
                   </div>
 
                   <div className="text-right font-mono">
-                    <div className="text-xs text-muted-foreground uppercase">CORRIDOR</div>
-                    <div className="text-sm font-bold text-foreground">DHAKA → CHATTOGRAM</div>
-                    <div className="text-[11px] text-primary font-semibold">WT: 1.85 KG · COLL: ৳1,650</div>
+                    <div className="text-xs text-muted-foreground uppercase">
+                      CORRIDOR
+                    </div>
+                    <div className="text-sm font-bold text-foreground">
+                      DHAKA → CHATTOGRAM
+                    </div>
+                    <div className="text-[11px] text-primary font-semibold">
+                      WT: 1.85 KG · COLL: ৳1,650
+                    </div>
                   </div>
                 </div>
               </CardHeader>
@@ -235,7 +278,9 @@ export default function HeroSection() {
                 <div>
                   <div className="flex items-center justify-between text-[11px] font-mono text-muted-foreground mb-1.5">
                     <span>TEJGAON [HUB-01]</span>
-                    <span className="text-primary font-semibold">HIGHWAY N1 CORRIDOR</span>
+                    <span className="text-primary font-semibold">
+                      HIGHWAY N1 CORRIDOR
+                    </span>
                     <span>AGRABAD [HUB-04]</span>
                   </div>
 
@@ -250,7 +295,11 @@ export default function HeroSection() {
                       className="absolute top-[-2px] h-3 w-3 rounded-full bg-foreground shadow-md"
                       initial={{ left: "46%" }}
                       animate={{ left: ["46%", "52%", "48%"] }}
-                      transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 2.8,
+                        ease: "easeInOut",
+                      }}
                     />
                   </div>
                 </div>
@@ -267,8 +316,8 @@ export default function HeroSection() {
                           isActive
                             ? "border-primary/50 bg-primary/10 text-foreground"
                             : isDone
-                            ? "border-border/60 bg-muted/40 text-foreground"
-                            : "border-transparent text-muted-foreground"
+                              ? "border-border/60 bg-muted/40 text-foreground"
+                              : "border-transparent text-muted-foreground"
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -277,26 +326,44 @@ export default function HeroSection() {
                               isActive
                                 ? "bg-primary text-primary-foreground animate-pulse"
                                 : isDone
-                                ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
-                                : "border border-border text-muted-foreground"
+                                  ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
+                                  : "border border-border text-muted-foreground"
                             }`}
                           >
-                            {isDone ? <Check className="h-3 w-3" /> : isActive ? "●" : "○"}
+                            {isDone ? (
+                              <Check className="h-3 w-3" />
+                            ) : isActive ? (
+                              "●"
+                            ) : (
+                              "○"
+                            )}
                           </div>
 
                           <div>
-                            <div className={`font-bold ${isActive ? "text-primary" : "text-foreground"}`}>
+                            <div
+                              className={`font-bold ${isActive ? "text-primary" : "text-foreground"}`}
+                            >
                               {cp.name}
                             </div>
-                            <div className="text-[10px] text-muted-foreground">{cp.location}</div>
+                            <div className="text-[10px] text-muted-foreground">
+                              {cp.location}
+                            </div>
                           </div>
                         </div>
 
                         <div className="text-right">
-                          <div className={isActive ? "text-primary font-bold" : "text-muted-foreground"}>
+                          <div
+                            className={
+                              isActive
+                                ? "text-primary font-bold"
+                                : "text-muted-foreground"
+                            }
+                          >
                             {cp.time}
                           </div>
-                          <div className="text-[10px] text-muted-foreground uppercase">{cp.status}</div>
+                          <div className="text-[10px] text-muted-foreground uppercase">
+                            {cp.status}
+                          </div>
                         </div>
                       </div>
                     );
@@ -315,7 +382,6 @@ export default function HeroSection() {
               </CardFooter>
             </Card>
           </div>
-
         </div>
       </div>
     </section>

@@ -82,20 +82,26 @@ export function CourierPickupDialog({
               Parcel Type / Weight
             </span>
             <span className="font-mono text-foreground">
-              {task.shipment.parcelType} ({Number(task.shipment.weight).toFixed(1)} kg)
+              {task.shipment.parcelType} (
+              {Number(task.shipment.weight).toFixed(1)} kg)
             </span>
           </div>
           <div className="pt-1 border-t border-border/40 text-[11px] text-muted-foreground flex items-start gap-1.5">
             <MapPin className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
             <span>
-              {task.shipment.pickupAddress?.addressLine}, {task.shipment.pickupAddress?.area}, {task.shipment.pickupAddress?.city}
+              {task.shipment.pickupAddress?.addressLine},{" "}
+              {task.shipment.pickupAddress?.area},{" "}
+              {task.shipment.pickupAddress?.city}
             </span>
           </div>
         </div>
 
         {/* Note Field */}
         <div className="space-y-2">
-          <Label htmlFor="pickup-note" className="text-xs uppercase font-mono tracking-wider">
+          <Label
+            htmlFor="pickup-note"
+            className="text-xs uppercase font-mono tracking-wider"
+          >
             Operational Note (Optional)
           </Label>
           <Input

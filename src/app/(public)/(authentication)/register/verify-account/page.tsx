@@ -7,7 +7,11 @@ export default function VerifyAccountPage() {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 pt-2 pb-2 md:p-8">
         <Link href="/" className="h-auto w-auto">
-          <img src="/logo.png" alt="" className="h-30 w-30  lg:h-60 lg:w-60  object-cover" />
+          <img
+            src="/logo.png"
+            alt=""
+            className="h-30 w-30  lg:h-60 lg:w-60  object-cover"
+          />
         </Link>
 
         <div className="flex flex-1 items-center justify-center">

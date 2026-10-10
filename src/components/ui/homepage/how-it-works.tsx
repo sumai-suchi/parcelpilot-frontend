@@ -37,9 +37,11 @@ export default function HowItWorks() {
   return (
     <section className="py-20 bg-primary/[0.04] dark:bg-primary/[0.05] text-foreground">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3" data-aos="fade-up">
+        <div
+          className="text-center max-w-2xl mx-auto space-y-3"
+          data-aos="fade-up"
+        >
           <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 px-3.5 py-1 text-xs font-semibold text-orange-600 dark:text-orange-400">
             Effortless Workflow
           </div>
@@ -47,7 +49,8 @@ export default function HowItWorks() {
             How ParcelPilot Works
           </h2>
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-            From booking to final doorstep delivery, experience a transparent and frictionless logistics journey.
+            From booking to final doorstep delivery, experience a transparent
+            and frictionless logistics journey.
           </p>
         </div>
 

@@ -88,7 +88,9 @@ export default function ApplyForRolePage() {
       vehicleType:
         desiredRole === "COURIER" ? vehicleType.trim() || undefined : undefined,
       vehicleNumber:
-        desiredRole === "COURIER" ? vehicleNumber.trim() || undefined : undefined,
+        desiredRole === "COURIER"
+          ? vehicleNumber.trim() || undefined
+          : undefined,
       hubId:
         desiredRole === "COURIER" || desiredRole === "HUB_MANAGER"
           ? hubId || undefined
@@ -141,14 +143,16 @@ export default function ApplyForRolePage() {
               Sign In Required
             </CardTitle>
             <CardDescription className="text-muted-foreground font-sans text-xs">
-              You must have an active ParcelPilot account to apply for operational roles.
+              You must have an active ParcelPilot account to apply for
+              operational roles.
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex flex-col gap-3">
             <Link
               href="/login?redirect=/apply-for-role"
               className={buttonVariants({
-                className: "w-full rounded-none font-mono text-xs uppercase tracking-wider",
+                className:
+                  "w-full rounded-none font-mono text-xs uppercase tracking-wider",
               })}
             >
               Log In to Apply
@@ -157,7 +161,8 @@ export default function ApplyForRolePage() {
               href="/register"
               className={buttonVariants({
                 variant: "outline",
-                className: "w-full rounded-none font-mono text-xs uppercase tracking-wider",
+                className:
+                  "w-full rounded-none font-mono text-xs uppercase tracking-wider",
               })}
             >
               Create Account
@@ -182,7 +187,9 @@ export default function ApplyForRolePage() {
           Apply for Logistics Role.
         </h1>
         <p className="text-sm text-muted-foreground max-w-2xl leading-relaxed">
-          Transition your account to courier rider, terminal hub manager, or operations dispatcher. Applications undergo direct review by platform administrators.
+          Transition your account to courier rider, terminal hub manager, or
+          operations dispatcher. Applications undergo direct review by platform
+          administrators.
         </p>
       </div>
 
@@ -208,7 +215,8 @@ export default function ApplyForRolePage() {
                 2. Identification & Photo
               </CardTitle>
               <CardDescription className="text-muted-foreground text-xs font-sans">
-                Upload a clear profile picture for field badge and identity verification. Click directly on the image to upload.
+                Upload a clear profile picture for field badge and identity
+                verification. Click directly on the image to upload.
               </CardDescription>
             </CardHeader>
             <CardContent>

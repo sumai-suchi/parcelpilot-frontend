@@ -11,10 +11,30 @@ import {
 } from "@/components/ui/card";
 
 const METRICS = [
-  { label: "Active In-Flight Consignments", value: "14,892", delta: "+8.4%", sub: "Live across 64 districts" },
-  { label: "Hub Turnaround Velocity", value: "38.4m", delta: "-4.1m", sub: "Avg induction-to-dispatch" },
-  { label: "First-Attempt Delivery Rate", value: "96.4%", delta: "+1.2%", sub: "Exceeding industry benchmark" },
-  { label: "Exception Resolution Rate", value: "94.8%", delta: "+3.6%", sub: "Automated retry & correction" },
+  {
+    label: "Active In-Flight Consignments",
+    value: "14,892",
+    delta: "+8.4%",
+    sub: "Live across 64 districts",
+  },
+  {
+    label: "Hub Turnaround Velocity",
+    value: "38.4m",
+    delta: "-4.1m",
+    sub: "Avg induction-to-dispatch",
+  },
+  {
+    label: "First-Attempt Delivery Rate",
+    value: "96.4%",
+    delta: "+1.2%",
+    sub: "Exceeding industry benchmark",
+  },
+  {
+    label: "Exception Resolution Rate",
+    value: "94.8%",
+    delta: "+3.6%",
+    sub: "Automated retry & correction",
+  },
 ];
 
 const HOURLY_FLOW = [
@@ -36,7 +56,6 @@ export default function OperationalAnalytics() {
   return (
     <section className="py-24 bg-primary/[0.04] dark:bg-primary/[0.05] text-foreground border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
         <div className="max-w-3xl space-y-3 mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded">
@@ -49,25 +68,31 @@ export default function OperationalAnalytics() {
             Real-time operational intelligence.
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
-            Monitor consignment velocity, warehouse induction rates, and courier density 
-            across your entire delivery footprint in one unified telemetry dashboard.
+            Monitor consignment velocity, warehouse induction rates, and courier
+            density across your entire delivery footprint in one unified
+            telemetry dashboard.
           </p>
         </div>
 
         {/* Dashboard Frame using Shadcn Card */}
         <Card className="border-border bg-card text-card-foreground shadow-xl">
-          
           {/* Top Key Metrics Strip */}
           <CardHeader className="border-b border-border/70 pb-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {METRICS.map((m) => (
                 <div key={m.label} className="space-y-1 font-mono">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wider">{m.label}</div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider">
+                    {m.label}
+                  </div>
                   <div className="text-3xl font-black text-foreground font-mono flex items-baseline gap-2">
                     <span>{m.value}</span>
-                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">{m.delta}</span>
+                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+                      {m.delta}
+                    </span>
                   </div>
-                  <div className="text-[11px] text-muted-foreground">{m.sub}</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {m.sub}
+                  </div>
                 </div>
               ))}
             </div>
@@ -79,7 +104,9 @@ export default function OperationalAnalytics() {
               <CardTitle className="text-xs font-bold uppercase tracking-wider text-foreground">
                 HOURLY PARCEL THROUGHPUT VELOCITY (24-HOUR RUNTIME)
               </CardTitle>
-              <span className="text-primary font-bold">PEAK LOAD: 14,200 PK/HR</span>
+              <span className="text-primary font-bold">
+                PEAK LOAD: 14,200 PK/HR
+              </span>
             </div>
 
             {/* Technical Bar Chart: Clean, No Square Grid */}
@@ -87,7 +114,10 @@ export default function OperationalAnalytics() {
               {HOURLY_FLOW.map((bar, idx) => {
                 const heightPercent = (bar.volume / maxVol) * 100;
                 return (
-                  <div key={bar.hour} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
+                  <div
+                    key={bar.hour}
+                    className="flex-1 flex flex-col items-center gap-2 h-full justify-end group"
+                  >
                     <div className="w-full relative flex items-end h-full">
                       <motion.div
                         initial={{ height: 0 }}
@@ -111,12 +141,12 @@ export default function OperationalAnalytics() {
                 <span>METRICS REFRESH INTERVAL: 5s</span>
                 <span>AGGREGATION: CLOUDSTREAM REALTIME</span>
               </div>
-              <div className="text-emerald-600 dark:text-emerald-400 font-semibold">99.98% TELEMETRY AVAILABILITY</div>
+              <div className="text-emerald-600 dark:text-emerald-400 font-semibold">
+                99.98% TELEMETRY AVAILABILITY
+              </div>
             </div>
           </CardContent>
-
         </Card>
-
       </div>
     </section>
   );

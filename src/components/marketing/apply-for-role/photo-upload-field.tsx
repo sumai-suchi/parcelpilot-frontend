@@ -138,7 +138,9 @@ export function PhotoUploadField({
           >
             <UploadCloud className="size-4" />
             <span>
-              {displayAvatar ? "Change Profile Picture" : "Upload Profile Picture"}
+              {displayAvatar
+                ? "Change Profile Picture"
+                : "Upload Profile Picture"}
             </span>
           </Button>
         </div>
@@ -155,7 +157,8 @@ export function PhotoUploadField({
         />
 
         <p className="font-mono text-[11px] text-muted-foreground">
-          Accepted formats: JPG, PNG, WEBP. Max 5MB. Click either the avatar or button.
+          Accepted formats: JPG, PNG, WEBP. Max 5MB. Click either the avatar or
+          button.
         </p>
       </div>
     </div>

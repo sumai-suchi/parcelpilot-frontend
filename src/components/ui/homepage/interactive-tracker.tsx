@@ -28,17 +28,20 @@ interface TelemetryEvent {
   current?: boolean;
 }
 
-const SAMPLE_DATA: Record<string, {
-  id: string;
-  origin: string;
-  destination: string;
-  service: string;
-  weight: string;
-  cod: string;
-  eta: string;
-  carrier: string;
-  events: TelemetryEvent[];
-}> = {
+const SAMPLE_DATA: Record<
+  string,
+  {
+    id: string;
+    origin: string;
+    destination: string;
+    service: string;
+    weight: string;
+    cod: string;
+    eta: string;
+    carrier: string;
+    events: TelemetryEvent[];
+  }
+> = {
   "PP-48291": {
     id: "PP-48291",
     origin: "Dhaka (Tejgaon Hub)",
@@ -49,15 +52,79 @@ const SAMPLE_DATA: Record<string, {
     eta: "Today, 06:30 PM",
     carrier: "Express Linehaul #TRK-8821",
     events: [
-      { status: "Shipment Created", time: "07:15 AM", location: "Dhanmondi Merchant Station", checkpoint: "Manifest Generated", verifiedBy: "System API", completed: true },
-      { status: "Pickup Requested", time: "07:45 AM", location: "Dhanmondi Pickup Zone", checkpoint: "Rider Dispatched", verifiedBy: "Dispatch Engine", completed: true },
-      { status: "Courier Assigned", time: "08:00 AM", location: "Sector 4 Cluster", checkpoint: "Courier Accepted", verifiedBy: "Rider #1142", completed: true },
-      { status: "Picked Up", time: "08:30 AM", location: "Merchant Dock", checkpoint: "Weight Verified", verifiedBy: "Rider #1142", completed: true },
-      { status: "Origin Hub", time: "11:15 AM", location: "Tejgaon Hub [HUB-01]", checkpoint: "Automated Belt Sorting", verifiedBy: "Hub Manager M. Kibria", completed: true },
-      { status: "In Transit", time: "02:40 PM", location: "Highway N1 Corridor", checkpoint: "Linehaul Transport", verifiedBy: "Fleet Ops Telematics", completed: true, current: true },
-      { status: "Destination Hub", time: "Est. 05:45 PM", location: "Agrabad Hub [HUB-04]", checkpoint: "Inbound Scan Scheduled", verifiedBy: "Pending", completed: false },
-      { status: "Out for Delivery", time: "Est. Tomorrow Morning", location: "Chattogram Metropolitan", checkpoint: "Local Courier Route", verifiedBy: "Pending", completed: false },
-      { status: "Delivered", time: "Est. Tomorrow 11:00 AM", location: "Consignee Address", checkpoint: "OTP Verification Required", verifiedBy: "Pending", completed: false },
+      {
+        status: "Shipment Created",
+        time: "07:15 AM",
+        location: "Dhanmondi Merchant Station",
+        checkpoint: "Manifest Generated",
+        verifiedBy: "System API",
+        completed: true,
+      },
+      {
+        status: "Pickup Requested",
+        time: "07:45 AM",
+        location: "Dhanmondi Pickup Zone",
+        checkpoint: "Rider Dispatched",
+        verifiedBy: "Dispatch Engine",
+        completed: true,
+      },
+      {
+        status: "Courier Assigned",
+        time: "08:00 AM",
+        location: "Sector 4 Cluster",
+        checkpoint: "Courier Accepted",
+        verifiedBy: "Rider #1142",
+        completed: true,
+      },
+      {
+        status: "Picked Up",
+        time: "08:30 AM",
+        location: "Merchant Dock",
+        checkpoint: "Weight Verified",
+        verifiedBy: "Rider #1142",
+        completed: true,
+      },
+      {
+        status: "Origin Hub",
+        time: "11:15 AM",
+        location: "Tejgaon Hub [HUB-01]",
+        checkpoint: "Automated Belt Sorting",
+        verifiedBy: "Hub Manager M. Kibria",
+        completed: true,
+      },
+      {
+        status: "In Transit",
+        time: "02:40 PM",
+        location: "Highway N1 Corridor",
+        checkpoint: "Linehaul Transport",
+        verifiedBy: "Fleet Ops Telematics",
+        completed: true,
+        current: true,
+      },
+      {
+        status: "Destination Hub",
+        time: "Est. 05:45 PM",
+        location: "Agrabad Hub [HUB-04]",
+        checkpoint: "Inbound Scan Scheduled",
+        verifiedBy: "Pending",
+        completed: false,
+      },
+      {
+        status: "Out for Delivery",
+        time: "Est. Tomorrow Morning",
+        location: "Chattogram Metropolitan",
+        checkpoint: "Local Courier Route",
+        verifiedBy: "Pending",
+        completed: false,
+      },
+      {
+        status: "Delivered",
+        time: "Est. Tomorrow 11:00 AM",
+        location: "Consignee Address",
+        checkpoint: "OTP Verification Required",
+        verifiedBy: "Pending",
+        completed: false,
+      },
     ],
   },
   "PP-91044": {
@@ -70,12 +137,55 @@ const SAMPLE_DATA: Record<string, {
     eta: "Tomorrow, 10:00 AM",
     carrier: "Regional Transit #VAN-402",
     events: [
-      { status: "Shipment Created", time: "Yesterday 04:00 PM", location: "Sylhet Central", checkpoint: "Created via Web", verifiedBy: "Portal", completed: true },
-      { status: "Picked Up", time: "Yesterday 06:30 PM", location: "Zindabazar Point", checkpoint: "Courier Collected", verifiedBy: "Rider #082", completed: true },
-      { status: "Origin Hub", time: "Yesterday 09:15 PM", location: "Sylhet Hub [HUB-08]", checkpoint: "Linehaul Manifest", verifiedBy: "Hub Ops", completed: true },
-      { status: "In Transit", time: "Today 04:30 AM", location: "Dhaka-Sylhet Highway", checkpoint: "Linehaul Truck En Route", verifiedBy: "GPS Telemetry", completed: true, current: true },
-      { status: "Destination Hub", time: "Pending", location: "Uttara Hub [HUB-02]", checkpoint: "Awaiting Arrival", verifiedBy: "Pending", completed: false },
-      { status: "Delivered", time: "Pending", location: "Consignee Doorstep", checkpoint: "Delivery Scheduled", verifiedBy: "Pending", completed: false },
+      {
+        status: "Shipment Created",
+        time: "Yesterday 04:00 PM",
+        location: "Sylhet Central",
+        checkpoint: "Created via Web",
+        verifiedBy: "Portal",
+        completed: true,
+      },
+      {
+        status: "Picked Up",
+        time: "Yesterday 06:30 PM",
+        location: "Zindabazar Point",
+        checkpoint: "Courier Collected",
+        verifiedBy: "Rider #082",
+        completed: true,
+      },
+      {
+        status: "Origin Hub",
+        time: "Yesterday 09:15 PM",
+        location: "Sylhet Hub [HUB-08]",
+        checkpoint: "Linehaul Manifest",
+        verifiedBy: "Hub Ops",
+        completed: true,
+      },
+      {
+        status: "In Transit",
+        time: "Today 04:30 AM",
+        location: "Dhaka-Sylhet Highway",
+        checkpoint: "Linehaul Truck En Route",
+        verifiedBy: "GPS Telemetry",
+        completed: true,
+        current: true,
+      },
+      {
+        status: "Destination Hub",
+        time: "Pending",
+        location: "Uttara Hub [HUB-02]",
+        checkpoint: "Awaiting Arrival",
+        verifiedBy: "Pending",
+        completed: false,
+      },
+      {
+        status: "Delivered",
+        time: "Pending",
+        location: "Consignee Doorstep",
+        checkpoint: "Delivery Scheduled",
+        verifiedBy: "Pending",
+        completed: false,
+      },
     ],
   },
 };
@@ -92,7 +202,9 @@ export default function InteractiveTracker() {
       setActiveShipment(SAMPLE_DATA[clean]);
       setErrorMsg(null);
     } else {
-      setErrorMsg(`No active telemetry record for ID "${clean}". Try sample ID: PP-48291 or PP-91044.`);
+      setErrorMsg(
+        `No active telemetry record for ID "${clean}". Try sample ID: PP-48291 or PP-91044.`,
+      );
     }
   };
 
@@ -103,9 +215,11 @@ export default function InteractiveTracker() {
   };
 
   return (
-    <section id="tracking-cockpit" className="py-24 bg-primary/[0.04] dark:bg-primary/[0.05] text-foreground border-y border-border relative">
+    <section
+      id="tracking-cockpit"
+      className="py-24 bg-primary/[0.04] dark:bg-primary/[0.05] text-foreground border-y border-border relative"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
         <div className="max-w-3xl space-y-3 mb-12">
           <div className="inline-flex items-center gap-2 font-mono text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded">
@@ -115,11 +229,14 @@ export default function InteractiveTracker() {
           </div>
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground font-sans">
             Know where the shipment is. <br />
-            <span className="text-muted-foreground">Know what happens next.</span>
+            <span className="text-muted-foreground">
+              Know what happens next.
+            </span>
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
-            Enter a consignment identifier to pull live checkpoint timestamps, chain of custody logs, 
-            carrier telemetry, and estimated arrival windows.
+            Enter a consignment identifier to pull live checkpoint timestamps,
+            chain of custody logs, carrier telemetry, and estimated arrival
+            windows.
           </p>
         </div>
 
@@ -153,7 +270,9 @@ export default function InteractiveTracker() {
                 type="button"
                 onClick={() => handleSelectSample(id)}
                 className={`underline hover:text-primary transition-colors ${
-                  activeShipment.id === id ? "text-primary font-bold" : "text-muted-foreground"
+                  activeShipment.id === id
+                    ? "text-primary font-bold"
+                    : "text-muted-foreground"
                 }`}
               >
                 {id}
@@ -171,31 +290,52 @@ export default function InteractiveTracker() {
 
         {/* Live Shipment Manifest Card with Shadcn Card Frame */}
         <Card className="border-border bg-card text-card-foreground shadow-lg">
-          
           {/* Metadata Top Bar */}
           <CardHeader className="border-b border-border/70 pb-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 font-mono text-xs">
               <div>
-                <div className="text-muted-foreground uppercase tracking-wider">CONSIGNMENT ID</div>
+                <div className="text-muted-foreground uppercase tracking-wider">
+                  CONSIGNMENT ID
+                </div>
                 <CardTitle className="text-xl font-bold font-mono tracking-tight text-foreground mt-1">
                   {activeShipment.id}
                 </CardTitle>
-                <div className="text-[11px] text-primary font-semibold">{activeShipment.service}</div>
+                <div className="text-[11px] text-primary font-semibold">
+                  {activeShipment.service}
+                </div>
               </div>
               <div>
-                <div className="text-muted-foreground uppercase tracking-wider">CORRIDOR ROUTE</div>
-                <div className="text-xs font-bold text-foreground mt-1">{activeShipment.origin}</div>
-                <div className="text-[11px] text-muted-foreground">→ {activeShipment.destination}</div>
+                <div className="text-muted-foreground uppercase tracking-wider">
+                  CORRIDOR ROUTE
+                </div>
+                <div className="text-xs font-bold text-foreground mt-1">
+                  {activeShipment.origin}
+                </div>
+                <div className="text-[11px] text-muted-foreground">
+                  → {activeShipment.destination}
+                </div>
               </div>
               <div>
-                <div className="text-muted-foreground uppercase tracking-wider">ESTIMATED ARRIVAL</div>
-                <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1">{activeShipment.eta}</div>
-                <div className="text-[11px] text-muted-foreground">{activeShipment.carrier}</div>
+                <div className="text-muted-foreground uppercase tracking-wider">
+                  ESTIMATED ARRIVAL
+                </div>
+                <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                  {activeShipment.eta}
+                </div>
+                <div className="text-[11px] text-muted-foreground">
+                  {activeShipment.carrier}
+                </div>
               </div>
               <div>
-                <div className="text-muted-foreground uppercase tracking-wider">PACKAGE SPECS</div>
-                <div className="text-sm font-bold text-foreground mt-1">{activeShipment.weight}</div>
-                <div className="text-[11px] text-primary font-semibold">COD: {activeShipment.cod} (VERIFIED)</div>
+                <div className="text-muted-foreground uppercase tracking-wider">
+                  PACKAGE SPECS
+                </div>
+                <div className="text-sm font-bold text-foreground mt-1">
+                  {activeShipment.weight}
+                </div>
+                <div className="text-[11px] text-primary font-semibold">
+                  COD: {activeShipment.cod} (VERIFIED)
+                </div>
               </div>
             </div>
           </CardHeader>
@@ -204,7 +344,9 @@ export default function InteractiveTracker() {
           <CardContent className="space-y-4 pt-6">
             <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-4 flex items-center justify-between">
               <span>CHAIN OF CUSTODY TIMELINE</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">● TELEMETRY STREAM SYNCHRONIZED</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+                ● TELEMETRY STREAM SYNCHRONIZED
+              </span>
             </div>
 
             <div className="space-y-2.5 font-mono text-xs">
@@ -215,8 +357,8 @@ export default function InteractiveTracker() {
                     evt.current
                       ? "border-primary/50 bg-primary/10 text-foreground"
                       : evt.completed
-                      ? "border-border/60 bg-muted/40 text-foreground"
-                      : "border-transparent text-muted-foreground"
+                        ? "border-border/60 bg-muted/40 text-foreground"
+                        : "border-transparent text-muted-foreground"
                   }`}
                 >
                   {/* Status Indicator */}
@@ -226,8 +368,8 @@ export default function InteractiveTracker() {
                         evt.current
                           ? "bg-primary text-primary-foreground animate-pulse"
                           : evt.completed
-                          ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
-                          : "border border-border text-muted-foreground"
+                            ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
+                            : "border border-border text-muted-foreground"
                       }`}
                     >
                       {evt.completed && !evt.current ? (
@@ -238,7 +380,9 @@ export default function InteractiveTracker() {
                         "○"
                       )}
                     </div>
-                    <span className={`font-bold ${evt.current ? "text-primary" : "text-foreground"}`}>
+                    <span
+                      className={`font-bold ${evt.current ? "text-primary" : "text-foreground"}`}
+                    >
                       {evt.status}
                     </span>
                   </div>
@@ -256,10 +400,18 @@ export default function InteractiveTracker() {
 
                   {/* Timestamp & Signoff */}
                   <div className="md:col-span-2 text-right">
-                    <div className={evt.current ? "text-primary font-bold" : "text-foreground font-semibold"}>
+                    <div
+                      className={
+                        evt.current
+                          ? "text-primary font-bold"
+                          : "text-foreground font-semibold"
+                      }
+                    >
                       {evt.time}
                     </div>
-                    <div className="text-[10px] text-muted-foreground truncate">{evt.verifiedBy}</div>
+                    <div className="text-[10px] text-muted-foreground truncate">
+                      {evt.verifiedBy}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -274,9 +426,7 @@ export default function InteractiveTracker() {
             </div>
             <div>STATUS: TAMPER-SEAL INTACT · CARGO TEMPERATURE 22°C</div>
           </CardFooter>
-
         </Card>
-
       </div>
     </section>
   );

@@ -92,7 +92,6 @@ export default function RouteJourney() {
   return (
     <section className="py-24 bg-background text-foreground border-t border-border relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Section Header */}
         <div className="max-w-3xl space-y-3 mb-16">
           <div className="inline-flex items-center gap-2 font-mono text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded">
@@ -104,8 +103,9 @@ export default function RouteJourney() {
             How a parcel moves through ParcelPilot.
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
-            One continuous operational route. Every transfer of custody is timestamped, 
-            geolocated, and assigned to a specific role in real time.
+            One continuous operational route. Every transfer of custody is
+            timestamped, geolocated, and assigned to a specific role in real
+            time.
           </p>
         </div>
 
@@ -156,7 +156,9 @@ export default function RouteJourney() {
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="text-muted-foreground">NODE:</span>
-                          <span className="text-foreground font-medium truncate">{stage.location}</span>
+                          <span className="text-foreground font-medium truncate">
+                            {stage.location}
+                          </span>
                         </div>
                       </div>
 
@@ -170,9 +172,7 @@ export default function RouteJourney() {
               );
             })}
           </div>
-
         </div>
-
       </div>
     </section>
   );

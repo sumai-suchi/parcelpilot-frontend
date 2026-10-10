@@ -1,5 +1,5 @@
 "use client";
- 
+
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -46,7 +46,6 @@ export function CreateShipmentForm() {
 
   const createShipmentMutation = useCreateShipment();
   const createCheckoutMutation = useCreateCheckoutSession();
-
 
   const handleSelectPickupSaved = (id: string) => {
     setPickupSelectedId(id);
@@ -166,7 +165,6 @@ export function CreateShipmentForm() {
       />
     );
   }
-
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

@@ -3,7 +3,8 @@ import { UserProfileView } from "@/components/dashboard/shared/user-profile-view
 
 export const metadata: Metadata = {
   title: "Courier Rider Profile | ParcelPilot",
-  description: "View verified courier credentials, rider status, and dispatch assignments.",
+  description:
+    "View verified courier credentials, rider status, and dispatch assignments.",
 };
 
 export default function CourierProfilePage() {

@@ -66,7 +66,8 @@ export function RoleSpecificStep({
           3. Role-Specific Qualifications
         </CardTitle>
         <CardDescription className="text-muted-foreground text-xs font-sans">
-          Provide operational credentials and logistics background for the {roleName} position.
+          Provide operational credentials and logistics background for the{" "}
+          {roleName} position.
         </CardDescription>
       </CardHeader>
 
@@ -75,7 +76,10 @@ export function RoleSpecificStep({
         {desiredRole === "COURIER" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="vehicleType" className="font-mono text-xs uppercase tracking-wider">
+              <Label
+                htmlFor="vehicleType"
+                className="font-mono text-xs uppercase tracking-wider"
+              >
                 Vehicle Type
               </Label>
               <select
@@ -93,7 +97,10 @@ export function RoleSpecificStep({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="vehicleNumber" className="font-mono text-xs uppercase tracking-wider">
+              <Label
+                htmlFor="vehicleNumber"
+                className="font-mono text-xs uppercase tracking-wider"
+              >
                 Vehicle Reg. / License Plate
               </Label>
               <Input
@@ -110,7 +117,10 @@ export function RoleSpecificStep({
         {/* Hub selection for Courier and Hub Manager */}
         {(desiredRole === "COURIER" || desiredRole === "HUB_MANAGER") && (
           <div className="space-y-2">
-            <Label htmlFor="hubId" className="font-mono text-xs uppercase tracking-wider">
+            <Label
+              htmlFor="hubId"
+              className="font-mono text-xs uppercase tracking-wider"
+            >
               Preferred Logistics Hub / Station
             </Label>
             {isHubsLoading ? (
@@ -125,7 +135,9 @@ export function RoleSpecificStep({
                 onChange={(e) => onHubIdChange(e.target.value)}
                 className="w-full h-9 rounded-none border border-border bg-background px-3 font-mono text-xs text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
               >
-                <option value="">-- Select Distribution Hub (Optional) --</option>
+                <option value="">
+                  -- Select Distribution Hub (Optional) --
+                </option>
                 {hubs.map((hub) => (
                   <option key={hub.id} value={hub.id}>
                     {hub.name} ({hub.code}) - {hub.address}
@@ -134,14 +146,18 @@ export function RoleSpecificStep({
               </select>
             )}
             <p className="font-mono text-[11px] text-muted-foreground">
-              Optional: specify your preferred terminal node or leave blank for open assignment.
+              Optional: specify your preferred terminal node or leave blank for
+              open assignment.
             </p>
           </div>
         )}
 
         {/* Experience */}
         <div className="space-y-2">
-          <Label htmlFor="experience" className="font-mono text-xs uppercase tracking-wider">
+          <Label
+            htmlFor="experience"
+            className="font-mono text-xs uppercase tracking-wider"
+          >
             Relevant Experience & Background
           </Label>
           <Textarea
@@ -151,8 +167,8 @@ export function RoleSpecificStep({
               desiredRole === "COURIER"
                 ? "E.g., 2 years experience with express courier deliveries and city route mapping."
                 : desiredRole === "HUB_MANAGER"
-                ? "E.g., Warehouse supervisor with inbound/outbound manifest dispatching experience."
-                : "Describe previous operational, management, or technical dispatch capabilities."
+                  ? "E.g., Warehouse supervisor with inbound/outbound manifest dispatching experience."
+                  : "Describe previous operational, management, or technical dispatch capabilities."
             }
             value={experience}
             onChange={(e) => onExperienceChange(e.target.value)}
@@ -162,7 +178,10 @@ export function RoleSpecificStep({
 
         {/* Notes / Motivation */}
         <div className="space-y-2">
-          <Label htmlFor="notes" className="font-mono text-xs uppercase tracking-wider">
+          <Label
+            htmlFor="notes"
+            className="font-mono text-xs uppercase tracking-wider"
+          >
             Applicant Statement / Notes (Optional)
           </Label>
           <Textarea

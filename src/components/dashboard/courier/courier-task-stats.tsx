@@ -9,7 +9,10 @@ interface CourierTaskStatsProps {
   isLoading?: boolean;
 }
 
-export function CourierTaskStats({ tasks, isLoading = false }: CourierTaskStatsProps) {
+export function CourierTaskStats({
+  tasks,
+  isLoading = false,
+}: CourierTaskStatsProps) {
   const pendingAssignments = tasks.filter((t) => t.status === "PENDING").length;
 
   const activeDeliveries = tasks.filter(
@@ -25,9 +28,7 @@ export function CourierTaskStats({ tasks, isLoading = false }: CourierTaskStatsP
   ).length;
 
   const failedDeliveries = tasks.filter(
-    (t) =>
-      t.shipment?.status === "DELIVERY_FAILED" ||
-      t.status === "REJECTED",
+    (t) => t.shipment?.status === "DELIVERY_FAILED" || t.status === "REJECTED",
   ).length;
 
   return (

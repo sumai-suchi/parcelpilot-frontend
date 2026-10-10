@@ -3,7 +3,8 @@ import { OperationsHubTransfersView } from "@/components/dashboard/operations/op
 
 export const metadata: Metadata = {
   title: "Inter-Hub Transfer Monitoring | ParcelPilot",
-  description: "Supervise linehaul movements between origin hubs and destination sorting centers.",
+  description:
+    "Supervise linehaul movements between origin hubs and destination sorting centers.",
 };
 
 export default function OperationsHubTransfersPage() {

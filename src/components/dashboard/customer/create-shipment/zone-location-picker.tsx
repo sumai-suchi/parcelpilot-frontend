@@ -38,14 +38,18 @@ export function ZoneLocationPicker({
   }, [city]);
 
   // Track if custom mode is manually engaged
-  const [isCustomCitySelected, setIsCustomCitySelected] = useState<boolean>(() => {
-    return Boolean(city && !matchedZone);
-  });
+  const [isCustomCitySelected, setIsCustomCitySelected] = useState<boolean>(
+    () => {
+      return Boolean(city && !matchedZone);
+    },
+  );
 
-  const [isCustomAreaSelected, setIsCustomAreaSelected] = useState<boolean>(() => {
-    if (!matchedZone) return false;
-    return Boolean(area && !matchedZone.areas.includes(area));
-  });
+  const [isCustomAreaSelected, setIsCustomAreaSelected] = useState<boolean>(
+    () => {
+      if (!matchedZone) return false;
+      return Boolean(area && !matchedZone.areas.includes(area));
+    },
+  );
 
   const citySelectValue = useMemo(() => {
     if (isCustomCitySelected) return "__OTHER__";

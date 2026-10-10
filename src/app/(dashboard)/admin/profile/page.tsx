@@ -3,7 +3,8 @@ import { UserProfileView } from "@/components/dashboard/shared/user-profile-view
 
 export const metadata: Metadata = {
   title: "Admin Profile & Credentials | ParcelPilot",
-  description: "View verified administrator credentials and system authorizations.",
+  description:
+    "View verified administrator credentials and system authorizations.",
 };
 
 export default function AdminProfilePage() {

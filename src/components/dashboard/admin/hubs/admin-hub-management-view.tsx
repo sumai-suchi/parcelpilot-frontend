@@ -31,7 +31,9 @@ export function AdminHubManagementView() {
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"ALL" | "ACTIVE" | "INACTIVE">("ALL");
+  const [statusFilter, setStatusFilter] = useState<
+    "ALL" | "ACTIVE" | "INACTIVE"
+  >("ALL");
 
   const { data: hubsRes, isLoading } = useAdminHubs();
   const hubs: AdminHubItem[] = hubsRes?.data || [];
@@ -321,10 +323,7 @@ export function AdminHubManagementView() {
       )}
 
       {/* Add Hub Slide-over Side Modal */}
-      <AddHubDrawer
-        open={isAddDrawerOpen}
-        onOpenChange={setIsAddDrawerOpen}
-      />
+      <AddHubDrawer open={isAddDrawerOpen} onOpenChange={setIsAddDrawerOpen} />
 
       {/* Import Hubs JSON Modal */}
       <ImportHubsModal

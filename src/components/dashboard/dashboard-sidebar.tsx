@@ -50,7 +50,9 @@ export function DashboardSidebar({ role }: { role: UserRole }) {
             >
               <IconInnerShadowTop className="size-5! text-primary" />
               <div className="flex flex-col">
-                <span className="text-sm font-bold tracking-tight">ParcelPilot</span>
+                <span className="text-sm font-bold tracking-tight">
+                  ParcelPilot
+                </span>
                 <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
                   {role.replace("_", " ")}
                 </span>

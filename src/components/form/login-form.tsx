@@ -104,9 +104,8 @@ export function LoginForm({
             type: "success",
           });
           console.log("res", res);
-          
-            router.push("/");
-          
+
+          router.push("/");
         },
         onError: (err) => {
           toast.add({
@@ -212,7 +211,7 @@ export function LoginForm({
                   disabled={loginPending}
                   className={cn(
                     "h-8 gap-1.5 text-[11px] font-semibold tracking-normal normal-case transition-all",
-                    isSelected && "bg-primary text-primary-foreground"
+                    isSelected && "bg-primary text-primary-foreground",
                   )}
                 >
                   <Icon className="size-3.5 shrink-0" />

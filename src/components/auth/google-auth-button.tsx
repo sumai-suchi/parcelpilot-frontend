@@ -130,7 +130,11 @@ export function GoogleAuthButton({
 
   // Initialize and Render Button
   useEffect(() => {
-    if (!isScriptLoaded || !containerRef.current || !window.google?.accounts?.id) {
+    if (
+      !isScriptLoaded ||
+      !containerRef.current ||
+      !window.google?.accounts?.id
+    ) {
       return;
     }
 
@@ -169,7 +173,8 @@ export function GoogleAuthButton({
     } else {
       toast.add({
         title: "Google Sign-In",
-        description: "Google services are initializing, please wait a moment...",
+        description:
+          "Google services are initializing, please wait a moment...",
         type: "info",
       });
     }

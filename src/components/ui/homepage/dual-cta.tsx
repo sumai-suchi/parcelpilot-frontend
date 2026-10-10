@@ -7,9 +7,7 @@ export default function DualCta() {
   return (
     <section className="py-20 bg-primary/[0.04] dark:bg-primary/[0.05] text-foreground">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
           {/* Card 1: Merchant CTA */}
           <div
             data-aos="fade-right"
@@ -29,7 +27,9 @@ export default function DualCta() {
             </h3>
 
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
-              Sign up today and get automated next-day Cash on Delivery payout, bulk order CSV import, and free doorstep package pickup every afternoon.
+              Sign up today and get automated next-day Cash on Delivery payout,
+              bulk order CSV import, and free doorstep package pickup every
+              afternoon.
             </p>
 
             <ul className="space-y-2.5 mb-8 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
@@ -75,7 +75,9 @@ export default function DualCta() {
             </h3>
 
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
-              Earn competitive daily earnings with weekly incentive bonuses, flexible shifts in your own neighborhood, and free transit accidental insurance.
+              Earn competitive daily earnings with weekly incentive bonuses,
+              flexible shifts in your own neighborhood, and free transit
+              accidental insurance.
             </p>
 
             <ul className="space-y-2.5 mb-8 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
@@ -89,7 +91,9 @@ export default function DualCta() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                <span>Complimentary delivery kit, safety helmet & insurance</span>
+                <span>
+                  Complimentary delivery kit, safety helmet & insurance
+                </span>
               </li>
             </ul>
 
@@ -101,7 +105,6 @@ export default function DualCta() {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-
         </div>
       </div>
     </section>

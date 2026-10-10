@@ -38,7 +38,6 @@ export function ShipmentSuccessModal({
   onReset,
   isRedirecting = false,
 }: ShipmentSuccessModalProps) {
-
   const [copied, setCopied] = useState(false);
   const isPaid = shipment.paymentStatus === "PAID";
 
@@ -190,7 +189,6 @@ export function ShipmentSuccessModal({
             )}
           </Button>
         )}
-
 
         <Link
           href={`/customer/track-shipment?tracking=${shipment.trackingNumber}`}

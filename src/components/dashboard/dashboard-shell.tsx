@@ -36,9 +36,9 @@ export default function DashboardShell({
               {roleLabel} Console
             </span>
           </div>
-            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-none uppercase tracking-wider font-semibold">
-              Live System
-            </span>
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-none uppercase tracking-wider font-semibold">
+            Live System
+          </span>
         </header>
         <main className="flex-1 w-full">{children}</main>
       </SidebarInset>

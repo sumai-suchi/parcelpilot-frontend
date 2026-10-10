@@ -281,7 +281,10 @@ export function AdminDashboardView() {
                   Direct navigation to dedicated operational management portals.
                 </p>
               </div>
-              <Badge variant="outline" className="font-mono text-[10px] uppercase">
+              <Badge
+                variant="outline"
+                className="font-mono text-[10px] uppercase"
+              >
                 5 Operational Sub-Pages
               </Badge>
             </div>
@@ -301,7 +304,10 @@ export function AdminDashboardView() {
                         </div>
                         <Badge
                           variant="outline"
-                          className={cn("text-[10px] font-mono uppercase", mod.badgeColor)}
+                          className={cn(
+                            "text-[10px] font-mono uppercase",
+                            mod.badgeColor,
+                          )}
                         >
                           {mod.badge}
                         </Badge>
@@ -417,7 +423,8 @@ export function AdminDashboardView() {
                         Operational Sorting Hubs
                       </span>
                       <span className="text-base font-bold text-foreground">
-                        {overview?.infrastructure?.activeHubs || 0} Distribution Facilities
+                        {overview?.infrastructure?.activeHubs || 0} Distribution
+                        Facilities
                       </span>
                     </div>
                     <Building2 className="size-5 text-primary/70" />
@@ -428,7 +435,8 @@ export function AdminDashboardView() {
                         Geographic Coverage Zones
                       </span>
                       <span className="text-base font-bold text-foreground">
-                        {overview?.infrastructure?.activeZones || 0} Regional Zones (64 Districts)
+                        {overview?.infrastructure?.activeZones || 0} Regional
+                        Zones (64 Districts)
                       </span>
                     </div>
                     <MapPin className="size-5 text-amber-500/70" />
@@ -456,7 +464,8 @@ export function AdminDashboardView() {
                   Live Operational Activity & Audit Telemetry
                 </CardTitle>
                 <CardDescription className="text-xs text-muted-foreground">
-                  Real-time lifecycle mutations across consignments, hub routing, and dispatch staff.
+                  Real-time lifecycle mutations across consignments, hub
+                  routing, and dispatch staff.
                 </CardDescription>
               </div>
               <Badge variant="outline" className="font-mono text-xs w-fit">
@@ -464,7 +473,8 @@ export function AdminDashboardView() {
               </Badge>
             </CardHeader>
             <CardContent className="p-0">
-              {overview?.recentActivities && overview.recentActivities.length > 0 ? (
+              {overview?.recentActivities &&
+              overview.recentActivities.length > 0 ? (
                 <div className="divide-y divide-border/60">
                   {overview.recentActivities.slice(0, 8).map((act) => (
                     <div
@@ -478,12 +488,19 @@ export function AdminDashboardView() {
                               {act.shipment.trackingNumber}
                             </span>
                           )}
-                          <Badge variant="secondary" className="text-[10px] uppercase font-mono">
+                          <Badge
+                            variant="secondary"
+                            className="text-[10px] uppercase font-mono"
+                          >
                             {act.status.replace("_", " ")}
                           </Badge>
                           {act.updater && (
                             <span className="text-muted-foreground text-[11px]">
-                              by <strong className="text-foreground">{act.updater.name}</strong> ({act.updater.role})
+                              by{" "}
+                              <strong className="text-foreground">
+                                {act.updater.name}
+                              </strong>{" "}
+                              ({act.updater.role})
                             </span>
                           )}
                         </div>

@@ -2,7 +2,13 @@
 
 import { Bike, Building2, CheckCircle2, Compass, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import type { ApplicationRole } from "@/types/roleApplication.interface";
 import { cn } from "@/lib/utils";
 
@@ -67,7 +73,8 @@ export function RoleSelectionStep({
           1. Select Desired Role
         </CardTitle>
         <CardDescription className="text-muted-foreground text-xs font-sans">
-          Choose the operational position you wish to apply for within the logistics network.
+          Choose the operational position you wish to apply for within the
+          logistics network.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -90,8 +97,8 @@ export function RoleSelectionStep({
                   isAlreadyCurrentRole
                     ? "opacity-50 cursor-not-allowed border-border/40 bg-muted/30"
                     : isSelected
-                    ? "border-primary bg-primary/5 shadow-xs ring-1 ring-primary/40"
-                    : "border-border hover:border-primary/40 bg-card",
+                      ? "border-primary bg-primary/5 shadow-xs ring-1 ring-primary/40"
+                      : "border-border hover:border-primary/40 bg-card",
                 )}
               >
                 <div className="flex items-center justify-between mb-3">

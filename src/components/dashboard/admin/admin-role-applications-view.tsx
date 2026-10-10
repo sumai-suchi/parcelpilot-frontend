@@ -45,7 +45,11 @@ export function AdminRoleApplicationsView() {
     ...(searchTerm.trim() ? { searchTerm: searchTerm.trim() } : {}),
   };
 
-  const { data: appsRes, isLoading, refetch } = useGetAllApplications(queryParams);
+  const {
+    data: appsRes,
+    isLoading,
+    refetch,
+  } = useGetAllApplications(queryParams);
   const applications = appsRes?.data || [];
 
   const reviewMutation = useReviewRoleApplication();
@@ -187,7 +191,10 @@ export function AdminRoleApplicationsView() {
                           <h4 className="font-bold text-base text-foreground truncate">
                             {app.user.name}
                           </h4>
-                          <Badge variant="outline" className="text-[10px] uppercase">
+                          <Badge
+                            variant="outline"
+                            className="text-[10px] uppercase"
+                          >
                             Current: {app.user.role}
                           </Badge>
                         </div>
@@ -196,9 +203,12 @@ export function AdminRoleApplicationsView() {
                         </p>
                         <p className="text-[11px] text-muted-foreground mt-0.5">
                           Submitted:{" "}
-                          {new Date(app.createdAt).toLocaleDateString(undefined, {
-                            dateStyle: "medium",
-                          })}
+                          {new Date(app.createdAt).toLocaleDateString(
+                            undefined,
+                            {
+                              dateStyle: "medium",
+                            },
+                          )}
                         </p>
                       </div>
                     </div>
@@ -363,7 +373,8 @@ export function AdminRoleApplicationsView() {
                     Vehicle Spec:
                   </span>
                   <span className="font-semibold">
-                    {selectedApp.vehicleType} ({selectedApp.vehicleNumber || "N/A"})
+                    {selectedApp.vehicleType} (
+                    {selectedApp.vehicleNumber || "N/A"})
                   </span>
                 </div>
               )}

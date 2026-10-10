@@ -83,7 +83,8 @@ export function OperationsDashboardView() {
               Live Queue & Waybill Ledger
             </h4>
             <p className="text-xs text-muted-foreground">
-              Filter and search through active consignment records to assign couriers or resolve routing.
+              Filter and search through active consignment records to assign
+              couriers or resolve routing.
             </p>
           </div>
         </div>

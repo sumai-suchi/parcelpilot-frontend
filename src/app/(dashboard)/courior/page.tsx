@@ -3,7 +3,8 @@ import { CourierDashboardView } from "@/components/dashboard/courier/courier-das
 
 export const metadata: Metadata = {
   title: "Courier Field Portal | ParcelPilot",
-  description: "Field courier task management, pickups, and delivery confirmation.",
+  description:
+    "Field courier task management, pickups, and delivery confirmation.",
 };
 
 export default function CourierDashboardPage() {

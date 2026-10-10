@@ -65,10 +65,9 @@ export default function AboutValues() {
   return (
     <section className="py-24 bg-background text-foreground border-b border-border relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
+          <div className="inline-flex items-center gap-2 rounded-none border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
             <Compass className="size-3.5" />
             <span>OPERATING CREED & ETHOS</span>
           </div>
@@ -76,8 +75,9 @@ export default function AboutValues() {
             Principles That Direct Every Delivery
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Technology is merely a lever for values. At ParcelPilot, every line of code, hub policy,
-            and courier assignment reflects our commitment to reliability, fairness, and transparency.
+            Technology is merely a lever for values. At ParcelPilot, every line
+            of code, hub policy, and courier assignment reflects our commitment
+            to reliability, fairness, and transparency.
           </p>
         </div>
 
@@ -93,7 +93,9 @@ export default function AboutValues() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
               >
-                <Card className={`h-full border ${val.borderAccent} bg-card hover:shadow-md transition-all relative overflow-hidden flex flex-col justify-between`}>
+                <Card
+                  className={`h-full rounded-none border ${val.borderAccent} bg-card hover:shadow-md transition-all relative overflow-hidden flex flex-col justify-between`}
+                >
                   <CardHeader className="space-y-3 pb-3">
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs tracking-wider text-muted-foreground font-semibold">
@@ -105,7 +107,7 @@ export default function AboutValues() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-muted text-foreground">
+                      <div className="p-2.5 rounded-none bg-muted text-foreground">
                         <IconComponent className={`size-6 ${val.accent}`} />
                       </div>
                       <CardTitle className="text-xl font-bold text-foreground">
@@ -124,7 +126,6 @@ export default function AboutValues() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

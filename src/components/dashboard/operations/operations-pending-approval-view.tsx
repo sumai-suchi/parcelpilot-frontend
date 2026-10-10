@@ -42,7 +42,7 @@ export function OperationsPendingApprovalView() {
 
   const allPendingShipments = useMemo(
     () => shipmentsRes?.data || [],
-    [shipmentsRes]
+    [shipmentsRes],
   );
   const hubs = useMemo(() => hubsRes?.data || [], [hubsRes]);
   const couriers = useMemo(() => couriersRes?.data || [], [couriersRes]);
@@ -51,12 +51,12 @@ export function OperationsPendingApprovalView() {
   const metrics = useMemo(() => {
     const total = allPendingShipments.length;
     const express = allPendingShipments.filter(
-      (s) => (s.deliveryType || "").toUpperCase() === "EXPRESS"
+      (s) => (s.deliveryType || "").toUpperCase() === "EXPRESS",
     ).length;
     const sameDay = allPendingShipments.filter(
       (s) =>
         (s.deliveryType || "").toUpperCase().includes("SAME") ||
-        (s.deliveryType || "").toUpperCase().includes("DAY")
+        (s.deliveryType || "").toUpperCase().includes("DAY"),
     ).length;
     const standard = total - (express + sameDay);
 
@@ -167,7 +167,7 @@ export function OperationsPendingApprovalView() {
                 "h-7 px-2.5 text-[10px] uppercase rounded-none cursor-pointer",
                 serviceTierFilter === tier
                   ? "bg-primary text-primary-foreground font-bold"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {tier.replace("_", " ")}

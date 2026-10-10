@@ -14,7 +14,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 export function useApplyForRole() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateRoleApplicationPayload) => applyForRole(payload),
+    mutationFn: (payload: CreateRoleApplicationPayload) =>
+      applyForRole(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-role-applications"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });

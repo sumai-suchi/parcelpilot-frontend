@@ -26,9 +26,17 @@ export function ShipmentCostSummary({
 }: ShipmentCostSummaryProps) {
   // Pricing breakdown formula matching backend rate rules
   const baseRate =
-    deliveryType === "SAME_DAY" ? 200.0 : deliveryType === "EXPRESS" ? 150.0 : 100.0;
+    deliveryType === "SAME_DAY"
+      ? 200.0
+      : deliveryType === "EXPRESS"
+        ? 150.0
+        : 100.0;
   const perKg =
-    deliveryType === "SAME_DAY" ? 50.0 : deliveryType === "EXPRESS" ? 35.0 : 20.0;
+    deliveryType === "SAME_DAY"
+      ? 50.0
+      : deliveryType === "EXPRESS"
+        ? 35.0
+        : 20.0;
   const weightSurcharge = Math.max(0, (weight - 1) * perKg);
   const total = (baseRate + weightSurcharge).toFixed(2);
 
