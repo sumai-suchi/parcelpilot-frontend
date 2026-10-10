@@ -16,11 +16,12 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { GoogleAuthButton } from "@/components/auth/google-auth-button";
+
 import { useRegistration } from "@/hooks/auth.hook";
 import type { RegistrationPayload } from "@/types/auth.interface";
 import { CustomerRegistrationSchema } from "@/validation/auth.validation";
 import { toast } from "../ui/toast";
+import GoogleLoginComponent from "../google-login/GoogleLogin";
 
 export function SignupForm({
   className,
@@ -349,8 +350,9 @@ export function SignupForm({
           <Button type="submit">Create Account</Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
+        <GoogleLoginComponent></GoogleLoginComponent>
         <Field>
-          <GoogleAuthButton mode="register" />
+         
           <FieldDescription className="px-6 text-center">
             Already have an account? <a href="/login">Sign in</a>
           </FieldDescription>

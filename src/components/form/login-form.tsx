@@ -25,11 +25,12 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { GoogleAuthButton } from "@/components/auth/google-auth-button";
+
 import { useLogin } from "@/hooks/auth.hook";
 import { loginSchema } from "@/validation/auth.validation";
 import { Spinner } from "../ui/spinner";
 import { toast } from "../ui/toast";
+import GoogleLoginComponent from "../google-login/GoogleLogin";
 
 const DEMO_ACCOUNTS = [
   {
@@ -309,8 +310,9 @@ export function LoginForm({
         </FieldGroup>
 
         <FieldSeparator>Or continue with</FieldSeparator>
+        <GoogleLoginComponent></GoogleLoginComponent>
         <Field>
-          <GoogleAuthButton mode="login" />
+        
           <FieldDescription className="text-center">
             Don&apos;t have an account?{" "}
             <a href="/register" className="underline underline-offset-4">

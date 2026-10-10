@@ -5,7 +5,7 @@ export default function LoginPage() {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="relative hidden bg-muted lg:block">
         <img
-          src="/Login.jpg"
+          src="/Register.jpg"
           alt="signin"
           className="absolute inset-0 h-full w-full  dark:brightness-[0.2] dark:grayscale"
         />
