@@ -56,9 +56,6 @@ export default function GoogleLoginComponent() {
 
   return (
     <GoogleLogin
-      theme="outline"
-      shape="pill"
-      text="continue_with"
       onSuccess={handleGoogleSuccess}
       onError={handleGoogleError}
     />
