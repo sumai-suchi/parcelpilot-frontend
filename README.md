@@ -44,52 +44,6 @@ From sub-second **interactive freight tariff simulators** and **3D-calibrated vo
 
 ---
 
-## 🏗️ Frontend Architecture & Design System
-
-```mermaid
-flowchart TD
-    User([🌐 End User / Operator]) --> NextApp[⚡ Next.js 16 App Router]
-
-    subgraph "Public Marketing & Telemetry Suite"
-        Home["🏠 Telemetry Home (/)"]
-        Pricing["💰 Rate Simulator (/pricing)"]
-        Coverage["🗺️ Hub Directory (/coverage)"]
-        Packaging["📦 Packaging & Volumetric (/packaging-guide)"]
-        Help["💡 Knowledge Base & FAQs (/help)"]
-        Contact["📡 Dispatch Control Console (/contact)"]
-        About["🏢 Engineering Creed (/about-us)"]
-    end
-
-    subgraph "Authentication & Identity Guard"
-        Auth[🔐 JWT / Refresh Auth + Google OAuth 2.0]
-        OTP[📱 4-Digit Email Verification Form]
-    end
-
-    subgraph "Protected Role Consoles (RBAC)"
-        Admin["👑 Admin Console (/admin)"]
-        Ops["⚡ Operations Manager (/operation_manager)"]
-        Hub["🏢 Hub Manager (/hub_manager)"]
-        Courier["🛵 Courier Field App (/courior)"]
-        Customer["👤 Merchant / Customer (/customer)"]
-    end
-
-    NextApp --> Public Marketing & Telemetry Suite
-    NextApp --> Authentication & Identity Guard
-    Authentication & Identity Guard --> Protected Role Consoles (RBAC)
-
-    subgraph "Client Data Layer"
-        RQ["⚡ TanStack React Query v5"]
-        API["📡 Custom ofetch API Client"]
-        RQ --> API
-    end
-
-    Protected Role Consoles (RBAC) --> Client Data Layer
-    Public Marketing & Telemetry Suite --> Client Data Layer
-    API --> Backend["🌐 ParcelPilot Express API Gateway (Vercel)"]
-```
-
----
-
 ## 🚀 Key Feature Walkthrough
 
 ### 1. 🛡️ Public Marketing & Interactive Telemetry Suite
